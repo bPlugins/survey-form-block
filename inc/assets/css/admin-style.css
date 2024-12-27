@@ -1,0 +1,19 @@
+.svbAdminContainer #svb_table_id_wrapper #svb_table_id_length select {
+    width: 56px;
+    height: 30px;
+    padding: 0px 2px;
+    margin-bottom: 10px;
+}
+
+.svbAdminContainer #svb_table_id_wrapper #svb_table_id_filter input {
+    width: 100px;
+    height: 30px;
+    padding: 0px 2px;
+    margin-bottom: 10px;
+}
+
+
+
+.svb_table_id:not(.dataTable) {
+    visibility: hidden;
+}

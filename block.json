@@ -1,0 +1,217 @@
+{
+	"apiVersion": "1",
+	"name": "svb/survey-block",
+	"title": "Survey Form Block",
+	"description": "Create custom survey forms easily with the Survey Form Block plugin",
+	"category": "widgets",
+	"keywords": [
+		"survey",
+		"block",
+		"form"
+	],
+	"textdomain": "survey-form-block",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": ""
+		},
+		"cId": {
+			"type": "string",
+			"default": ""
+		},
+		"form": {
+			"type": "object",
+			"default": {
+				"bgColor": "#F9F9F991",
+				"padding": {
+					"top": "8px",
+					"right": "12px",
+					"bottom": "8px",
+					"left": "12px"
+				},
+				"border": {
+					"width": "0px",
+					"style": "solid",
+					"color": "#0575e6",
+					"side": "all",
+					"radius": "5px"
+				},
+				"creator_id": "",
+				"id": "",
+				"title": "Student Information",
+				"description": "Form Description here",
+				"descriptionTypo": {
+					"fontSize": {
+						"desktop": 14,
+						"tablet": 14,
+						"mobile": 14
+					},
+					"fontWeight": 400,
+					"lineHeight": "135%"
+				},
+				"descriptionColor": "#000",
+				"descriptionAlign": "left",
+				"descriptionMargin": {
+					"top": "0px",
+					"right": "0px",
+					"bottom": "10px",
+					"left": "0px"
+				},
+				"titleTypo": {
+					"fontSize": {
+						"desktop": 18,
+						"tablet": 16,
+						"mobile": 14
+					},
+					"fontWeight": 500,
+					"lineHeight": "135%"
+				},
+				"titleColor": "#000",
+				"titleAlign": "left",
+				"titleMargin": {
+					"top": "20px",
+					"right": "0px",
+					"bottom": "20px",
+					"left": "0px"
+				},
+				"successMsg": "Submitted successfully",
+				"successMsgColor": "green"
+			}
+		},
+		"fields": {
+			"type": "array",
+			"default": [
+				{
+					"id": "cvTd",
+					"type": "",
+					"column": 1,
+					"size": 100,
+					"label": "Enter your label",
+					"labelPosition": "column",
+					"help": "",
+					"name": "",
+					"placeholder": "Enter your placeholder",
+					"classes": "",
+					"isRequired": false,
+					"isDisable": false,
+					"options": [
+						{
+							"label": "Author",
+							"value": "John deo"
+						}
+					],
+					"start": "1990",
+					"end": "2023"
+				}
+			]
+		},
+		"labelS": {
+			"type": "object",
+			"default": {
+				"typo": {
+					"fontSize": {
+						"desktop": 16,
+						"tablet": 15,
+						"mobile": 14
+					},
+					"fontWeight": 500,
+					"lineHeight": "135%"
+				},
+				"color": "#000"
+			}
+		},
+		"input": {
+			"type": "object",
+			"default": {
+				"typo": {
+					"fontSize": {
+						"desktop": 14,
+						"tablet": 14,
+						"mobile": 14
+					},
+					"fontWeight": 400,
+					"lineHeight": "135%"
+				},
+				"color": "#000",
+				"padding": {
+					"top": "8px",
+					"right": "12px",
+					"bottom": "8px",
+					"left": "12px"
+				},
+				"border": {
+					"width": "0px",
+					"style": "solid",
+					"color": "#0575e6",
+					"side": "all",
+					"radius": "3px"
+				}
+			}
+		},
+		"radioCheckLabelTypo": {
+			"type": "object",
+			"default": {
+				"fontSize": {
+					"desktop": 14,
+					"tablet": 14,
+					"mobile": 14
+				},
+				"fontWeight": 400,
+				"lineHeight": "135%"
+			}
+		},
+		"radioCheckLabelColor": {
+			"type": "string",
+			"default": "#000"
+		},
+		"button": {
+			"type": "object",
+			"default": {
+				"typo": {
+					"fontSize": {
+						"desktop": 16,
+						"tablet": 15,
+						"mobile": 14
+					},
+					"fontWeight": 400,
+					"lineHeight": "135%"
+				},
+				"colors": {
+					"color": "#fff",
+					"bg": "#4527a4"
+				},
+				"padding": {
+					"top": "11px",
+					"right": "0px",
+					"bottom": "11px",
+					"left": "0px"
+				}
+			}
+		},
+		"year": {
+			"type": "object",
+			"default": {
+				"start": "1990",
+				"end": "2023"
+			}
+		}
+	},
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false
+	},
+	"example": {
+		"attributes": {
+			"preview": true,
+			"columns": {
+				"desktop": 1,
+				"tablet": 1,
+				"mobile": 1
+			}
+		}
+	},
+	"editorScript": "file:dist/editor.js"
+}

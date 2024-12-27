@@ -1,0 +1,121 @@
+$primaryColor: #4527a4;
+
+.svbNowEditing {
+	outline: 2px solid $primaryColor;
+}
+
+// Custom
+.wp-block-svb-survey-block {
+	.svbMainArea {
+		.fieldItem {
+			margin-bottom: 10px;
+		}
+
+		.fieldMainArea {
+			.labelArea {
+				.btnArea {
+					display: flex;
+					gap: 5px;
+
+					button {
+						padding: 1px 4px;
+						border: none;
+						border-radius: 3px;
+						color: #fff;
+						cursor: pointer;
+						width: 25px;
+						height: 25px;
+					}
+
+					button:nth-child(1) {
+						background-color: #4527a4;
+					}
+
+					button:nth-child(2) {
+						background-color: red;
+					}
+				}
+			}
+		}
+
+		.selectBox {
+			select {
+				padding: 8px 1px;
+				border-radius: 2px;
+				font-size: 15px;
+				font-weight: 400;
+				font-family: inherit;
+				line-height: 20px;
+				min-height: 0;
+				border: 1px solid #000;
+				padding-left: 12px;
+				height: initial;
+			}
+		}
+
+	}
+}
+
+
+.svTabPanel {
+	.inputArea {
+		.single {
+			display: flex;
+			justify-content: space-between;
+
+			.icon {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+
+				button {
+					padding: 3px 6px;
+					border: none;
+					border-radius: 3px;
+					color: #fff;
+					cursor: pointer;
+				}
+
+				button:nth-child(1) {
+					background-color: #4527a4;
+				}
+
+				button:nth-child(2) {
+					background-color: red;
+				}
+			}
+		}
+
+		.subBtn {
+			font-size: 14px;
+			font-weight: 400;
+			background-color: #4527a4;
+			color: #fff;
+			border: none;
+			padding: 3px 6px;
+			margin: 15px 0px;
+			cursor: pointer;
+		}
+	}
+
+	.addField {
+		font-size: 16px;
+		font-weight: 400;
+		background-color: #4527a4;
+		color: #fff;
+		width: 100%;
+		padding: 11px 0px;
+		border: none;
+		cursor: pointer;
+		margin-bottom: 10px;
+	}
+
+	.svb-year {
+		gap: 10px;
+	}
+
+}
+
+.wp-block-svb-survey-block .svbMainArea form .mainFieldArea .disable {
+	display: block !important;
+}
