@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) {exit;}
-if(!class_exists('SVB_Survey_Column_Model')) {
-    class SVB_Survey_Column_Model
+if(!class_exists('BPSVB_Survey_Column_Model')) {
+    class BPSVB_Survey_Column_Model
     {
 
         private $table_name = 'svb_columns';
@@ -18,13 +18,13 @@ if(!class_exists('SVB_Survey_Column_Model')) {
             $data['created_at'] = wp_date("Y-m-d H:i:s", current_time("U"));
 
             // return $data;
-            $find = $wpdb->get_row($wpdb->prepare("SELECT * FROM $this->table_name WHERE form_id=%s", $data['form_id']), 'ARRAY_A');
+            $find = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE form_id=%s", $this->table_name, $data['form_id']), 'ARRAY_A');
 
             $columns = json_decode($data['columns'], true);
             $exist_columns = json_decode($find['columns'], true) ?? [];
 
             if ($find) {
-                $dataModel = new SVB_Survey_Data_Model();
+                $dataModel = new BPSVB_Survey_Data_Model();
                 $submitted_data = $dataModel->getDataByFormId($data['form_id']);
 
                 if (!$submitted_data) {
@@ -65,7 +65,7 @@ if(!class_exists('SVB_Survey_Column_Model')) {
         public function getAll()
         {
             global $wpdb;
-            $data = $wpdb->get_results("SELECT * FROM $this->table_name", 'ARRAY_A');
+            $data = $wpdb->get_results($wpdb->prepare("SELECT * FROM %i", $this->table_name), 'ARRAY_A');
             foreach ($data as $index => $item) {
                 $data[$index]['columns'] = json_decode(stripslashes($item['columns']), true);
             }
@@ -81,7 +81,7 @@ if(!class_exists('SVB_Survey_Column_Model')) {
         {
             global $wpdb;
 
-            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $this->table_name WHERE form_id=%s AND labels!=%s", $form_id, null), 'ARRAY_A');
+            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE form_id=%s AND labels!=%s", $this->table_name, $form_id, null), 'ARRAY_A');
 
             if ($data) {
                 $data['labels'] = json_decode(stripslashes($data['labels']), true);

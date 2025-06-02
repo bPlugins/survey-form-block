@@ -5,8 +5,8 @@ require_once __DIR__ . '/SurveyData.php';
 require_once __DIR__ . '/SurveyColumns.php';
 require_once __DIR__ . '/SurveyColumnModel.php';
 
-if(!class_exists('SVB_Init')) {
-    class SVB_Init
+if(!class_exists('BPSVB_Init')) {
+    class BPSVB_Init
     {
         public function __construct()
         {
@@ -23,8 +23,8 @@ if(!class_exists('SVB_Init')) {
         public static function get_tables()
         {
             return [
-                SVB_Survey_Data::class,
-                SVB_Survey_Columns::class,
+                BPSVB_Survey_Data::class,
+                BPSVB_Survey_Columns::class,
             ];
         }
 
@@ -41,9 +41,9 @@ if(!class_exists('SVB_Init')) {
 
         private static function instantiate($class)
         {
-            return new $class(new SVB_Table);
+            return new $class(new BPSVB_Table);
         }
     }
-    new SVB_Init();
+    new BPSVB_Init();
 }
 

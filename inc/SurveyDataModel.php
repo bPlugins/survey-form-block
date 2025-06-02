@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) {exit;}
-if(!class_exists('SVB_Survey_Data_Model')) {
-    class SVB_Survey_Data_Model
+if(!class_exists('BPSVB_Survey_Data_Model')) {
+    class BPSVB_Survey_Data_Model
     {
         private $table_name = 'svb_data';
 
@@ -47,7 +47,8 @@ if(!class_exists('SVB_Survey_Data_Model')) {
         {
             global $wpdb;
 
-            $data = $wpdb->get_results("SELECT * FROM $this->table_name", 'ARRAY_A');
+            // $data = $wpdb->get_results("SELECT * FROM $this->table_name", 'ARRAY_A');
+            $data = $wpdb->get_results($wpdb->prepare("SELECT * FROM %i", $this->table_name), 'ARRAY_A');
 
             foreach ($data as $index => $item) {
                 $data[$index]['data'] = json_decode(stripslashes($item['data']), true);
@@ -60,7 +61,7 @@ if(!class_exists('SVB_Survey_Data_Model')) {
         {
             global $wpdb;
 
-            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $this->table_name WHERE form_id=%s", $form_id), 'ARRAY_A');
+            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE form_id=%s", $this->table_name, $form_id), 'ARRAY_A');
             return $data;
         }
 
@@ -68,7 +69,7 @@ if(!class_exists('SVB_Survey_Data_Model')) {
         {
             global $wpdb;
 
-            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $this->table_name WHERE form_id=%s AND labels!=%s", $form_id, null), 'ARRAY_A');
+            $data = $wpdb->get_row($wpdb->prepare("SELECT * FROM %i WHERE form_id=%s AND labels!=%s",$this->table_name, $form_id, null), 'ARRAY_A');
 
             if ($data) {
                 $data['labels'] = json_decode(stripslashes($data['labels']), true);

@@ -2,10 +2,8 @@
 Contributors: bplugins, abuhayat, btechnologies
 Donate link: https://www.buymeacoffee.com/abuhayat
 Tags: block, survey form, form, investigation, Gutenberg block
-Requires at least: 6.5+
-Tested up to: 6.7.1
-Stable tag: 1.0.0
-Requires PHP: 7.1
+Tested up to: 6.8
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -101,41 +99,24 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 - 25 April, 2025 =
+* Compatible with WordPress 6.8;
+
+= 1.0.0 -  13 Jan, 2025 =
 * Initial Release
 
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.1 - 25 April, 2025 =
+* Compatible with WordPress 6.8;
+
+= 1.0.0 -  13 Jan, 2025 =
 * Initial Release
 
-== External Service Integration ==
-
-* Service Name: datatable.min.js
-Docs Link: https://datatables.net/manual/installation
-
-* Service Name: tailwind.min.js
-Docs Link:https://tailwindcss.com/docs/installation
  
-== External Link ===
 
-I used this link for the data table
-https://datatables.net/tn/17
+ 
 
 
-== Developer Notes ==
-
-* I used this file for the data table
-inc/assets/DataTable.min.css
-inc/assets/DataTable.min.js
-
-* I used this file for css library
-inc/assets/tailwind.min.js
-
-
-Public source code GitHub link for review, study, and contribute.
-
-https://github.com/alamingitpailot/Survey-form-block
-
-For more information on how to contribute to this plugin, please visit our GitHub repository.
+ 

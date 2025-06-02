@@ -1,8 +1,8 @@
 <?php
 if (!defined('ABSPATH')) {exit;}
 
-if(!class_exists('SVB_ADMIN_MENU')) {
-    class SVB_ADMIN_MENU
+if(!class_exists('BPSVB_ADMIN_MENU')) {
+    class BPSVB_ADMIN_MENU
     {
         public function __construct()
         {
@@ -13,10 +13,10 @@ if(!class_exists('SVB_ADMIN_MENU')) {
         public function adminEnqueueScripts()
         {
 
-            wp_register_script('svb-data-table-script', SVB_DIR . 'inc/assets/js/DataTable.min.js', [], SVB_PLUGIN_VERSION, true);
-            wp_register_script('svb-tailwind-script', SVB_DIR . 'inc/assets/js/tailwind.min.js', [], SVB_PLUGIN_VERSION, true);
+            wp_register_script('svb-data-table-script', BPSVB_DIR . 'inc/assets/js/DataTable.min.js', [], '2.2.1', true);
+            wp_register_script('svb-tailwind-script', BPSVB_DIR . 'inc/assets/js/tailwind.min.js', [], BPSVB_PLUGIN_VERSION, true);
 
-            wp_register_script('svb-admin-script', SVB_DIR . 'dist/admin-script.js', ['svb-data-table-script', 'svb-tailwind-script', 'react', 'react-dom'], SVB_PLUGIN_VERSION, true);
+            wp_register_script('svb-admin-script', BPSVB_DIR . 'dist/admin-script.js', ['svb-data-table-script', 'svb-tailwind-script', 'react', 'react-dom'], BPSVB_PLUGIN_VERSION, true);
 
             wp_localize_script('svb-admin-script', 'svbData', [
                 'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -42,8 +42,8 @@ if(!class_exists('SVB_ADMIN_MENU')) {
 
         public function listPage()
         {
-            wp_enqueue_style('svb-data-table-style', SVB_DIR . 'inc/assets/css/DataTable.min.css', [], SVB_PLUGIN_VERSION);
-            wp_enqueue_style('svb-admin-style', SVB_DIR . 'inc/assets/css/admin-style.css', [], SVB_PLUGIN_VERSION);
+            wp_enqueue_style('svb-data-table-style', BPSVB_DIR . 'inc/assets/css/DataTable.min.css', [], '2.2.1');
+            wp_enqueue_style('svb-admin-style', BPSVB_DIR . 'inc/assets/css/admin-style.css', [], BPSVB_PLUGIN_VERSION);
             wp_enqueue_script('svb-admin-script');
 
             ?>
@@ -52,7 +52,7 @@ if(!class_exists('SVB_ADMIN_MENU')) {
             </div>
         <?php }
     }
-    new SVB_ADMIN_MENU();
+    new BPSVB_ADMIN_MENU();
 }
 
 

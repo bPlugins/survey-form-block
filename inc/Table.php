@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) {exit;}
-if(!class_exists('SVB_Table')) {
-    class SVB_Table
+if(!class_exists('BPSVB_Table')) {
+    class BPSVB_Table
     {
         /**
          * Create a database table
@@ -50,10 +50,11 @@ if(!class_exists('SVB_Table')) {
             }
 
             if ('delete_first' == $opts['upgrade_method']) {
-                $wpdb->query("DROP TABLE IF EXISTS $full_table_name;");
+                $wpdb->query($wpdb->prepare("DROP TABLE IF EXISTS %i",$full_table_name ), 'ARRAY_A');
             }
 
-            $wpdb->query("CREATE TABLE IF NOT EXISTS $full_table_name ( $columns ) $table_options;");
+            // $wpdb->query("CREATE TABLE IF NOT EXISTS $full_table_name ( $columns ) $table_options;");
+            $wpdb->query($wpdb->prepare("CREATE TABLE IF NOT EXISTS %i %s %s", $full_table_name, $columns, $table_options), 'ARRAY_A');
 
             update_option("{$name}_database_version", $version);
         }

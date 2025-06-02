@@ -1,13 +1,13 @@
 <?php
 if (!defined('ABSPATH')) {exit;}
-if(!class_exists('SVB_Survey_Data')) {
-    class SVB_Survey_Data
+if(!class_exists('BPSVB_Survey_Data')) {
+    class BPSVB_Survey_Data
     {
         protected $table;
         protected $version = 1.2;
         protected $name = 'svb_data';
 
-        public function __construct(SVB_Table $table)
+        public function __construct(BPSVB_Table $table)
         {
             $this->table = $table;
         }

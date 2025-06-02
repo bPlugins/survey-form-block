@@ -9,7 +9,7 @@ export const bundle = () => gulp.src([
 	'**/*',
 	'!bundled/**',
 	'!node_modules/**',
-	'!src/**',
+	'src/**',
 	'!.eslintrc.js',
 	'!.gitignore',
 	'!gulpfile.mjs',
