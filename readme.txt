@@ -2,8 +2,8 @@
 Contributors: bplugins, abuhayat, btechnologies
 Donate link: https://www.buymeacoffee.com/abuhayat
 Tags: block, survey form, form, investigation, Gutenberg block
-Tested up to: 6.8
-Stable tag: 1.0.1
+Tested up to: 6.9
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -99,6 +99,9 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Changelog ==
 
+= 1.0.2 - 8 April, 2026 =
+* Wordfence problem has been solved;
+
 = 1.0.1 - 25 April, 2025 =
 * Compatible with WordPress 6.8;
 
@@ -107,6 +110,9 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 
 == Upgrade Notice ==
+
+= 1.0.2 - 8 April, 2026 =
+* Wordfence problem has been solved;
 
 = 1.0.1 - 25 April, 2025 =
 * Compatible with WordPress 6.8;

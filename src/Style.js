@@ -2,11 +2,11 @@
 import { getBoxValue } from '../../bpl-tools/utils/functions';
 import { getBorderCSS, getColorsCSS, getTypoCSS } from '../../bpl-tools/utils/getCSS';
 
-const Style = ({ attributes, clientId }) => {
+const Style = ({ attributes, id }) => {
 	const { fields, labelS, input, radioCheckLabelTypo, radioCheckLabelColor, button, form } = attributes;
 	const { bgColor, padding, border, titleTypo, titleColor, titleAlign, titleMargin, descriptionTypo, descriptionColor, descriptionAlign, descriptionMargin, successMsgColor } = form;
 
-	const mainWrapper = `#svbMainArea-${clientId}`;
+	const mainWrapper = `#${id}`;
 	const fieldArea = `${mainWrapper} .svbMainArea .fieldItem .fieldArea`;
 	return <style dangerouslySetInnerHTML={{
 		__html: `

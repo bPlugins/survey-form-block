@@ -56,6 +56,11 @@ if(!class_exists('BPSVB_Ajax')) {
             if (!wp_verify_nonce($nonce, 'wp_ajax')) {
                 wp_send_json_error('validation failed');
             }
+            
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error('insufficient permissions');
+            }
+            
 
             $model = new BPSVB_Survey_Data_Model();
             $columnsModel = new BPSVB_Survey_Column_Model();

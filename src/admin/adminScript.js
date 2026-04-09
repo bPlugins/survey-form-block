@@ -1,5 +1,5 @@
 
-import { createRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom';
 import Table from './Components/Table';
 
 document.addEventListener('DOMContentLoaded', () => {

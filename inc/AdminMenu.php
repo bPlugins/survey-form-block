@@ -16,7 +16,7 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
             wp_register_script('svb-data-table-script', BPSVB_DIR . 'inc/assets/js/DataTable.min.js', [], '2.2.1', true);
             wp_register_script('svb-tailwind-script', BPSVB_DIR . 'inc/assets/js/tailwind.min.js', [], BPSVB_PLUGIN_VERSION, true);
 
-            wp_register_script('svb-admin-script', BPSVB_DIR . 'dist/admin-script.js', ['svb-data-table-script', 'svb-tailwind-script', 'react', 'react-dom'], BPSVB_PLUGIN_VERSION, true);
+            wp_register_script('svb-admin-script', BPSVB_DIR . 'build/admin-script.js', ['svb-data-table-script', 'svb-tailwind-script', 'react', 'react-dom'], BPSVB_PLUGIN_VERSION, true);
 
             wp_localize_script('svb-admin-script', 'svbData', [
                 'ajaxUrl' => admin_url('admin-ajax.php'),

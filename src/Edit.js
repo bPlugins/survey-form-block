@@ -6,6 +6,7 @@ import { __ } from '@wordpress/i18n';
 import { SelectControl, Tooltip } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
 import { RichText } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 
 import { tabController } from '../../bpl-tools/utils/functions';
 import { LabelPositionOpt, fieldTypeOpt } from './utils/options';
@@ -15,7 +16,7 @@ import Form from './Form';
 import { generateUniqueId, postData } from './utils/functions';
 
 const Edit = props => {
-	const { className, attributes, setAttributes, clientId, isSelected, formCreatorId, isSavingPost } = props;
+	const { attributes, setAttributes, clientId, isSelected, formCreatorId, isSavingPost } = props;
 	const { fields, form } = attributes;
 	const { id, creator_id, title } = form;
 
@@ -116,18 +117,18 @@ const Edit = props => {
 			label: <RichText tagName="label" className='label' value={label} onChange={(val) => updateFields(index, 'label', val)} placeholder={__('Enter your label', 'survey-form-block')} inlineToolbar />
 		}
 	});
-
-	return <>
+	const elId = `svbMainArea-${clientId}`;
+	return <div {...useBlockProps()}>
 		<Settings updateObject={updateObject} setFormData={setFormData} formData={formData} attributes={attributes} setAttributes={setAttributes} activeIndex={activeIndex} setActiveIndex={setActiveIndex} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} />
 
-		<div className={className} id={`svbMainArea-${clientId}`}>
-			<Style attributes={attributes} clientId={clientId} />
+		<div id={elId}>
+			<Style attributes={attributes} id={elId} />
 
 			<div className={`svbMainArea`}>
 				<Form RichText={RichText} fieldsEls={fieldsEls} updateObject={updateObject} postData={postData} Tooltip={Tooltip} requireError={requireError} setRequireError={setRequireError} LabelPositionOpt={LabelPositionOpt} fieldTypeOpt={fieldTypeOpt} __={__} SelectControl={SelectControl} attributes={attributes} setAttributes={setAttributes} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} activeIndex={activeIndex} setActiveIndex={setActiveIndex} formData={formData} setFormData={setFormData} isBackend={true} />
 			</div>
 		</div>
-	</>;
+	</div>;
 };
 
 export default withSelect((select) => {
