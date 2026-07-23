@@ -14,7 +14,19 @@ Effortlessly craft bespoke surveys in Gutenberg. Engage your audience and glean 
 
 
 = Features =
-- **Field Type Selection**: Choose from a variety of field types.
+- **Versatile Form Builder Engine**: Create any custom form (contact forms, survey forms, feedback forms, lead generation) directly inside the Gutenberg block editor.
+- **Multi-Column Responsive Grid**: Flexibly adjust field column widths (100% Full, 66% Two Thirds, 50% Half, 33% One Third, 25% One Fourth) with mobile responsive auto-stacking.
+- **Standard Text & Input Fields**: Single Line Text, Multi-Line Paragraph Textarea, Email with built-in format validation, Numeric input (with Min/Max/Step), Telephone Number, and Website URL inputs.
+- **Choice & Selection Controls**: Dropdown Select Menus, Checkbox Groups, Radio Buttons, and iOS/Material style Switch Toggles.
+- **Interactive Survey & Feedback Widgets**:
+  - **Star Rating**: 1-5 or 1-10 interactive star/icon rating widget.
+  - **Opinion Scale**: 1-10 Likert scale rating bar for quick feedback.
+  - **Net Promoter Score (NPS)**: 0-10 score selection with automatic Detractor, Passive, and Promoter category styling.
+  - **Range Slider**: Smooth range slider input with live value indicator badge.
+  - **Section Break Dividers**: Structural headers and divider lines for grouping form sections.
+- **Enhanced Date Picker**: Date input with date range boundaries.
+- **Categorized Block Inspector**: Intuitive sidebar settings to reorder, clone, delete, and configure field labels, placeholders, and validation.
+- **Complete Design Customization**: Total control over typography, colors, padding, borders, background, and submit button styling.
 
 
 = How to use =

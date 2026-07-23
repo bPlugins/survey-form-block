@@ -77,19 +77,27 @@ const Settings = ({ updateObject, attributes, setAttributes, activeIndex, addFie
 						{(() => {
 							switch (type) {
 								case "text":
-									return <Text {...fieldProps} />
+								case "email":
+								case "number":
+								case "phone":
+								case "url":
+								case "star_rating":
+								case "opinion_scale":
+								case "nps":
+								case "range_slider":
+								case "toggle":
+								case "section":
+									return <Text {...fieldProps} />;
 								case "paragraph":
-									return <TextArea {...fieldProps} />
+									return <TextArea {...fieldProps} />;
 								case "checkbox":
 								case "radio":
 								case "select":
-									return <MultipleInput column={column} options={options} addChildField={addChildField} onDuplicateChildField={onDuplicateChildField} onRemoveChildField={onRemoveChildField} {...fieldProps} />
-								case "email":
-									return <Email {...fieldProps} />
+									return <MultipleInput column={column} options={options} addChildField={addChildField} onDuplicateChildField={onDuplicateChildField} onRemoveChildField={onRemoveChildField} {...fieldProps} />;
 								case "date":
-									return <Date {...fieldProps} />
+									return <Date {...fieldProps} />;
 								default:
-									return null;
+									return <Text {...fieldProps} />;
 							}
 						})()}
 						{myFields.type && <SelectControl label={__('Select Field Type', 'survey-form-block')} options={[{ label: 'Select', value: '' }, ...fieldTypeOpt]} value={myFields.type} onChange={(val) => {

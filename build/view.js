@@ -763,6 +763,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const safeCSSUrl = url => {
+  const sanitized = (0,_common__WEBPACK_IMPORTED_MODULE_6__.sanitizeURL)(url);
+  if (!sanitized) {
+    return 'none';
+  }
+  const cleanUrl = sanitized.replace(/['"()]/g, '');
+  return `url('${cleanUrl}')`;
+};
 
 const isValidCSS = (p, v) => (0,_common__WEBPACK_IMPORTED_MODULE_6__.isExist)(v) ? `${p}: ${v};` : '';
 const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true) => {
@@ -777,7 +785,7 @@ const getBackgroundCSS = (bg, isSolid = true, isGradient = true, isImage = true)
     size = '',
     overlayColor = ''
   } = bg || {};
-  const styles = 'gradient' === type && isGradient ? isValidCSS('background', gradient) : 'image' === type && isImage ? `background: url(${image?.url});
+  const styles = 'gradient' === type && isGradient ? isValidCSS('background', gradient) : 'image' === type && isImage ? `background: ${safeCSSUrl(image?.url)};
 				${isValidCSS('background-color', overlayColor)}
 				${isValidCSS('background-position', position)}
 				${isValidCSS('background-size', size)}
@@ -1030,7 +1038,7 @@ const getImagePosition = img => {
 const getImageCSS = (img = {}) => {
   if (img) {
     return {
-      desktop: (0,_common__WEBPACK_IMPORTED_MODULE_6__.isExist)(img.url) ? `background-image: url(${img.url}); ${getImagePosition(img?.desktop)}` : '',
+      desktop: (0,_common__WEBPACK_IMPORTED_MODULE_6__.isExist)(img.url) ? `background-image: ${safeCSSUrl(img.url)}; ${getImagePosition(img?.desktop)}` : '',
       tablet: (0,_common__WEBPACK_IMPORTED_MODULE_6__.isExist)(img.url) ? getImagePosition(img?.tablet) : '',
       mobile: (0,_common__WEBPACK_IMPORTED_MODULE_6__.isExist)(img.url) ? getImagePosition(img?.mobile) : ''
     };
@@ -1050,8 +1058,13 @@ const getVideoCSS = (video, selector) => {
   videoEl.classList.add('bPlVideo');
   if (!el) {
     if (parentEl && url) {
-      videoEl.innerHTML = `<source src=${url}></source>`;
-      parentEl.appendChild(videoEl);
+      const sanitizedUrl = (0,_common__WEBPACK_IMPORTED_MODULE_6__.sanitizeURL)(url);
+      if (sanitizedUrl) {
+        const sourceEl = document.createElement('source');
+        sourceEl.src = sanitizedUrl;
+        videoEl.appendChild(sourceEl);
+        parentEl.appendChild(videoEl);
+      }
     }
   }
   videoEl.loop = loop;
@@ -1251,7 +1264,7 @@ const getMaskCSS = mask => {
     type: 'hexagon'
   }];
   const getShape = type => svgShape.find(e => e.type === type);
-  return isMask ? `-webkit-mask-image: url(${shape.type === 'custom' ? shape.url : getShape(shape.type).svg});
+  return isMask ? `-webkit-mask-image: ${shape.type === 'custom' ? safeCSSUrl(shape.url) : `url(${getShape(shape.type).svg})`};
 		-webkit-mask-size: ${size.type === 'custom' ? size.scale : size.type};
 		${position.type === 'custom' ? `${isValidCSS('-webkit-mask-position-x', position.x)}
 			${isValidCSS('-webkit-mask-position-y', position.y)}` : `${isValidCSS('-webkit-mask-position', position.type)}`}
@@ -1603,6 +1616,229 @@ const Email = ({
 
 /***/ },
 
+/***/ "./src/Components/FrontEnd/Fields/NPS.js"
+/*!***********************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/NPS.js ***!
+  \***********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const NPS = ({
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  value,
+  help,
+  onChange
+}) => {
+  const scores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const getScoreCategory = score => {
+    if (score <= 6) return 'detractor';
+    if (score <= 8) return 'passive';
+    return 'promoter';
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "fieldArea svbNpsArea"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbNpsGrid"
+  }, scores.map(score => {
+    const category = getScoreCategory(score);
+    const isSelected = value === score;
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+      key: score,
+      type: "button",
+      className: `svbNpsBtn ${category} ${isSelected ? 'active' : ''}`,
+      onClick: () => onChange(score)
+    }, score);
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbNpsLegend"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "detractorLabel"
+  }, "0-6 Detractors"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "passiveLabel"
+  }, "7-8 Passives"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "promoterLabel"
+  }, "9-10 Promoters"))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NPS);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/Number.js"
+/*!**************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/Number.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const NumberField = ({
+  cId,
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  name,
+  placeholder,
+  classes,
+  value,
+  help,
+  min,
+  max,
+  step,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldArea ${classes || ''}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "number",
+    name: name,
+    id: `${cId}-${index}`,
+    value: value || '',
+    placeholder: placeholder,
+    min: min,
+    max: max,
+    step: step || 'any',
+    onChange: e => onChange(e.target.value)
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NumberField);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/OpinionScale.js"
+/*!********************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/OpinionScale.js ***!
+  \********************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const OpinionScale = ({
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  value,
+  help,
+  onChange
+}) => {
+  const scalePoints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "fieldArea svbOpinionScaleArea"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbScaleWrapper"
+  }, scalePoints.map(point => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    key: point,
+    type: "button",
+    className: `svbScaleBtn ${value === point ? 'selected' : ''}`,
+    onClick: () => onChange(point)
+  }, point))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbScaleLabels"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Not at all likely"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Extremely likely"))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OpinionScale);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/Phone.js"
+/*!*************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/Phone.js ***!
+  \*************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const Phone = ({
+  cId,
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  name,
+  placeholder,
+  classes,
+  value,
+  help,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldArea ${classes || ''}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "tel",
+    name: name,
+    id: `${cId}-${index}`,
+    value: value || '',
+    placeholder: placeholder || '+1 (555) 000-0000',
+    onChange: e => onChange(e.target.value)
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Phone);
+
+/***/ },
+
 /***/ "./src/Components/FrontEnd/Fields/Radio.js"
 /*!*************************************************!*\
   !*** ./src/Components/FrontEnd/Fields/Radio.js ***!
@@ -1657,6 +1893,150 @@ const Radio = ({
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Radio);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/RangeSlider.js"
+/*!*******************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/RangeSlider.js ***!
+  \*******************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const RangeSlider = ({
+  cId,
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  min = 0,
+  max = 100,
+  step = 1,
+  value = 50,
+  help,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "fieldArea svbRangeSliderArea"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbSliderWrapper"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "range",
+    id: `${cId}-${index}`,
+    min: min,
+    max: max,
+    step: step,
+    value: value !== undefined && value !== '' ? value : Math.round((Number(min) + Number(max)) / 2),
+    onChange: e => onChange(Number(e.target.value)),
+    className: "svbRangeInput"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbSliderValuePill"
+  }, value !== undefined && value !== '' ? value : Math.round((Number(min) + Number(max)) / 2))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbRangeBounds"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, min), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, max))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RangeSlider);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/Section.js"
+/*!***************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/Section.js ***!
+  \***************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const Section = ({
+  fieldEls,
+  help
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbSectionDivider"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbSectionHeader"
+  }, fieldEls.label), help && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "svbSectionDescription"
+  }, help), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("hr", {
+    className: "svbSectionLine"
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Section);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/StarRating.js"
+/*!******************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/StarRating.js ***!
+  \******************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const StarRating = ({
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  maxStars = 5,
+  value = 0,
+  help,
+  onChange
+}) => {
+  const starCount = parseInt(maxStars) || 5;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "fieldArea svbStarRatingArea"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "svbStarsWrapper"
+  }, Array.from({
+    length: starCount
+  }, (_, i) => i + 1).map(starNum => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    key: starNum,
+    type: "button",
+    className: `svbStarBtn ${starNum <= (value || 0) ? 'active' : ''}`,
+    onClick: () => onChange(starNum),
+    "aria-label": `Rate ${starNum} out of ${starCount}`
+  }, "\u2605"))), value > 0 && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "svbStarValueBadge"
+  }, value, " / ", starCount)));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StarRating);
 
 /***/ },
 
@@ -1762,6 +2142,110 @@ const TextArea = ({
 
 /***/ },
 
+/***/ "./src/Components/FrontEnd/Fields/Toggle.js"
+/*!**************************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/Toggle.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const Toggle = ({
+  cId,
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  value,
+  help,
+  onChange
+}) => {
+  const isChecked = Boolean(value);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "fieldArea svbToggleArea"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "svbSwitch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "checkbox",
+    id: `${cId}-${index}`,
+    checked: isChecked,
+    onChange: e => onChange(e.target.checked)
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "svbSlider round"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "svbToggleStateText"
+  }, isChecked ? 'Yes' : 'No')));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Toggle);
+
+/***/ },
+
+/***/ "./src/Components/FrontEnd/Fields/Url.js"
+/*!***********************************************!*\
+  !*** ./src/Components/FrontEnd/Fields/Url.js ***!
+  \***********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../MainEle/LabelArea */ "./src/Components/FrontEnd/MainEle/LabelArea.js");
+
+
+const UrlField = ({
+  cId,
+  fieldEls,
+  buttonArea,
+  index,
+  isRequired,
+  name,
+  placeholder,
+  classes,
+  value,
+  help,
+  onChange
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldMainArea labelPosition-${index}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_MainEle_LabelArea__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isRequired: isRequired,
+    labelEl: fieldEls.label,
+    help: help,
+    buttonArea: buttonArea,
+    index: index
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `fieldArea ${classes || ''}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "url",
+    name: name,
+    id: `${cId}-${index}`,
+    value: value || '',
+    placeholder: placeholder || 'https://example.com',
+    onChange: e => onChange(e.target.value)
+  })));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UrlField);
+
+/***/ },
+
 /***/ "./src/Components/FrontEnd/MainEle/LabelArea.js"
 /*!******************************************************!*\
   !*** ./src/Components/FrontEnd/MainEle/LabelArea.js ***!
@@ -1820,6 +2304,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_FrontEnd_Fields_Email__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Email */ "./src/Components/FrontEnd/Fields/Email.js");
 /* harmony import */ var _Components_FrontEnd_Fields_DropDowns__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/DropDowns */ "./src/Components/FrontEnd/Fields/DropDowns.js");
 /* harmony import */ var _Components_FrontEnd_Fields_Date__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Date */ "./src/Components/FrontEnd/Fields/Date.js");
+/* harmony import */ var _Components_FrontEnd_Fields_StarRating__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/StarRating */ "./src/Components/FrontEnd/Fields/StarRating.js");
+/* harmony import */ var _Components_FrontEnd_Fields_OpinionScale__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/OpinionScale */ "./src/Components/FrontEnd/Fields/OpinionScale.js");
+/* harmony import */ var _Components_FrontEnd_Fields_NPS__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/NPS */ "./src/Components/FrontEnd/Fields/NPS.js");
+/* harmony import */ var _Components_FrontEnd_Fields_RangeSlider__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/RangeSlider */ "./src/Components/FrontEnd/Fields/RangeSlider.js");
+/* harmony import */ var _Components_FrontEnd_Fields_Toggle__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Toggle */ "./src/Components/FrontEnd/Fields/Toggle.js");
+/* harmony import */ var _Components_FrontEnd_Fields_Section__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Section */ "./src/Components/FrontEnd/Fields/Section.js");
+/* harmony import */ var _Components_FrontEnd_Fields_Number__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Number */ "./src/Components/FrontEnd/Fields/Number.js");
+/* harmony import */ var _Components_FrontEnd_Fields_Phone__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Phone */ "./src/Components/FrontEnd/Fields/Phone.js");
+/* harmony import */ var _Components_FrontEnd_Fields_Url__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/FrontEnd/Fields/Url */ "./src/Components/FrontEnd/Fields/Url.js");
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1984,7 +2486,7 @@ const Form = ({
     };
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       key: index,
-      className: `fieldItem w${size} ${isDisable ? "disable" : ''} ${isBackend && index === activeIndex ? 'svbNowEditing' : ''}`,
+      className: `fieldItem w${size || 100} ${isDisable ? "disable" : ''} ${isBackend && index === activeIndex ? 'svbNowEditing' : ''}`,
       onClick: () => isBackend && setActiveIndex(index)
     }, !type && isBackend && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SelectControl, {
       className: "selectBox",
@@ -2023,6 +2525,30 @@ const Form = ({
               [id]: val
             })
           });
+        case 'number':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Number__WEBPACK_IMPORTED_MODULE_15__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'phone':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Phone__WEBPACK_IMPORTED_MODULE_16__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'url':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Url__WEBPACK_IMPORTED_MODULE_17__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
         case 'checkbox':
           return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_CheckBox__WEBPACK_IMPORTED_MODULE_4__["default"], {
             ...fieldsPros,
@@ -2047,6 +2573,46 @@ const Form = ({
               [id]: val
             })
           });
+        case 'toggle':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Toggle__WEBPACK_IMPORTED_MODULE_13__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'star_rating':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_StarRating__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'opinion_scale':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_OpinionScale__WEBPACK_IMPORTED_MODULE_10__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'nps':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_NPS__WEBPACK_IMPORTED_MODULE_11__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
+        case 'range_slider':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_RangeSlider__WEBPACK_IMPORTED_MODULE_12__["default"], {
+            ...fieldsPros,
+            onChange: val => setFormData({
+              ...formData,
+              [id]: val
+            })
+          });
         case 'date':
           return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Date__WEBPACK_IMPORTED_MODULE_8__["default"], {
             ...fieldsPros,
@@ -2054,6 +2620,10 @@ const Form = ({
               ...formData,
               [id]: val
             })
+          });
+        case 'section':
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Components_FrontEnd_Fields_Section__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            ...fieldsPros
           });
         default:
           return null;

@@ -1,0 +1,41 @@
+====================================================================
+SURVEY FORM BLOCK / FORM BUILDER - FEATURE ROADMAP & TODO LIST
+====================================================================
+
+--------------------------------------------------------------------
+1. ADDED / COMPLETED FEATURES [FREE]
+--------------------------------------------------------------------
+[x] [FREE] Single Line Text Field (Name, Subject, City)
+[x] [FREE] Paragraph / Textarea Field (Multi-line text)
+[x] [FREE] Email Field (Built-in format validation)
+[x] [FREE] Number Input Field (Min, Max, Step controls)
+[x] [FREE] Phone Input Field (Tel input type)
+[x] [FREE] Website / URL Field (URL format input)
+[x] [FREE] Checkbox Group Field (Multiple choice selection)
+[x] [FREE] Radio Buttons Field (Single choice selection)
+[x] [FREE] Dropdown Select Menu (Dropdown choices)
+[x] [FREE] Switch / Toggle Control (iOS/Material style ON/OFF switch)
+[x] [FREE] Star Rating Widget (1-5 or 1-10 star interactive rating)
+[x] [FREE] Opinion Scale Bar (1-10 Likert scale rating)
+[x] [FREE] NPS (Net Promoter Score) Field (0-10 score with Detractor/Passive/Promoter tags)
+[x] [FREE] Range Slider Field (Interactive slider with live value pill)
+[x] [FREE] Enhanced Date Picker Field
+[x] [FREE] Section Break Header & Divider Component
+[x] [FREE] Multi-Column Responsive Grid System (25%, 33%, 50%, 66%, 100% column widths)
+[x] [FREE] Categorized Field Inspector Controls
+[x] [FREE] Form Title, Description, and Custom Success Message Controls
+
+--------------------------------------------------------------------
+2. UPCOMING / PLANNED FEATURES & ENHANCEMENTS
+--------------------------------------------------------------------
+[ ] [PLANNED] Multi-Step / Multi-Page Form Pagination (Progress bar, Next/Prev buttons)
+[ ] [PLANNED] Conditional Logic Engine (Show/Hide fields based on user answers)
+[ ] [PLANNED] File Upload & Attachment Field (Images, PDF, Documents with size limit)
+[ ] [PLANNED] Matrix / Grid Rating Table (Evaluate multiple features in one table)
+[ ] [PLANNED] Signature Pad Field (Digital signature canvas input)
+[ ] [PLANNED] Quiz & Survey Score Calculation Engine (Correct answers & auto-scoring)
+[ ] [PLANNED] Conversational / Card View Layout (One question at a time UX like Typeform)
+[ ] [PLANNED] Pre-built Form Templates Library (Contact Us, Event Registration, Feedback, RSVP)
+[ ] [PLANNED] Email Notifications & Autoresponder Builder (Custom HTML tags & email triggers)
+[ ] [PLANNED] Integrations & Webhooks (Google Sheets, Mailchimp, Zapier, Webhooks)
+[ ] [PLANNED] Form Submissions & Analytics Dashboard in WP Admin

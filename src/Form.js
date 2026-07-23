@@ -8,6 +8,15 @@ import Radio from './Components/FrontEnd/Fields/Radio';
 import Email from './Components/FrontEnd/Fields/Email';
 import DropDown from './Components/FrontEnd/Fields/DropDowns';
 import Date from './Components/FrontEnd/Fields/Date';
+import StarRating from './Components/FrontEnd/Fields/StarRating';
+import OpinionScale from './Components/FrontEnd/Fields/OpinionScale';
+import NPS from './Components/FrontEnd/Fields/NPS';
+import RangeSlider from './Components/FrontEnd/Fields/RangeSlider';
+import Toggle from './Components/FrontEnd/Fields/Toggle';
+import Section from './Components/FrontEnd/Fields/Section';
+import NumberField from './Components/FrontEnd/Fields/Number';
+import Phone from './Components/FrontEnd/Fields/Phone';
+import UrlField from './Components/FrontEnd/Fields/Url';
 
 const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireError, setRequireError, formData, setFormData, __, SelectControl, isBackend, fieldTypeOpt, attributes, updateFields, addField, onDuplicateFields, removeField, activeIndex, setActiveIndex }) => {
     const { form, fields, cId } = attributes;
@@ -88,7 +97,7 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
                     value: formData[id]
                 }
 
-                return <div key={index} className={`fieldItem w${size} ${isDisable ? "disable" : ''} ${isBackend && index === activeIndex ? 'svbNowEditing' : ''}`}
+                return <div key={index} className={`fieldItem w${size || 100} ${isDisable ? "disable" : ''} ${isBackend && index === activeIndex ? 'svbNowEditing' : ''}`}
                     onClick={() => isBackend && setActiveIndex(index)}>
 
                     {(!type && isBackend) && (
@@ -103,14 +112,32 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
                                 return <TextArea {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
                             case 'email':
                                 return <Email {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'number':
+                                return <NumberField {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'phone':
+                                return <Phone {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'url':
+                                return <UrlField {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
                             case 'checkbox':
-                                return <Checkbox  {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                                return <Checkbox {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
                             case 'radio':
-                                return <Radio  {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                                return <Radio {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
                             case 'select':
-                                return <DropDown  {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                                return <DropDown {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'toggle':
+                                return <Toggle {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'star_rating':
+                                return <StarRating {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'opinion_scale':
+                                return <OpinionScale {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'nps':
+                                return <NPS {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'range_slider':
+                                return <RangeSlider {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
                             case 'date':
-                                return <Date {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />
+                                return <Date {...fieldsPros} onChange={val => setFormData({ ...formData, [id]: val })} />;
+                            case 'section':
+                                return <Section {...fieldsPros} />;
                             default:
                                 return null;
                         }
