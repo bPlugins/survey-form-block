@@ -3,3 +3,5 @@ bundled
 dist/*
 !dist/*.php
 node_modules
+build
+docs
