@@ -5,7 +5,7 @@
 	"title": "Survey Form Block",
 	"description": "Create custom survey forms easily with the Survey Form Block plugin",
 	"category": "widgets",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"keywords": [
 		"survey",
 		"block",
@@ -195,6 +195,112 @@
 			"default": {
 				"start": "1990",
 				"end": "2023"
+			}
+		},
+		"design": {
+			"type": "object",
+			"default": {
+				"theme": "classic",
+				"layout": "classic",
+				"inputStyle": "classic",
+				"maxWidth": "",
+				"gap": {
+					"desktop": "",
+					"tablet": "",
+					"mobile": ""
+				},
+				"stackBreakpoint": 768,
+				"card": {
+					"enable": false,
+					"bgType": "solid",
+					"bg": "",
+					"gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+					"border": {
+						"width": "",
+						"style": "solid",
+						"color": "",
+						"side": "all",
+						"radius": ""
+					},
+					"shadow": [],
+					"padding": {
+						"top": "",
+						"right": "",
+						"bottom": "",
+						"left": ""
+					},
+					"hoverEffect": "none"
+				},
+				"input": {
+					"bg": "",
+					"radius": "",
+					"focusColor": "",
+					"focusRing": true,
+					"placeholderColor": "",
+					"accentColor": ""
+				},
+				"button": {
+					"variant": "classic",
+					"label": "",
+					"width": "full",
+					"align": "left",
+					"radius": "",
+					"gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+					"hoverEffect": "none",
+					"hoverColors": {
+						"color": "",
+						"bg": ""
+					},
+					"transition": 250
+				},
+				"background": {
+					"enable": false,
+					"type": "solid",
+					"color": "",
+					"gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+					"image": {},
+					"position": "center center",
+					"size": "cover",
+					"repeat": "no-repeat",
+					"attachment": "scroll",
+					"overlayColor": "",
+					"blur": 0
+				},
+				"animation": {
+					"type": "none",
+					"duration": 500,
+					"stagger": 60
+				},
+				"progress": {
+					"enable": false,
+					"style": "linear",
+					"position": "top",
+					"height": "6px",
+					"color": "",
+					"trackColor": "",
+					"gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+					"showLabel": true
+				},
+				"success": {
+					"style": "inline",
+					"icon": "check",
+					"animation": "fade",
+					"title": "",
+					"iconColor": "",
+					"bg": "",
+					"duration": 2000
+				},
+				"label": {
+					"requiredMark": "asterisk",
+					"helpColor": ""
+				},
+				"divider": {
+					"style": "solid",
+					"color": "",
+					"thickness": "2px",
+					"headingColor": "",
+					"descriptionColor": ""
+				}
 			}
 		}
 	},

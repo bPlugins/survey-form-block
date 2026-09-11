@@ -1,3 +1,5 @@
+@import 'design';
+
 $primaryColor: #4527a4;
 
 // Common CSS
@@ -16,7 +18,6 @@ html {
 		box-sizing: border-box;
 	}
 
-
 	.svbMainArea {
 		form {
 
@@ -29,27 +30,33 @@ html {
 			.mainFieldArea {
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-between;
-				align-items: center;
+				// `space-between` used to fling half-filled rows to the two edges and
+				// `center` vertically floated short fields next to tall ones. Packing
+				// from the start with a real gap is what the column widths assume.
+				justify-content: flex-start;
+				align-items: stretch;
+				column-gap: 15px;
 
 				.fieldItem {
 					flex-basis: 100%;
 					margin-bottom: 16px;
 
+					// Widths account for the 15px column gap so a full row lands on
+					// exactly 100% instead of overflowing.
 					&.w66 {
-						flex-basis: calc(66.66% - 10px);
+						flex-basis: calc(66.666% - 5px);
 					}
 
 					&.w50 {
-						flex-basis: calc(50% - 10px);
+						flex-basis: calc(50% - 7.5px);
 					}
 
 					&.w33 {
-						flex-basis: calc(33.33% - 10px);
+						flex-basis: calc(33.333% - 10px);
 					}
 
 					&.w25 {
-						flex-basis: calc(25% - 10px);
+						flex-basis: calc(25% - 11.25px);
 					}
 
 					@media (max-width: 768px) {
@@ -62,6 +69,9 @@ html {
 						display: flex;
 						gap: 5px;
 						flex-direction: column;
+						height: 100%;
+						// Anchor for the help tooltip (and for the floating label style).
+						position: relative;
 
 						.labelArea {
 							display: flex;
@@ -72,31 +82,62 @@ html {
 								display: flex;
 								gap: 2px;
 								width: 100%;
+								align-items: center;
 
 								label {
 									cursor: pointer;
 								}
 
+								.svbFieldIcon {
+									display: inline-flex;
+									align-items: center;
+									margin-right: 6px;
+									font-size: 1.1em;
+									color: var(--svb-accent, #{$primaryColor});
+									flex: 0 0 auto;
+								}
+
+								.svbRequiredBadge {
+									font-size: 10px;
+									font-weight: 600;
+									letter-spacing: .04em;
+									text-transform: uppercase;
+									padding: 2px 7px;
+									border-radius: 999px;
+									margin-left: 6px;
+									color: #b42318;
+									background: rgba(180, 35, 24, .1);
+									white-space: nowrap;
+									align-self: center;
+								}
+
 								.help {
-									position: relative;
+									// Static on purpose: the tooltip is anchored to the
+									// field, not to the 16px icon. Anchoring it to the icon
+									// pushed a fixed 256px bubble past the viewport on
+									// narrow screens and gave the whole page a horizontal
+									// scrollbar.
+									position: static;
 									cursor: pointer;
 									display: inline-flex;
 									align-items: center;
 
-									&:hover span {
-										z-index: 1;
+									&:hover span, &:focus-within span {
+										z-index: 999;
 										opacity: 1;
 										transition: opacity 0.3s ease-in-out;
 									}
 
 									span {
 										position: absolute;
-										bottom: 28px;
-										left: 17px;
-										width: 256px;
+										left: 0;
+										top: 0;
+										transform: translateY(calc(-100% - 8px));
+										width: max-content;
+										max-width: min(256px, 100%);
 										font-size: 14px;
 										font-weight: 400;
-										z-index: 999;
+										line-height: 1.45;
 										color: #fff;
 										background-color: #000;
 										padding: 10px 15px;
@@ -104,6 +145,7 @@ html {
 										text-align: center;
 										opacity: 0;
 										z-index: -1;
+										pointer-events: none;
 										transition: opacity 0.3s ease-in-out;
 									}
 								}
@@ -128,8 +170,16 @@ html {
 								column-gap: 10px;
 							}
 
+							// Every text-like control shares one baseline. Number, phone,
+							// url and date used to fall through to raw browser chrome.
 							input[type=text],
 							input[type=email],
+							input[type=number],
+							input[type=tel],
+							input[type=url],
+							input[type=date],
+							input[type=password],
+							input[type=search],
 							textarea {
 								width: 100%;
 								padding: 8px 12px;
@@ -138,28 +188,42 @@ html {
 								font-family: inherit;
 								border-radius: 3px;
 								min-height: 0;
-								line-height: 0;
+								// Was `0`, which clipped descenders wherever the typography
+								// control did not override it.
+								line-height: normal;
 								border: 1px solid #000;
+								background-color: var(--svb-input-bg, transparent);
+								transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
 
+								&:focus,
 								&:focus-visible {
+									// The old rule removed the outline and put nothing back,
+									// leaving keyboard users with no visible focus at all.
 									outline: none;
+									border-color: var(--svb-input-focus, #{$primaryColor});
+									box-shadow: 0 0 0 3px var(--svb-input-focus-ring, rgba(69, 39, 164, .15));
 								}
 							}
 
 							textarea {
 								line-height: inherit;
-
+								resize: vertical;
 							}
 
 							input[type=checkbox],
 							input[type=radio] {
 								width: 20px;
 								height: 20px;
-
+								flex: 0 0 auto;
+								accent-color: var(--svb-accent, #{$primaryColor});
 								border-radius: 0px;
 								border: 1px solid #000;
+								cursor: pointer;
 
-
+								&:focus-visible {
+									outline: 2px solid var(--svb-input-focus, #{$primaryColor});
+									outline-offset: 2px;
+								}
 
 								&:checked::before {
 									width: 25px;
@@ -187,6 +251,15 @@ html {
 								min-height: 0;
 								border: 1px solid #000;
 								padding-left: 12px;
+								background-color: var(--svb-input-bg, transparent);
+								transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+
+								&:focus,
+								&:focus-visible {
+									outline: none;
+									border-color: var(--svb-input-focus, #{$primaryColor});
+									box-shadow: 0 0 0 3px var(--svb-input-focus-ring, rgba(69, 39, 164, .15));
+								}
 							}
 
 							.selectArea {
@@ -195,11 +268,34 @@ html {
 								align-items: center;
 								justify-content: space-between;
 								gap: 15px;
+								flex-wrap: wrap;
 
 								select {
 									width: 100%;
+									flex: 1 1 120px;
 								}
 							}
+						}
+					}
+
+					// Unanswered required field after a failed submit.
+					&.svbFieldError {
+						.fieldArea {
+							input[type=text],
+							input[type=email],
+							input[type=number],
+							input[type=tel],
+							input[type=url],
+							input[type=date],
+							textarea,
+							select {
+								border-color: #dc2626;
+								box-shadow: 0 0 0 3px rgba(220, 38, 38, .12);
+							}
+						}
+
+						.fieldMainArea {
+							animation: svbShake .4s ease;
 						}
 					}
 				}
@@ -207,7 +303,6 @@ html {
 				.disable {
 					display: none;
 					position: relative;
-
 
 					.fieldArea {
 						pointer-events: none;
@@ -236,8 +331,6 @@ html {
 					margin-bottom: 10px;
 				}
 
-
-
 				.subBtnArea {
 					position: relative;
 					width: 100%;
@@ -263,16 +356,16 @@ html {
 						justify-content: center;
 						background: #000000ad;
 						height: 100%;
+						border-radius: inherit;
 					}
 				}
 
 				.successArea {
-
 					margin: auto;
+					width: 100%;
 
 					.message {
 						font-size: 18px;
-						font-weight: 400;
 						font-weight: 400;
 						margin: 10px 0px 0px 0px;
 						color: green;
@@ -305,15 +398,28 @@ html {
 						background: transparent;
 						border: none;
 						font-size: 26px;
-						color: #d1d5db;
+						line-height: 1;
+						color: var(--svb-star-empty, #d1d5db);
 						cursor: pointer;
 						transition: transform 0.15s ease, color 0.15s ease;
 						padding: 0;
-						line-height: 1;
+						display: inline-flex;
+
+						svg {
+							fill: currentColor;
+							stroke: none;
+							display: block;
+						}
 
 						&:hover, &.active {
-							color: #f59e0b;
-							transform: scale(1.15);
+							color: var(--svb-star-active, #f59e0b);
+							transform: scale(1.12);
+						}
+
+						&:focus-visible {
+							outline: 2px solid var(--svb-input-focus, $primaryColor);
+							outline-offset: 3px;
+							border-radius: 4px;
 						}
 					}
 				}
@@ -321,8 +427,8 @@ html {
 				.svbStarValueBadge {
 					font-size: 13px;
 					font-weight: 600;
-					background: #f3f4f6;
-					color: #374151;
+					background: var(--svb-accent-soft, #f3f4f6);
+					color: var(--svb-heading, #374151);
 					padding: 2px 8px;
 					border-radius: 12px;
 				}
@@ -342,24 +448,30 @@ html {
 						flex: 1;
 						min-width: 32px;
 						height: 38px;
-						border: 1px solid #d1d5db;
-						background: #ffffff;
+						border: 1px solid var(--svb-divider, #d1d5db);
+						background: var(--svb-scale-btn-bg, #ffffff);
 						border-radius: 6px;
 						font-weight: 600;
 						font-size: 14px;
-						color: #374151;
+						font-family: inherit;
+						color: var(--svb-scale-btn-color, #374151);
 						cursor: pointer;
 						transition: all 0.2s ease;
 
 						&:hover {
-							border-color: #4527a4;
-							color: #4527a4;
+							border-color: var(--svb-accent, #{$primaryColor});
+							color: var(--svb-accent, #{$primaryColor});
+						}
+
+						&:focus-visible {
+							outline: 2px solid var(--svb-input-focus, $primaryColor);
+							outline-offset: 2px;
 						}
 
 						&.selected {
-							background: #4527a4;
-							border-color: #4527a4;
-							color: #ffffff;
+							background: var(--svb-accent, #{$primaryColor});
+							border-color: var(--svb-accent, #{$primaryColor});
+							color: var(--svb-accent-contrast, #ffffff);
 							box-shadow: 0 2px 6px rgba(69, 39, 164, 0.3);
 						}
 					}
@@ -369,7 +481,7 @@ html {
 					display: flex;
 					justify-content: space-between;
 					font-size: 12px;
-					color: #6b7280;
+					color: var(--svb-muted, #6b7280);
 				}
 			}
 
@@ -389,13 +501,19 @@ html {
 
 					.svbNpsBtn {
 						height: 38px;
-						border: 1px solid #e5e7eb;
-						background: #ffffff;
+						border: 1px solid var(--svb-divider, #e5e7eb);
+						background: var(--svb-scale-btn-bg, #ffffff);
 						border-radius: 6px;
 						font-weight: 700;
 						font-size: 13px;
+						font-family: inherit;
 						cursor: pointer;
 						transition: all 0.2s ease;
+
+						&:focus-visible {
+							outline: 2px solid var(--svb-input-focus, $primaryColor);
+							outline-offset: 2px;
+						}
 
 						&.detractor {
 							color: #dc2626;
@@ -431,6 +549,7 @@ html {
 					justify-content: space-between;
 					font-size: 11px;
 					font-weight: 600;
+					gap: 8px;
 
 					.detractorLabel { color: #dc2626; }
 					.passiveLabel { color: #d97706; }
@@ -450,17 +569,22 @@ html {
 
 					.svbRangeInput {
 						flex: 1;
-						accent-color: #4527a4;
+						accent-color: var(--svb-accent, #{$primaryColor});
 						height: 6px;
 						cursor: pointer;
+
+						&:focus-visible {
+							outline: 2px solid var(--svb-input-focus, $primaryColor);
+							outline-offset: 4px;
+						}
 					}
 
 					.svbSliderValuePill {
 						min-width: 44px;
 						text-align: center;
 						padding: 4px 8px;
-						background: #4527a4;
-						color: #ffffff;
+						background: var(--svb-accent, #{$primaryColor});
+						color: var(--svb-accent-contrast, #ffffff);
 						font-weight: 700;
 						font-size: 13px;
 						border-radius: 6px;
@@ -471,7 +595,7 @@ html {
 					display: flex;
 					justify-content: space-between;
 					font-size: 12px;
-					color: #9ca3af;
+					color: var(--svb-muted, #9ca3af);
 				}
 			}
 
@@ -485,6 +609,7 @@ html {
 					display: inline-block;
 					width: 46px;
 					height: 24px;
+					flex: 0 0 auto;
 
 					input {
 						opacity: 0;
@@ -492,11 +617,15 @@ html {
 						height: 0;
 
 						&:checked + .svbSlider {
-							background-color: #4527a4;
+							background-color: var(--svb-accent, #{$primaryColor});
 						}
 
 						&:checked + .svbSlider:before {
 							transform: translateX(22px);
+						}
+
+						&:focus-visible + .svbSlider {
+							box-shadow: 0 0 0 3px var(--svb-input-focus-ring, rgba(69, 39, 164, .25));
 						}
 					}
 
@@ -531,7 +660,7 @@ html {
 				.svbToggleStateText {
 					font-weight: 600;
 					font-size: 14px;
-					color: #374151;
+					color: var(--svb-heading, #374151);
 				}
 			}
 
@@ -542,19 +671,22 @@ html {
 				.svbSectionHeader {
 					font-size: 18px;
 					font-weight: 700;
-					color: #111827;
+					color: var(--svb-heading, #111827);
 					margin-bottom: 4px;
+					display: flex;
+					align-items: center;
+					gap: 8px;
 				}
 
 				.svbSectionDescription {
 					font-size: 14px;
-					color: #6b7280;
+					color: var(--svb-muted, #6b7280);
 					margin: 0 0 10px 0;
 				}
 
 				.svbSectionLine {
 					border: none;
-					border-top: 2px solid #e5e7eb;
+					border-top: 2px solid var(--svb-divider, #e5e7eb);
 					margin: 0;
 				}
 			}

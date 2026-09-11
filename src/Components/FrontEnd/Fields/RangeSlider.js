@@ -1,9 +1,9 @@
 import LabelArea from '../MainEle/LabelArea';
 
-const RangeSlider = ({ cId, fieldEls, buttonArea, index, isRequired, min = 0, max = 100, step = 1, value = 50, help, onChange }) => {
+const RangeSlider = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, isRequired, min = 0, max = 100, step = 1, value = 50, help, onChange }) => {
     return (
         <div className={`fieldMainArea labelPosition-${index}`}>
-            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} />
+            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
             <div className="fieldArea svbRangeSliderArea">
                 <div className="svbSliderWrapper">
                     <input

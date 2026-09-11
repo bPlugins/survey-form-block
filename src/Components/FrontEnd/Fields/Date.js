@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import LabelArea from '../MainEle/LabelArea';
 
-const Date = ({ fieldEls, buttonArea, index, isRequired, name, help, classes, onChange, end, start }) => {
+const Date = ({ fieldEls, buttonArea, index, icon, requiredMark, isRequired, name, help, classes, onChange, end, start }) => {
 
     const [data, setData] = useState({});
     const capitalize = (str) => {
@@ -44,7 +44,7 @@ const Date = ({ fieldEls, buttonArea, index, isRequired, name, help, classes, on
     }
 
     return <div className={`fieldMainArea labelPosition-${index} `}>
-        <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} />
+        <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
         <div className={`fieldArea ${classes}`}>
             <div className="selectArea">
                 <select name={name} value={data.month} onChange={(e) => setData({ ...data, month: e.target.value })}>

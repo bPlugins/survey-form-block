@@ -38,5 +38,6 @@ export const fieldTypeOpt = [
 
 export const generalStyleTabs = [
 	{ name: 'general', title: __('General', 'survey-form-block') },
+	{ name: 'design', title: __('Design', 'survey-form-block') },
 	{ name: 'style', title: __('Style', 'survey-form-block') }
 ];

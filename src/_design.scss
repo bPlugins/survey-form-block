@@ -1,0 +1,343 @@
+/**
+ * Survey Form Block - design layer.
+ *
+ * Static half of the design system: keyframes, the progress indicator, the
+ * success panel and the structural bits of the layout presets. Everything that
+ * varies per block instance is generated in `utils/designCSS.js`.
+ *
+ * Loaded through `style.scss`, so it applies in the editor and on the frontend.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Keyframes                                                                   */
+/* -------------------------------------------------------------------------- */
+
+@keyframes svbAnim-fade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes svbAnim-slide-up {
+	from { opacity: 0; transform: translateY(18px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes svbAnim-slide-left {
+	from { opacity: 0; transform: translateX(24px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes svbAnim-scale {
+	from { opacity: 0; transform: scale(.94); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbAnim-reveal {
+	from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(10px); }
+	to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+@keyframes svbSuccess-fade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes svbSuccess-pop {
+	0% { opacity: 0; transform: scale(.8); }
+	60% { opacity: 1; transform: scale(1.04); }
+	100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbSuccess-scale {
+	from { opacity: 0; transform: scale(.92); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbSuccess-slide {
+	from { opacity: 0; transform: translateY(16px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes svbShake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-4px); }
+	75% { transform: translateX(4px); }
+}
+
+@keyframes svbSpin {
+	to { transform: rotate(360deg); }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Shared design surface                                                       */
+/* -------------------------------------------------------------------------- */
+
+.wp-block-svb-survey-block {
+
+	/**
+	 * The survey widgets carry both `.fieldArea` and their own modifier class on
+	 * one element. `.fieldArea { display: grid }` is more specific than the
+	 * widget rules, so it used to win - stacking the toggle above its state text
+	 * and the star badge below the stars. Re-assert the intended box here at a
+	 * specificity that beats it.
+	 */
+	.svbMainArea form .mainFieldArea .fieldItem .fieldMainArea .fieldArea {
+		&.svbStarRatingArea,
+		&.svbToggleArea {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		&.svbOpinionScaleArea,
+		&.svbNpsArea,
+		&.svbRangeSliderArea {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.svbMainArea {
+
+		/* ------------------------------- Progress ------------------------------ */
+
+		.svbProgressArea {
+			width: 100%;
+			margin: 0 0 18px;
+
+			&.svbProgress-bottom {
+				margin: 20px 0 0;
+			}
+
+			.svbProgressLabel {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: .01em;
+				margin-top: 7px;
+				opacity: .85;
+			}
+
+			.svbProgressTrack {
+				position: relative;
+				width: 100%;
+				height: var(--svb-progress-height, 6px);
+				background: var(--svb-progress-track, rgba(15, 23, 42, .1));
+				border-radius: 999px;
+				overflow: hidden;
+
+				.svbProgressFill {
+					display: block;
+					height: 100%;
+					border-radius: inherit;
+					background: var(--svb-progress-fill, #4527a4);
+					transition: width .45s cubic-bezier(.22, .61, .36, 1);
+				}
+			}
+
+			.svbProgressSegments {
+				display: flex;
+				gap: 5px;
+
+				.svbProgressSegment {
+					flex: 1;
+					height: var(--svb-progress-height, 6px);
+					border-radius: 999px;
+					background: var(--svb-progress-track, rgba(15, 23, 42, .1));
+					transition: background-color .3s ease;
+
+					&.done {
+						background: var(--svb-progress-fill, #4527a4);
+					}
+				}
+			}
+
+			.svbProgressSteps {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				flex-wrap: wrap;
+
+				.svbProgressStep {
+					display: inline-flex;
+					align-items: center;
+					flex: 0 0 auto;
+
+					.svbProgressStepDot {
+						width: 26px;
+						height: 26px;
+						border-radius: 50%;
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 11px;
+						font-weight: 700;
+						font-style: normal;
+						color: var(--svb-muted, #64748b);
+						background: var(--svb-progress-track, rgba(15, 23, 42, .08));
+						border: 1px solid transparent;
+						transition: all .25s ease;
+					}
+
+					&.done .svbProgressStepDot {
+						color: var(--svb-accent-contrast, #fff);
+						background: var(--svb-progress-fill, #4527a4);
+					}
+				}
+			}
+
+			&.svbProgress-circular {
+				position: relative;
+				width: 72px;
+				height: 72px;
+				margin-left: auto;
+				margin-right: auto;
+
+				.svbProgressCircle {
+					width: 100%;
+					height: 100%;
+					transform: rotate(-90deg);
+
+					circle {
+						fill: none;
+						stroke-width: 6;
+						stroke-linecap: round;
+					}
+
+					.svbProgressCircleTrack {
+						stroke: var(--svb-progress-track, rgba(15, 23, 42, .1));
+					}
+
+					.svbProgressCircleValue {
+						stroke: var(--svb-progress-fill, #4527a4);
+						transition: stroke-dashoffset .45s cubic-bezier(.22, .61, .36, 1);
+					}
+				}
+
+				.svbProgressCircleText {
+					position: absolute;
+					inset: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 14px;
+					font-weight: 700;
+					color: var(--svb-heading, inherit);
+				}
+			}
+		}
+
+		/* ------------------------------- Success ------------------------------- */
+
+		.successArea {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			justify-content: center;
+			text-align: center;
+
+			.svbSuccessIcon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 22px;
+				flex: 0 0 auto;
+
+				svg {
+					display: block;
+				}
+			}
+
+			.svbSuccessBody {
+				text-align: center;
+			}
+
+			.svbSuccessTitle {
+				margin: 0 0 2px;
+				font-size: 17px;
+				font-weight: 700;
+				color: var(--svb-heading, inherit);
+			}
+
+			&.svbSuccess-card,
+			&.svbSuccess-replace {
+				flex-direction: column;
+				gap: 10px;
+				padding: 26px 22px;
+				margin-top: 14px;
+				border-radius: var(--svb-card-radius, 12px);
+				background: var(--svb-success-bg, var(--svb-accent-soft, rgba(22, 163, 74, .08)));
+				border: 1px solid var(--svb-card-border-color, rgba(22, 163, 74, .18));
+
+				.svbSuccessIcon {
+					font-size: 34px;
+				}
+			}
+
+			&.svbSuccess-replace {
+				padding: 46px 24px;
+			}
+
+			&.svbSuccess-banner {
+				justify-content: flex-start;
+				text-align: left;
+				padding: 14px 18px;
+				margin-top: 14px;
+				border-radius: var(--svb-card-radius, 10px);
+				border-left: 4px solid var(--svb-success-color, #16a34a);
+				background: var(--svb-success-bg, var(--svb-accent-soft, rgba(22, 163, 74, .08)));
+
+				.svbSuccessBody { text-align: left; }
+				.message { text-align: left; }
+			}
+		}
+
+		/* ------------------------------ Layouts -------------------------------- */
+
+		form.svbLayout-fullwidth {
+			.mainFieldArea .fieldItem .labelArea .labelHelp label {
+				font-size: 1.05em;
+			}
+		}
+
+		form.svbLayout-minimal {
+			.mainFieldArea {
+				row-gap: 4px;
+			}
+		}
+
+		/* Cards should not double up on a section divider. */
+		form.svbHasCards .mainFieldArea .fieldItem .fieldMainArea .svbSectionDivider {
+			margin-top: 0;
+		}
+
+		/* --------------------------- Button variants --------------------------- */
+
+		form .subBtnArea .subBtn {
+			span {
+				position: relative;
+				z-index: 1;
+			}
+		}
+
+		form.svbBtn-outline .subBtnArea .subBtn,
+		form.svbBtn-soft .subBtnArea .subBtn,
+		form.svbBtn-minimal .subBtnArea .subBtn {
+			background-color: transparent;
+		}
+	}
+}
+
+/* Reduced motion: honour the OS-level preference everywhere. */
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-svb-survey-block {
+		.svbMainArea * {
+			animation-duration: .001ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: .001ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+}

@@ -2,53 +2,102 @@
 /**
  * Plugin Name: Survey Form Block
  * Description: Create custom survey forms easily with the Survey Form Block plugin.
- * Version: 1.0.2
+ * Version: 1.1.0
  * Author: bPlugins
  * Author URI: http://bplugins.com
+ * Plugin URI: https://bplugins.com/products/survey-form-block
  * Requires at least: 6.5
  * Requires PHP: 7.1
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: survey-form-block
+ * @fs_premium_only /vendor/freemius, /inc/LicenseActivation.php
+ * @fs_free_only /vendor/freemius-lite
  */
 
 // ABS PATH
 if (!defined('ABSPATH')) {exit;}
 
-// Constant
-define( 'BPSVB_PLUGIN_VERSION', isset( $_SERVER['HTTP_HOST'] ) && 'localhost' === $_SERVER['HTTP_HOST'] ? time() : '1.0.2' );
-define( 'BPSVB_DIR', plugin_dir_url( __FILE__ ) );
-define( 'BPSVB_ASSETS_DIR', plugin_dir_url( __FILE__ ) . 'assets/' );
+if ( function_exists( 'bpsvb_fs' ) ) {
+    // A second copy of the plugin (free + premium) is present; hand this file to
+    // the already-booted SDK instead of initialising twice.
+    if ( bpsvb_fs() ) {
+        bpsvb_fs()->set_basename( true, __FILE__ );
+    }
+} else {
+    // Constant
+    define( 'BPSVB_PLUGIN_VERSION', isset( $_SERVER['HTTP_HOST'] ) && 'localhost' === $_SERVER['HTTP_HOST'] ? time() : '1.1.0' );
+    define( 'BPSVB_DIR', plugin_dir_url( __FILE__ ) );
+    define( 'BPSVB_PATH', plugin_dir_path( __FILE__ ) );
+    define( 'BPSVB_ASSETS_DIR', plugin_dir_url( __FILE__ ) . 'assets/' );
+    define( 'BPSVB_HAS_PRO', file_exists( plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php' ) );
 
-// Survey Block
-class BPSVB_Survey_Form_Block
-{
-    public function __construct()
+    // Admin menu slugs, shared with the Freemius menu configuration.
+    define( 'BPSVB_MENU_SLUG', 'survey-form-block' );
+    define( 'BPSVB_DASHBOARD_SLUG', 'survey-form-block-dashboard' );
+
+    require_once BPSVB_PATH . 'inc/fs.php';
+    require_once BPSVB_PATH . 'inc/Pro.php';
+
+    if ( BPSVB_HAS_PRO && file_exists( BPSVB_PATH . 'inc/LicenseActivation.php' ) ) {
+        require_once BPSVB_PATH . 'inc/LicenseActivation.php';
+    }
+
+    // Survey Block
+    class BPSVB_Survey_Form_Block
     {
-        add_action( 'enqueue_block_assets', [$this, 'enqueueBlockAssets'] );
-        add_action( 'init', [$this, 'onInit'] );
+        public function __construct()
+        {
+            add_action( 'enqueue_block_assets', [$this, 'enqueueBlockAssets'] );
+            add_action( 'init', [$this, 'onInit'] );
+            add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [$this, 'pluginActionLinks'] );
+        }
+
+        public function enqueueBlockAssets()
+        {
+
+            wp_localize_script('svb-survey-block-view-script', 'svbData', [
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('wp_ajax'),
+            ]);
+
+            wp_localize_script('svb-survey-block-editor-script', 'svbData', [
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('wp_ajax'),
+            ]);
+        }
+
+        public function onInit() {
+            register_block_type( __DIR__ . '/build' );
+        }
+
+        /**
+         * Adds Help & Demos / Go Pro links to the plugins list row.
+         *
+         * @param array $links Existing action links.
+         * @return array
+         */
+        public function pluginActionLinks( $links ) {
+            $links['svb-help-and-demos'] = sprintf(
+                '<a href="%s">%s</a>',
+                esc_url( admin_url( 'admin.php?page=' . BPSVB_DASHBOARD_SLUG . '#/welcome' ) ),
+                esc_html__( 'Help & Demos', 'survey-form-block' )
+            );
+
+            if ( ! BPSVB_Pro::isPremium() ) {
+                $links['svb-go-pro'] = sprintf(
+                    '<a href="%s" target="_blank" rel="noopener noreferrer" style="color:#FF7A00;font-weight:bold">%s</a>',
+                    esc_url( BPSVB_Pro::pricingUrl() ),
+                    esc_html__( 'Go Pro', 'survey-form-block' )
+                );
+            }
+
+            return $links;
+        }
     }
+    new BPSVB_Survey_Form_Block();
 
-    public function enqueueBlockAssets()
-    {
-
-        wp_localize_script('svb-survey-block-view-script', 'svbData', [
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_ajax'),
-        ]);
-
-        wp_localize_script('svb-survey-block-editor-script', 'svbData', [
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_ajax'),
-        ]);
-    }
-
-    public function onInit() {
-        register_block_type( __DIR__ . '/build' );
-    }
+    require_once BPSVB_PATH . 'inc/AdminMenu.php';
+    require_once BPSVB_PATH . 'inc/Init.php';
+    require_once BPSVB_PATH . 'inc/SVBAjax.php';
 }
-new BPSVB_Survey_Form_Block();
-
-require_once plugin_dir_path(__FILE__) . 'inc/AdminMenu.php';
-require_once __DIR__ . '/inc/Init.php';
-require_once __DIR__ . '/inc/SVBAjax.php';

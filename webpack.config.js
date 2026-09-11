@@ -14,6 +14,7 @@ module.exports = {
 	entry: {
 		...defaultConfig.entry(),
 		"admin-script": './src/admin/adminScript.js',
+		"admin-dashboard": './src/bplugins-admin/dashboard.js',
 	},
 	plugins: [
 		...plugins,

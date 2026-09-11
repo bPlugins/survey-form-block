@@ -1,13 +1,19 @@
-
 import { getBoxValue } from '../../bpl-tools/utils/functions';
 import { getBorderCSS, getColorsCSS, getTypoCSS } from '../../bpl-tools/utils/getCSS';
+import { getDesignCSS, TEXT_INPUTS } from './utils/designCSS';
 
-const Style = ({ attributes, id }) => {
+const Style = ({ attributes, id, isPremium = false }) => {
 	const { fields, labelS, input, radioCheckLabelTypo, radioCheckLabelColor, button, form } = attributes;
 	const { bgColor, padding, border, titleTypo, titleColor, titleAlign, titleMargin, descriptionTypo, descriptionColor, descriptionAlign, descriptionMargin, successMsgColor } = form;
 
 	const mainWrapper = `#${id}`;
 	const fieldArea = `${mainWrapper} .svbMainArea .fieldItem .fieldArea`;
+
+	// Historically only text/email/textarea/select were styled, which left the
+	// number, phone, url and date fields with raw browser chrome. One list now
+	// drives every text-like control.
+	const inputSelectors = TEXT_INPUTS.map(sel => `${fieldArea} ${sel}`).join(', ');
+
 	return <style dangerouslySetInnerHTML={{
 		__html: `
 
@@ -22,10 +28,7 @@ const Style = ({ attributes, id }) => {
 		${getTypoCSS(`${mainWrapper} .svbMainArea .titleArea .title`, titleTypo)?.styles}
 		${getTypoCSS(`${mainWrapper} .subBtn`, button?.typo)?.styles}
 		${getTypoCSS(`${fieldArea} .field label`, radioCheckLabelTypo)?.styles}
-		${getTypoCSS(`${fieldArea} select`, input?.typo)?.styles}
-		${getTypoCSS(`${fieldArea} textarea`, input?.typo)?.styles}
-		${getTypoCSS(`${fieldArea} input[type=email]`, input?.typo)?.styles}
-		${getTypoCSS(`${fieldArea} input[type=text]`, input?.typo)?.styles}
+		${getTypoCSS(inputSelectors, input?.typo)?.styles}
 		${getTypoCSS(`${mainWrapper} .svbMainArea .fieldItem .labelArea .labelHelp label`, labelS?.typo)?.styles}
 
 		${mainWrapper} form {
@@ -55,7 +58,7 @@ const Style = ({ attributes, id }) => {
 			color:${radioCheckLabelColor};
 		}
 
-		${fieldArea} input[type=text], ${fieldArea} input[type=email], ${fieldArea} textarea, ${fieldArea} select {
+		${inputSelectors} {
 			color:${input?.color};
 			padding:${getBoxValue(input?.padding)};
 			${getBorderCSS(input?.border)};
@@ -68,7 +71,7 @@ const Style = ({ attributes, id }) => {
 		${mainWrapper} .successArea .message {
 			color:${successMsgColor};
 		}
-		
+
 		${fields.map(({ column, labelPosition }, index) => {
 			return `
 
@@ -79,10 +82,13 @@ const Style = ({ attributes, id }) => {
 			${mainWrapper} .fieldArea-${index} {
 				grid-template-columns: repeat(${column}, 1fr);
 			}
-			
-			`
+
+			`;
 		}).join(' ')}
-		 
+
+		${getDesignCSS(attributes, id, isPremium)}
+
 	`}} />;
-}
+};
+
 export default Style;

@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { produce } from 'immer';
 import { __ } from '@wordpress/i18n';
@@ -14,11 +12,14 @@ import Settings from './Settings';
 import Style from './Style';
 import Form from './Form';
 import { generateUniqueId, postData } from './utils/functions';
+import { isPremium as checkPremium } from './utils/premium';
 
 const Edit = props => {
 	const { attributes, setAttributes, clientId, isSelected, formCreatorId, isSavingPost } = props;
 	const { fields, form } = attributes;
 	const { id, creator_id, title } = form;
+
+	const isPremium = checkPremium();
 
 	useEffect(() => { clientId && setAttributes({ cId: clientId.substring(0, 10) }); }, [clientId]); // Set & Update clientId to cId
 
@@ -26,10 +27,10 @@ const Edit = props => {
 		if (isSavingPost) {
 			const url = `${window.svbData?.ajaxUrl}`;
 			const columns = {};
-			fields.map(item => columns[item.id] = item.label)
-			postData(url, { columns: JSON.stringify(columns), form_id: id, action: 'svb_add_update_columns', nonce: window.svbData?.nonce, form_name: title }).then(res => console.log(res));
+			fields.map(item => columns[item.id] = item.label);
+			postData(url, { columns: JSON.stringify(columns), form_id: id, action: 'svb_add_update_columns', nonce: window.svbData?.nonce, form_name: title });
 		}
-	}, [isSavingPost])
+	}, [isSavingPost]);
 
 	useEffect(() => {
 		setAttributes({ form: { ...form, id: id || clientId.substring(0, 14), creator_id: creator_id || formCreatorId } });
@@ -52,7 +53,7 @@ const Edit = props => {
 			}
 		});
 		setAttributes({ fields: newFields });
-	}
+	};
 
 	//  Add Field
 	const addField = () => {
@@ -60,72 +61,75 @@ const Edit = props => {
 			const uniqueId = generateUniqueId(4);
 			const matched = fields.find(f => f.id === uniqueId);
 			return matched ? getUId() : uniqueId;
-		}
+		};
 
 		const newField = produce(fields, draft => {
 			draft.splice(draft.length, 0, {
 				id: getUId(),
-				type: "",
+				type: '',
 				column: 1,
 				size: 100,
-				label: "Label-1",
-				labelPosition: "column",
-				help: "",
-				name: "",
-				placeholder: "Placeholder",
-				classes: "",
+				label: 'Label-1',
+				labelPosition: 'column',
+				help: '',
+				name: '',
+				placeholder: 'Placeholder',
+				classes: '',
+				icon: '',
 				isRequired: false,
 				isDisable: false,
 				options: [
 					{
-						label: "Author",
-						value: "Al-Amin"
+						label: 'Author',
+						value: 'Al-Amin'
 					}
 				],
-				start: "1990",
-				end: "2023",
-			})
+				start: '1990',
+				end: '2023',
+			});
 		});
 
 		setAttributes({ fields: newField });
-	}
+	};
 
-	// Duplicate Fields 
+	// Duplicate Fields
 	const onDuplicateFields = (index) => {
-		setAttributes({ fields: produce(fields, draft => { draft.splice(index, 0, { ...fields[index], id: generateUniqueId(4) }) }) })
-	}
+		setAttributes({ fields: produce(fields, draft => { draft.splice(index, 0, { ...fields[index], id: generateUniqueId(4) }); }) });
+	};
 
 	//Remove Fields
 	const removeField = (index) => {
-		const removeField = produce(fields, draft => {
+		const removedFields = produce(fields, draft => {
 			draft.splice(index, 1);
 		});
-		setAttributes({ fields: removeField });
-	}
+		setAttributes({ fields: removedFields });
+	};
 
-	// update object 
+	// update object
 	const updateObject = (attr, key, val) => {
 		const newAttr = { ...attributes[attr] };
 		newAttr[key] = val;
-		setAttributes({ [attr]: newAttr })
-	}
+		setAttributes({ [attr]: newAttr });
+	};
 
 	const fieldsEls = fields.map((field, index) => {
 		const { label } = field;
 
 		return {
 			label: <RichText tagName="label" className='label' value={label} onChange={(val) => updateFields(index, 'label', val)} placeholder={__('Enter your label', 'survey-form-block')} inlineToolbar />
-		}
+		};
 	});
+
 	const elId = `svbMainArea-${clientId}`;
+
 	return <div {...useBlockProps()}>
-		<Settings updateObject={updateObject} setFormData={setFormData} formData={formData} attributes={attributes} setAttributes={setAttributes} activeIndex={activeIndex} setActiveIndex={setActiveIndex} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} />
+		<Settings updateObject={updateObject} setFormData={setFormData} formData={formData} attributes={attributes} setAttributes={setAttributes} activeIndex={activeIndex} setActiveIndex={setActiveIndex} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} isPremium={isPremium} />
 
 		<div id={elId}>
-			<Style attributes={attributes} id={elId} />
+			<Style attributes={attributes} id={elId} isPremium={isPremium} />
 
-			<div className={`svbMainArea`}>
-				<Form RichText={RichText} fieldsEls={fieldsEls} updateObject={updateObject} postData={postData} Tooltip={Tooltip} requireError={requireError} setRequireError={setRequireError} LabelPositionOpt={LabelPositionOpt} fieldTypeOpt={fieldTypeOpt} __={__} SelectControl={SelectControl} attributes={attributes} setAttributes={setAttributes} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} activeIndex={activeIndex} setActiveIndex={setActiveIndex} formData={formData} setFormData={setFormData} isBackend={true} />
+			<div className={'svbMainArea'}>
+				<Form RichText={RichText} fieldsEls={fieldsEls} updateObject={updateObject} postData={postData} Tooltip={Tooltip} requireError={requireError} setRequireError={setRequireError} LabelPositionOpt={LabelPositionOpt} fieldTypeOpt={fieldTypeOpt} __={__} SelectControl={SelectControl} attributes={attributes} setAttributes={setAttributes} updateFields={updateFields} addField={addField} onDuplicateFields={onDuplicateFields} removeField={removeField} activeIndex={activeIndex} setActiveIndex={setActiveIndex} formData={formData} setFormData={setFormData} isBackend={true} isPremium={isPremium} />
 			</div>
 		</div>
 	</div>;
@@ -133,9 +137,9 @@ const Edit = props => {
 
 export default withSelect((select) => {
 	const formCreatorId = select('core').getCurrentUser()?.id;
-	const { isSavingPost } = select('core/editor')
+	const { isSavingPost } = select('core/editor');
 	return {
 		formCreatorId,
 		isSavingPost: isSavingPost()
-	}
+	};
 })(Edit);

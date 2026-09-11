@@ -1,11 +1,11 @@
 import LabelArea from '../MainEle/LabelArea';
 
-const Toggle = ({ cId, fieldEls, buttonArea, index, isRequired, value, help, onChange }) => {
+const Toggle = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, isRequired, value, help, onChange }) => {
     const isChecked = Boolean(value);
 
     return (
         <div className={`fieldMainArea labelPosition-${index}`}>
-            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} />
+            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
             <div className="fieldArea svbToggleArea">
                 <label className="svbSwitch">
                     <input
