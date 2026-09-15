@@ -1,38 +1,76 @@
-
-import { CheckboxControl, PanelRow, SelectControl, TextControl, TextareaControl } from '@wordpress/components';
-import Width from '../FieldAttr/Size';
-import { LabelPositionOpt } from '../../../utils/options';
+import { CheckboxControl, SelectControl, TextControl, TextareaControl, Flex, FlexItem } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-const Date = ({ updateFields, index, size, isRequired, isDisable, label, labelPosition, placeholder, classes, help, start, end }) => {
-    return <>
-        <PanelRow className='svb-year'>
-            <TextControl label={__('Start', 'survey-form-block')} value={start} onChange={(val) => updateFields(index, "start", val)} />
-            <TextControl label={__('End', 'survey-form-block')} value={end} onChange={(val) => updateFields(index, "end", val)} />
-        </PanelRow>
-        {/* width */}
-        <Width value={size} onChange={val => updateFields(index, 'size', val)} />
-        {/* label  */}
-        <label htmlFor='label'>{__('Label', 'survey-form-block')}</label>
-        <TextControl id='label' value={label} placeholder='Label Here' onChange={(val) => updateFields(index, 'label', val)} />
-        {/* label position  */}
-        <label htmlFor='labelPosition'>{__('Label Position', 'survey-form-block')}</label>
-        <SelectControl id='labelPosition' value={labelPosition} options={LabelPositionOpt} onChange={(val) => updateFields(index, 'labelPosition', val)} />
-        {/* name  */}
-        {/*  <TextControl value={name} placeholder='Name' onChange={(val) => updateFields(index, 'name', val)} /> */}
-        {/* placeholder  */}
-        <label htmlFor='placeholder'>{__('Placeholder', 'survey-form-block')}</label>
-        <TextControl id='placeholder' value={placeholder} placeholder='Placeholder here' onChange={(val) => updateFields(index, 'placeholder', val)} />
-        {/* isDisable  */}
-        <CheckboxControl label="Disable" checked={isDisable} onChange={(val) => updateFields(index, 'isDisable', val)} />
-        {/* isRequired  */}
-        {!isDisable && <CheckboxControl label="Required" checked={isRequired} onChange={(val) => updateFields(index, 'isRequired', val)} />}
-        {/* help  */}
-        <label htmlFor='help'>{__('Help', 'survey-form-block')}</label>
-        <TextareaControl id='help' value={help} placeholder='Help Text' onChange={(val) => updateFields(index, 'help', val)} />
-        {/* classes  */}
-        <label htmlFor='classes'>{__('Class', 'survey-form-block')}</label>
-        <TextControl id='classes' value={classes} placeholder='class name' onChange={(val) => updateFields(index, 'classes', val)} />
-    </>
-}
+import { LabelPositionOpt } from '../../../utils/options';
+import Width from '../FieldAttr/Size';
+
+/**
+ * Settings for the date picker, which adds a selectable year range.
+ */
+const Date = ({ updateFields, index, size, isRequired, isDisable, label, labelPosition, classes, help, start, end }) => {
+	return <div className="svbFieldSettings">
+		<TextControl
+			label={__('Label', 'survey-form-block')}
+			value={label}
+			placeholder={__('Label here', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'label', val)}
+		/>
+
+		<SelectControl
+			label={__('Label Position', 'survey-form-block')}
+			value={labelPosition}
+			options={LabelPositionOpt}
+			onChange={(val) => updateFields(index, 'labelPosition', val)}
+		/>
+
+		<Flex className='svbYearRange' gap={3} align='flex-start'>
+			<FlexItem isBlock>
+				<TextControl
+					label={__('First Year', 'survey-form-block')}
+					value={start}
+					onChange={(val) => updateFields(index, 'start', val)}
+				/>
+			</FlexItem>
+
+			<FlexItem isBlock>
+				<TextControl
+					label={__('Last Year', 'survey-form-block')}
+					value={end}
+					onChange={(val) => updateFields(index, 'end', val)}
+				/>
+			</FlexItem>
+		</Flex>
+
+		<TextareaControl
+			label={__('Help Text', 'survey-form-block')}
+			value={help}
+			placeholder={__('Shown in a tooltip beside the label', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'help', val)}
+		/>
+
+		<Width value={size} onChange={val => updateFields(index, 'size', val)} />
+
+		<div className="svbCheckGroup">
+			<CheckboxControl
+				label={__('Disable', 'survey-form-block')}
+				checked={isDisable}
+				onChange={(val) => updateFields(index, 'isDisable', val)}
+			/>
+
+			{!isDisable && <CheckboxControl
+				label={__('Required', 'survey-form-block')}
+				checked={isRequired}
+				onChange={(val) => updateFields(index, 'isRequired', val)}
+			/>}
+		</div>
+
+		<TextControl
+			label={__('CSS Class', 'survey-form-block')}
+			value={classes}
+			placeholder={__('class name', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'classes', val)}
+		/>
+	</div>;
+};
+
 export default Date;

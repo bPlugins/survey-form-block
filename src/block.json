@@ -94,6 +94,8 @@
 					"name": "",
 					"placeholder": "Enter your placeholder",
 					"classes": "",
+					"onLabel": "Yes",
+					"offLabel": "No",
 					"isRequired": false,
 					"isDisable": false,
 					"options": [

@@ -11,7 +11,7 @@
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: survey-form-block
- * @fs_premium_only /vendor/freemius, /inc/LicenseActivation.php
+ * @fs_premium_only /vendor/freemius, /includes/LicenseActivation.php
  * @fs_free_only /vendor/freemius-lite
  */
 
@@ -27,6 +27,7 @@ if ( function_exists( 'bpsvb_fs' ) ) {
 } else {
     // Constant
     define( 'BPSVB_PLUGIN_VERSION', isset( $_SERVER['HTTP_HOST'] ) && 'localhost' === $_SERVER['HTTP_HOST'] ? time() : '1.1.0' );
+    define( 'BPSVB_PLUGIN_FILE', __FILE__ );
     define( 'BPSVB_DIR', plugin_dir_url( __FILE__ ) );
     define( 'BPSVB_PATH', plugin_dir_path( __FILE__ ) );
     define( 'BPSVB_ASSETS_DIR', plugin_dir_url( __FILE__ ) . 'assets/' );
@@ -36,11 +37,11 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     define( 'BPSVB_MENU_SLUG', 'survey-form-block' );
     define( 'BPSVB_DASHBOARD_SLUG', 'survey-form-block-dashboard' );
 
-    require_once BPSVB_PATH . 'inc/fs.php';
-    require_once BPSVB_PATH . 'inc/Pro.php';
+    require_once BPSVB_PATH . 'includes/fs.php';
+    require_once BPSVB_PATH . 'includes/Pro.php';
 
-    if ( BPSVB_HAS_PRO && file_exists( BPSVB_PATH . 'inc/LicenseActivation.php' ) ) {
-        require_once BPSVB_PATH . 'inc/LicenseActivation.php';
+    if ( BPSVB_HAS_PRO && file_exists( BPSVB_PATH . 'includes/LicenseActivation.php' ) ) {
+        require_once BPSVB_PATH . 'includes/LicenseActivation.php';
     }
 
     // Survey Block
@@ -97,7 +98,20 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     }
     new BPSVB_Survey_Form_Block();
 
-    require_once BPSVB_PATH . 'inc/AdminMenu.php';
-    require_once BPSVB_PATH . 'inc/Init.php';
-    require_once BPSVB_PATH . 'inc/SVBAjax.php';
+    // Schema hooks only; the table classes load when there is work to do.
+    require_once BPSVB_PATH . 'includes/Init.php';
+    BPSVB_Init::boot( __FILE__ );
+
+    // Front end too: the Surveys post type has to exist on every request for
+    // [survey-form-block id="..."] to resolve, and the shortcode itself runs
+    // wherever it is used.
+    require_once BPSVB_PATH . 'includes/Shortcode.php';
+    require_once BPSVB_PATH . 'includes/PostType.php';
+
+    // Everything below is admin- or AJAX-only. admin-ajax.php sets WP_ADMIN, so
+    // is_admin() covers the public form endpoint too.
+    if ( is_admin() || wp_doing_ajax() ) {
+        require_once BPSVB_PATH . 'includes/AdminMenu.php';
+        require_once BPSVB_PATH . 'includes/SVBAjax.php';
+    }
 }

@@ -1,16 +1,20 @@
 === Survey Form Block ===
-Contributors: bplugins, abuhayat, btechnologies
+Contributors: bplugins, abuhayat, asadsuzan
 Donate link: https://www.buymeacoffee.com/abuhayat
-Tags: block, survey form, form, investigation, Gutenberg block
-Tested up to: 6.9
+Tags: survey, form, feedback, poll, gutenberg block
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 7.1
 Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create custom survey forms easily with the Survey Form Block plugin.
+Build surveys in the block editor, read every response in your dashboard, and reuse any survey anywhere with a shortcode.
 
 == Description ==
-Effortlessly craft bespoke surveys in Gutenberg. Engage your audience and glean valuable insights. Tailor surveys with versatile customization options.
+Build a survey in the block editor, drop it on a page, and watch the answers arrive. Every response is collected in your own dashboard — no third-party service, no account, and nothing leaves your site.
+
+Surveys can live straight on a page, or be saved once under **Survey Forms &rarr; Surveys** and printed anywhere with a shortcode.
 
 
 = Features =
@@ -27,6 +31,9 @@ Effortlessly craft bespoke surveys in Gutenberg. Engage your audience and glean 
 - **Enhanced Date Picker**: Date input with date range boundaries.
 - **Categorized Block Inspector**: Intuitive sidebar settings to reorder, clone, delete, and configure field labels, placeholders, and validation.
 - **Complete Design Customization**: Total control over typography, colors, padding, borders, background, and submit button styling.
+- **Reusable Surveys & Shortcode**: Save a survey once and print it wherever you like with `[survey-form-block id="123"]` — pages, posts, widgets, or a theme template. Edit it in one place and every copy follows.
+- **Response Dashboard**: Read, search, sort, page through, edit and delete submissions from the WordPress admin. Nothing is sent to an external service.
+- **Works With Page Caching**: Submissions are not tied to an expiring nonce, so visitors on a cached page can still answer. Flooding is limited per IP address instead.
 
 
 = Design Presets & Layouts =
@@ -44,8 +51,19 @@ The **Design** tab groups every visual control in one place, with a live preview
 - **Block Variations**: The inserter offers ready-styled starting points so a new survey looks designed from the first click.
 
 
+= Reusable Surveys & Responses =
+
+**Survey Forms &rarr; Surveys** is for surveys you want in more than one place. Each entry holds a single survey and gets its own shortcode, shown in the ShortCode column — click it to copy, then paste it into any page, post or widget, or call `do_shortcode()` from a template.
+
+Because every copy points at the same survey, editing it once updates all of them, and every copy writes to the same set of responses.
+
+**Survey Forms &rarr; Survey List** shows what people have answered: pick a survey, search across the answers, sort by any question, page through, correct a response in place, and delete one or several at a time. A Refresh button pulls in anything that arrived while the screen was open.
+
+Dropping the Survey Form Block straight onto a page still works exactly as before — the Surveys screen is an addition, not a replacement.
+
+
 = Pro =
-[Survey Form Block Pro](https://wordpress.org/plugins/survey-form-block/) adds the advanced visual toolkit:
+[Survey Form Block Pro](https://bplugins.com/products/survey-form-block) adds the advanced visual toolkit:
 
 - 7 premium themes: **Glassmorphism**, **Bold Gradient**, **Midnight Dark**, **Elegant**, **Neumorphic**, **Sunset Warm** and **Ocean Cool**
 - **Floating**, **Split** and **Full-Width** survey layouts
@@ -62,10 +80,11 @@ Every Pro setting degrades gracefully: if a license is not active, saved Pro val
 
 
 = How to use =
-- First, install the Survey Form plugin
-- Add the Survey Form block from the block category called "Widgets" in the Gutenberg editor.
-- You can change block settings from the right-side settings sidebar.
-- Enjoy!
+- Install and activate the plugin.
+- Add the **Survey Form Block** from the "Widgets" block category in the editor.
+- Build your questions and style them from the right-hand sidebar — the **General**, **Design** and **Style** tabs.
+- Publish the page. Answers appear under **Survey Forms &rarr; Survey List**.
+- To use the same survey in several places, add it under **Survey Forms &rarr; Surveys** instead and paste its shortcode wherever you need it.
 
 * For installation help click on Installation Tab
 
@@ -122,6 +141,14 @@ Yes, Survey Form Block is a free Gutenberg block plugin. A Pro version adds adva
 
 No. Existing surveys keep the exact styling they were saved with — they load on the Classic theme, which reproduces the previous look. New design options are opt-in.
 
+= Can I show the same survey in more than one place? =
+
+Yes. Go to **Survey Forms &rarr; Surveys** and add one there instead of building it straight onto a page. Each entry holds a single survey and gets its own shortcode, shown in the ShortCode column of the list — click it to copy. Paste `[survey-form-block id="123"]` into any page, post, widget, or into a theme template with `do_shortcode()`, and the survey appears there. Every copy writes to the same set of responses, and editing the survey once updates all of them.
+
+= Do I have to use the shortcode? =
+
+No. Dropping the Survey Form Block straight onto a page works exactly as it always has, and surveys built that way are untouched by this. The Surveys screen is there for when you want one survey in several places.
+
 = Does it work with any WordPress theme? =
 
 Yes, it will work with any standard WordPress theme.
@@ -134,6 +161,10 @@ Yes, you can change block settings from the Gutenberg block editor's right sideb
 
 Yes. A theme writes its palette into the normal Style controls, so every color, border and padding stays editable afterwards.
 
+= Does it work with page caching? =
+
+Yes. Submissions are not tied to a nonce that expires, so a visitor landing on a cached page can still respond. Flooding is limited per IP address instead, and the thresholds are filterable.
+
 = How many times can I reuse a block? =
 
 You can use unlimited times as you want.
@@ -145,8 +176,9 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Screenshots ==
 
-1. Default
-2. Settings
+1. A survey on the front end
+2. Building and styling a survey in the block editor
+3. Reusable surveys, each with a click-to-copy shortcode
 
 
 == Changelog ==
@@ -165,6 +197,25 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * New: Block variations so the inserter offers ready-styled surveys;
 * New: Responsive question spacing, max-width and a configurable column-stacking breakpoint;
 * New: Demo & Help dashboard with licence activation;
+* Security: The endpoint that records a form's field labels now requires the edit_posts capability. It previously checked only a nonce, so any logged-in user could overwrite the field labels of any form on the site;
+* Security: Submission payloads are now sanitised value by value instead of as one blob, and the submitter-supplied creator id is cast to an integer;
+* Fixed: Multi-line answers no longer lose their line breaks, and answers containing quotation marks are no longer discarded on save;
+* Fixed: A failed submission now shows an error instead of a thank-you message. Previously the response was ignored, so a rejected request looked like a success while the answer was lost;
+* Fixed: Responses submitted from a cached page are no longer rejected. The public endpoint required a nonce that expires after 24 hours, so on sites with page caching real responses were being turned away; submissions are now protected by per-address rate limiting, which caching cannot invalidate;
+* New: Submission throttling with the svb_submission_rate_limit, svb_submission_rate_window and svb_client_ip filters for sites behind a reverse proxy;
+* Fixed: Switch / Toggle answers are stored as readable words instead of true and false, and each switch can now carry its own on and off wording (Yes/No, Agreed/Declined, and so on). Responses recorded earlier still display correctly;
+* New: Responses can be edited and deleted from the Survey Responses screen, individually or several at once;
+* New: Deleting a response now asks for confirmation in a styled dialog rather than a browser alert, with keyboard support and focus starting on Cancel;
+* New: Surveys can now be saved in one place and reused - add one under Survey Forms &rarr; Surveys, copy its shortcode from the ShortCode column, and paste `[survey-form-block id="123"]` into any page, post, widget or template. Surveys placed directly on a page are unaffected and keep working as before;
+* New: A Refresh button on the Survey Responses screen pulls in responses that arrived after the page was opened, without losing the survey, search or sorting you were looking at;
+* Improved: The Survey Responses screen has been redesigned - one rounded card instead of stacked strips, a heading that lines up with the table, icons on the row actions, dates split into day and time, a placeholder for unanswered questions, and clearer sorting and selection states;
+* Fixed: The survey and per-page pickers had lost their dropdown arrow, so they looked like plain text fields;
+* Improved: Field settings in the block inspector now use consistent labels and spacing, with Disable and Required grouped together;
+* Fixed: A survey saved before a styling option existed no longer renders as a blank space;
+* Fixed: An empty form id is no longer accepted, and uninstalling now removes the plugin tables correctly;
+* Improved: The submissions screen was rebuilt without DataTables, jQuery and the Tailwind browser compiler - 485 KB of third-party assets replaced by 10 KB - and gained search, sorting, paging and a submitted-on column;
+* Improved: Added database indexes on form id; both tables were scanned in full on every lookup, and on every post save;
+* Improved: Plugin code is no longer loaded on front-end requests that do not need it, and the schema check no longer runs on every page load;
 * Fixed: Radio groups now get a unique name — two radio questions, or two surveys on one page, no longer share a selection;
 * Fixed: Number, phone, URL and date fields now inherit the same styling as text fields instead of raw browser chrome;
 * Fixed: Inputs now have a visible focus ring; the previous rule removed the outline without replacing it;

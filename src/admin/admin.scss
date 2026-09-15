@@ -1,0 +1,844 @@
+/**
+ * Submissions list screen.
+ *
+ * Replaces the runtime Tailwind build and the DataTables stylesheet. Sized and
+ * coloured to sit naturally inside wp-admin rather than to look like a separate
+ * application: wp-admin's own metrics (40px controls, 13px body text) are kept,
+ * and the plugin's purple is used only for accents, never as chrome.
+ *
+ * This stylesheet is enqueued by listPage() alone, so the few unscoped selectors
+ * near the top only ever apply to that one screen.
+ */
+
+/* ------------------------------- palette --------------------------------- */
+
+$accent: #4527a4;
+$accentSoft: #f5f2fe;
+$accentLine: #ddd4f8;
+$ink: #1d2327;
+$inkSoft: #3c434a;
+$muted: #646970;
+$faint: #8c8f94;
+$border: #e4e4e7;
+$borderStrong: #c9c9cf;
+$surface: #fff;
+$zebra: #fbfbfc;
+$danger: #c9282a;
+$dangerSoft: #fdf3f3;
+$ok: #17692f;
+$okSoft: #f0f9f2;
+$warnSoft: #fffaeb;
+$warnInk: #7a5a00;
+
+$radius: 10px;
+$control: 7px;
+$max: 1400px;
+$shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
+
+/* ------------------------------ page header ------------------------------ */
+
+.svbWrap {
+	// The card below is centred with a max width. Left-aligning the heading
+	// against the admin menu instead left it visibly off the card's edge.
+	> h1 {
+		max-width: $max;
+		margin: 26px auto 3px;
+		padding: 0;
+		font-size: 23px;
+		font-weight: 600;
+		line-height: 1.3;
+		color: $ink;
+	}
+
+	> .svbSubhead {
+		max-width: $max;
+		margin: 0 auto 18px;
+		font-size: 13px;
+		line-height: 1.5;
+		color: $muted;
+	}
+
+	// WordPress injects admin notices directly after the heading; keep them on
+	// the same column as the rest of the screen.
+	> .notice,
+	> .updated,
+	> .error {
+		max-width: $max;
+		margin-inline: auto;
+	}
+
+	@media (max-width: 782px) {
+		> h1,
+		> .svbSubhead { padding-inline: 12px; }
+	}
+}
+
+/* --------------------------------- shell --------------------------------- */
+
+.svbAdmin {
+	max-width: $max;
+	margin: 0 auto 40px;
+	color: $ink;
+	font-size: 13px;
+
+	* { box-sizing: border-box; }
+
+	// One card holds the toolbar, notices, table and pager, so the screen reads
+	// as a single object instead of a stack of separately bordered strips.
+	.svbPanel {
+		background: $surface;
+		border: 1px solid $border;
+		border-radius: $radius;
+		box-shadow: $shadow;
+		overflow: hidden;
+	}
+
+	&.isBusy {
+		cursor: progress;
+
+		.svbTable,
+		.svbBulkBar { opacity: .55; pointer-events: none; }
+	}
+
+	/* -------------------------------- toolbar ------------------------------- */
+
+	.svbToolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 14px 18px;
+		padding: 16px 18px;
+		background: linear-gradient(#fff, #fcfcfd);
+		border-bottom: 1px solid $border;
+	}
+
+	.svbField {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		min-width: 0;
+
+		label {
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: .07em;
+			color: $faint;
+		}
+
+		// wp-admin's forms.css sets min-height: 40px on select and on the text
+		// input types, with no media query. min-height beats height, so any
+		// smaller value here is ignored; 40 is what these actually draw at.
+		select,
+		input[type="search"] {
+			height: 40px;
+			min-width: 190px;
+			max-width: 280px;
+			padding: 0 12px;
+			border: 1px solid $borderStrong;
+			border-radius: $control;
+			// Colour only. The shorthand would drop the arrow image below.
+			background-color: $surface;
+			color: $ink;
+			font-size: 13px;
+			line-height: 38px;
+			box-shadow: 0 1px 1px rgba(16, 24, 40, .03);
+			transition: border-color .12s ease, box-shadow .12s ease;
+
+			&:hover { border-color: $muted; }
+
+			&:focus {
+				outline: none;
+				border-color: $accent;
+				box-shadow: 0 0 0 3px rgba(69, 39, 164, .14);
+			}
+		}
+
+		// Our own chevron. The previous `background: $surface` shorthand reset
+		// wp-admin's arrow image, leaving the pickers looking like text inputs.
+		select {
+			min-width: 200px;
+			appearance: none;
+			-webkit-appearance: none;
+			padding-right: 34px;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23646970' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+			background-repeat: no-repeat;
+			background-position: right 12px center;
+			background-size: 12px;
+			cursor: pointer;
+		}
+	}
+
+	.svbSearch {
+		position: relative;
+		display: flex;
+
+		svg {
+			position: absolute;
+			left: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $faint;
+			pointer-events: none;
+		}
+
+		input[type="search"] { padding-left: 34px; }
+	}
+
+	// Bottom margin of 6px against 40px controls puts the pill's centre on the
+	// controls' centre, which flex-end alone would not.
+	.svbCount {
+		display: inline-flex;
+		align-items: center;
+		height: 28px;
+		margin: 0 0 6px auto;
+		padding: 0 12px;
+		border-radius: 999px;
+		background: $accentSoft;
+		color: $accent;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.svbRefresh {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		height: 40px;
+		padding: 0 16px;
+		border: 1px solid $borderStrong;
+		border-radius: $control;
+		background: $surface;
+		color: $inkSoft;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 1;
+		white-space: nowrap;
+		cursor: pointer;
+		box-shadow: 0 1px 1px rgba(16, 24, 40, .03);
+		transition: border-color .12s ease, color .12s ease, background-color .12s ease;
+
+		svg {
+			display: block;
+			flex: none;
+		}
+
+		&:hover:not(:disabled) {
+			border-color: $accent;
+			background: $accentSoft;
+			color: $accent;
+		}
+
+		&:disabled {
+			opacity: .6;
+			cursor: default;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $accent;
+			outline-offset: 1px;
+		}
+
+		// Only the icon turns. Spinning the label too would make it unreadable
+		// for as long as the request takes.
+		&.isBusy {
+			border-color: $accentLine;
+			background: $accentSoft;
+			color: $accent;
+
+			svg { animation: svbSpin .8s linear infinite; }
+		}
+	}
+
+	/* ------------------------------- bulk bar ------------------------------- */
+
+	.svbBulkBar {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 11px 18px;
+		background: $accentSoft;
+		border-bottom: 1px solid $accentLine;
+		color: $accent;
+		font-weight: 600;
+
+		button {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			height: 30px;
+			padding: 0 12px;
+			border: 1px solid $borderStrong;
+			border-radius: 6px;
+			background: $surface;
+			color: $inkSoft;
+			font: inherit;
+			font-weight: 500;
+			cursor: pointer;
+			transition: border-color .12s ease, color .12s ease, background-color .12s ease;
+
+			svg {
+				display: block;
+				flex: none;
+			}
+
+			&:hover:not(:disabled) { border-color: $accent; color: $accent; }
+			&:disabled { opacity: .5; cursor: default; }
+			&:focus-visible { outline: 2px solid $accent; outline-offset: 1px; }
+
+			&.svbDanger {
+				border-color: rgba(201, 40, 42, .35);
+				color: $danger;
+
+				&:hover:not(:disabled) { background: $danger; border-color: $danger; color: #fff; }
+			}
+		}
+	}
+
+	/* -------------------------------- notices ------------------------------- */
+
+	.svbNotice {
+		display: flex;
+		align-items: flex-start;
+		gap: 9px;
+		padding: 11px 18px;
+		background: $warnSoft;
+		border-bottom: 1px solid $border;
+		color: $warnInk;
+		line-height: 1.5;
+
+		svg {
+			flex: none;
+			margin-top: 1px;
+		}
+
+		&.isOk {
+			background: $okSoft;
+			border-bottom-color: #cfe9d6;
+			color: $ok;
+		}
+
+		&.isError {
+			background: $dangerSoft;
+			border-bottom-color: #f3cfd0;
+			color: $danger;
+		}
+
+		// The whole-screen failure state is the only child of the card.
+		&:only-child { border-bottom: 0; }
+	}
+
+	/* -------------------------- loading / empty ----------------------------- */
+
+	.svbLoading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 64px 18px;
+		color: $muted;
+
+		svg { animation: svbSpin .8s linear infinite; }
+	}
+
+	.svbEmpty {
+		padding: 56px 24px 60px;
+		text-align: center;
+
+		.svbEmptyIcon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 52px;
+			height: 52px;
+			margin-bottom: 16px;
+			border-radius: 50%;
+			background: $accentSoft;
+			color: $accent;
+		}
+
+		h2 {
+			margin: 0 0 6px;
+			font-size: 16px;
+			font-weight: 600;
+			color: $ink;
+		}
+
+		p {
+			max-width: 46ch;
+			margin: 0 auto;
+			color: $muted;
+			line-height: 1.6;
+		}
+	}
+
+	/* --------------------------------- table -------------------------------- */
+
+	.svbTableScroll { overflow-x: auto; }
+
+	.svbTable {
+		width: 100%;
+		border-collapse: collapse;
+
+		th,
+		td {
+			padding: 13px 16px;
+			text-align: left;
+			vertical-align: top;
+			border-bottom: 1px solid $border;
+			white-space: pre-wrap;
+			// break-word, not anywhere: anywhere also feeds into the min-content
+			// width, which let the browser squeeze columns down to a few
+			// characters and split short answers across lines.
+			overflow-wrap: break-word;
+		}
+
+		// Deliberately not sticky. The wrapper needs `overflow-x: auto` for wide
+		// tables, which makes it the scrollport; a sticky header offset from the
+		// admin bar then lands 32px down inside that container and paints over
+		// the first data row.
+		//
+		// Padding is zero only on the sortable headers, whose <button> supplies
+		// it instead so the whole cell is clickable. Every other header keeps the
+		// normal cell padding - without it the checkbox column sat left of the
+		// checkboxes beneath it.
+		thead th {
+			padding: 0;
+			background: #fafafb;
+			border-bottom: 1px solid $borderStrong;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: .07em;
+			color: $faint;
+			white-space: nowrap;
+			vertical-align: middle;
+
+			&.svbCheck,
+			&.svbNum,
+			&.svbDate,
+			&.svbActions { padding: 12px 16px; }
+		}
+
+		thead button {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			width: 100%;
+			padding: 12px 16px;
+			border: 0;
+			background: none;
+			color: inherit;
+			font: inherit;
+			font-size: inherit;
+			font-weight: inherit;
+			text-transform: inherit;
+			letter-spacing: inherit;
+			text-align: left;
+			cursor: pointer;
+			transition: color .12s ease;
+
+			&:hover { color: $accent; }
+
+			&:focus-visible {
+				outline: 2px solid $accent;
+				outline-offset: -2px;
+			}
+		}
+
+		.svbSort {
+			display: inline-flex;
+			flex: none;
+			color: currentColor;
+
+			svg { display: block; }
+
+			.svbSortUp,
+			.svbSortDown { opacity: .3; }
+
+			&.isAsc {
+				color: $accent;
+
+				.svbSortUp { opacity: 1; }
+			}
+
+			&.isDesc {
+				color: $accent;
+
+				.svbSortDown { opacity: 1; }
+			}
+		}
+
+		tbody tr { transition: background-color .1s ease; }
+
+		tbody tr:nth-child(even) { background: $zebra; }
+
+		tbody tr:hover { background: $accentSoft; }
+
+		tbody tr:last-child td { border-bottom: 0; }
+
+		tbody td {
+			max-width: 340px;
+			color: $inkSoft;
+			line-height: 1.5;
+		}
+
+		// The leading answer is what identifies a row, so it carries the weight.
+		tbody .svbCheck + td {
+			color: $ink;
+			font-weight: 600;
+		}
+
+		.svbDash { color: #c6c7ca; }
+
+		tbody .svbCheck { padding-top: 15px; }
+
+		tbody .svbActions { padding-top: 8px; }
+
+		.svbNum {
+			width: 1%;
+			color: $muted;
+			font-variant-numeric: tabular-nums;
+			white-space: nowrap;
+		}
+
+		.svbDate {
+			width: 1%;
+			white-space: nowrap;
+			font-variant-numeric: tabular-nums;
+
+			.svbDay { display: block; }
+
+			.svbTime {
+				display: block;
+				margin-top: 2px;
+				font-size: 11px;
+				color: $faint;
+			}
+		}
+
+		.svbCheck {
+			width: 1%;
+			white-space: nowrap;
+			text-align: left;
+
+			input[type="checkbox"] {
+				display: block;
+				width: 17px;
+				height: 17px;
+				margin: 0;
+				border-radius: 4px;
+				border-color: $borderStrong;
+				cursor: pointer;
+
+				// wp-admin already draws a white tick, so only the box recolours.
+				&:checked {
+					background: $accent;
+					border-color: $accent;
+				}
+
+				&:focus {
+					border-color: $accent;
+					box-shadow: 0 0 0 3px rgba(69, 39, 164, .18);
+				}
+			}
+		}
+
+		.svbActions {
+			width: 1%;
+			white-space: nowrap;
+
+			button {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				height: 30px;
+				padding: 0 10px;
+				margin-right: 5px;
+				border: 1px solid $borderStrong;
+				border-radius: 6px;
+				background: $surface;
+				color: $inkSoft;
+				font: inherit;
+				font-size: 12px;
+				font-weight: 500;
+				cursor: pointer;
+				transition: border-color .12s ease, color .12s ease, background-color .12s ease;
+
+				svg {
+					display: block;
+					flex: none;
+				}
+
+				&:last-child { margin-right: 0; }
+				&:hover:not(:disabled) { border-color: $accent; color: $accent; }
+				&:disabled { opacity: .45; cursor: default; }
+				&:focus-visible { outline: 2px solid $accent; outline-offset: 1px; }
+
+				&.svbPrimary {
+					border-color: $accent;
+					background: $accent;
+					color: #fff;
+
+					&:hover:not(:disabled) { filter: brightness(1.14); color: #fff; }
+				}
+
+				&.svbLinkDanger {
+					border-color: transparent;
+					background: none;
+					color: $danger;
+
+					&:hover:not(:disabled) {
+						border-color: rgba(201, 40, 42, .35);
+						background: $dangerSoft;
+						color: $danger;
+					}
+				}
+			}
+		}
+
+		tbody tr.isEditing {
+			background: #fffdf3;
+			box-shadow: inset 3px 0 0 #dba617;
+		}
+
+		.svbEditInput {
+			width: 100%;
+			min-width: 160px;
+			min-height: 32px;
+			padding: 6px 9px;
+			border: 1px solid $borderStrong;
+			border-radius: 6px;
+			font: inherit;
+			line-height: 1.4;
+			resize: vertical;
+			field-sizing: content;
+
+			&:focus {
+				outline: none;
+				border-color: $accent;
+				box-shadow: 0 0 0 3px rgba(69, 39, 164, .14);
+			}
+		}
+	}
+
+	/* --------------------------------- pager -------------------------------- */
+
+	.svbPager {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 14px;
+		padding: 13px 18px;
+		background: #fcfcfd;
+		border-top: 1px solid $border;
+		color: $muted;
+		font-variant-numeric: tabular-nums;
+
+		button {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			height: 32px;
+			padding: 0 13px;
+			border: 1px solid $borderStrong;
+			border-radius: 6px;
+			background: $surface;
+			color: $inkSoft;
+			font: inherit;
+			font-weight: 500;
+			cursor: pointer;
+			transition: border-color .12s ease, color .12s ease, background-color .12s ease;
+
+			svg {
+				display: block;
+				flex: none;
+			}
+
+			&:hover:not(:disabled) {
+				border-color: $accent;
+				background: $accentSoft;
+				color: $accent;
+			}
+
+			&:disabled {
+				opacity: .45;
+				cursor: default;
+			}
+
+			&:focus-visible {
+				outline: 2px solid $accent;
+				outline-offset: 1px;
+			}
+		}
+	}
+
+	@media (max-width: 782px) {
+		margin-inline: 12px;
+
+		.svbToolbar { gap: 12px; }
+
+		.svbField {
+			flex: 1 1 100%;
+
+			select,
+			input[type="search"] {
+				min-width: 0;
+				width: 100%;
+				max-width: none;
+			}
+		}
+
+		.svbSearch { width: 100%; }
+
+		.svbCount { margin: 0; }
+
+		.svbRefresh { margin-left: auto; }
+
+		.svbTable {
+			th,
+			td { padding: 11px 12px; }
+
+			thead th {
+				&.svbCheck,
+				&.svbNum,
+				&.svbDate,
+				&.svbActions { padding: 10px 12px; }
+			}
+
+			thead button { padding: 10px 12px; }
+		}
+	}
+}
+
+/* -------------------------------------------------------------------------- */
+/* Confirmation dialog                                                         */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Sits outside .svbAdmin because wp-admin's own stacking contexts make a nested
+ * overlay unreliable; #wpcontent creates one, so a fixed child of it can end up
+ * painted beneath the admin menu.
+ */
+.svbModalOverlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100100; // above the admin bar (99999)
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: rgba(29, 35, 39, .5);
+	backdrop-filter: blur(2px);
+	animation: svbModalFade .12s ease-out;
+}
+
+.svbModal {
+	width: 100%;
+	max-width: 430px;
+	padding: 26px;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 16px 48px rgba(0, 0, 0, .28);
+	animation: svbModalIn .14s cubic-bezier(.22, .61, .36, 1);
+
+	.svbModalIcon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		margin-bottom: 16px;
+		border-radius: 50%;
+		background: $dangerSoft;
+		color: $danger;
+	}
+
+	h2 {
+		margin: 0 0 8px;
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 1.3;
+		color: $ink;
+	}
+
+	p {
+		margin: 0 0 22px;
+		font-size: 13px;
+		line-height: 1.6;
+		color: $muted;
+	}
+}
+
+.svbModalActions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+
+	button {
+		height: 36px;
+		padding: 0 18px;
+		border: 1px solid $borderStrong;
+		border-radius: 7px;
+		background: #fff;
+		color: $inkSoft;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background-color .12s ease, border-color .12s ease, color .12s ease;
+
+		&:hover:not(:disabled) { border-color: $accent; color: $accent; }
+		&:disabled { opacity: .5; cursor: default; }
+
+		&:focus-visible {
+			outline: 2px solid $accent;
+			outline-offset: 2px;
+		}
+
+		&.svbDanger {
+			border-color: $danger;
+			background: $danger;
+			color: #fff;
+
+			&:hover:not(:disabled) { background: #a81f21; border-color: #a81f21; color: #fff; }
+			&:focus-visible { outline-color: $danger; }
+		}
+
+		&.svbPrimary {
+			border-color: $accent;
+			background: $accent;
+			color: #fff;
+
+			&:hover:not(:disabled) { filter: brightness(1.14); color: #fff; }
+		}
+	}
+}
+
+/* ------------------------------- animation -------------------------------- */
+
+@keyframes svbSpin {
+	from { transform: rotate(0); }
+	to { transform: rotate(360deg); }
+}
+
+@keyframes svbModalFade {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes svbModalIn {
+	from { opacity: 0; transform: translateY(6px) scale(.98); }
+	to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.svbModalOverlay,
+	.svbModal { animation: none; }
+
+	// The disabled state and the changed label still say the refresh is running.
+	.svbAdmin .svbRefresh.isBusy svg,
+	.svbAdmin .svbLoading svg { animation: none; }
+}

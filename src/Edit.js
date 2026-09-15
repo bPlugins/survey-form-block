@@ -76,6 +76,8 @@ const Edit = props => {
 				placeholder: 'Placeholder',
 				classes: '',
 				icon: '',
+				onLabel: 'Yes',
+				offLabel: 'No',
 				isRequired: false,
 				isDisable: false,
 				options: [

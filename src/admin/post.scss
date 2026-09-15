@@ -1,0 +1,68 @@
+/**
+ * ShortCode column on the Surveys list screen.
+ *
+ * Deliberately the same markup, class names and look as the sibling
+ * offcanvas-block plugin, so the two read as one family.
+ */
+
+.bPlAdminShortcode {
+	position: relative;
+	display: inline-block;
+	margin: 0 auto;
+
+	input {
+		width: auto;
+		padding: 4px 10px;
+		border: none;
+		border-radius: 3px;
+		outline: none;
+		background-color: #4527a4;
+		color: #fff;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		font-size: 12px;
+		text-align: center;
+		cursor: pointer;
+
+		&:focus {
+			box-shadow: 0 0 0 2px rgba(69, 39, 164, .35);
+		}
+	}
+
+	// Below the field rather than above it: above, the first row's tooltip
+	// covered the column header.
+	.tooltip {
+		visibility: hidden;
+		position: absolute;
+		top: 145%;
+		left: 50%;
+		z-index: 2;
+		width: 170px;
+		margin-left: -85px;
+		padding: 5px;
+		border-radius: 6px;
+		background-color: #555;
+		color: #fff;
+		font-size: 12px;
+		line-height: 1.4;
+		text-align: center;
+		opacity: 0;
+		transition: opacity .3s;
+
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: transparent transparent #555 transparent;
+		}
+	}
+
+	&:hover .tooltip,
+	input:focus + .tooltip {
+		visibility: visible;
+		opacity: 1;
+	}
+}

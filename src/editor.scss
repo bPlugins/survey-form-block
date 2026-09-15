@@ -658,8 +658,106 @@ $panelBorder: #e0e3eb;
 	}
 }
 
+/* ------------------------- Inspector vertical rhythm ----------------------- */
+
+/**
+ * One spacing scale for every panel.
+ *
+ * The field settings used to pair a bare <label> with a control, and a bare
+ * label carries no margin - so each caption collapsed onto the control above it
+ * and the panel had no rhythm at all. Controls now render their own labels; this
+ * just gives every sibling the same gap.
+ */
+.svPanelBody,
 .svbDesignPanel {
 	.components-base-control {
-		margin-bottom: 12px;
+		margin-bottom: 16px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
+
+	/* WP still emits this wrapper on some controls; keep it from doubling up. */
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+
+	.components-base-control__help {
+		margin-top: 4px;
+		margin-bottom: 0;
+		font-size: 11.5px;
+		line-height: 1.5;
+		color: #757a8a;
+	}
+}
+
+.svbFieldSettings {
+	display: flex;
+	flex-direction: column;
+
+	> .components-base-control,
+	> .svbOptionList,
+	> .svbCheckGroup,
+	> .svbYearRange {
+		margin-bottom: 16px;
+	}
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+/* Disable / Required sit together as one decision, not two stray rows. */
+.svbCheckGroup {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 20px;
+	padding: 10px 12px;
+	border: 1px solid $panelBorder;
+	border-radius: 4px;
+	background: #f8f9fb;
+
+	.components-base-control {
+		margin-bottom: 0 !important;
+	}
+
+	.components-checkbox-control__label {
+		font-size: 12px;
+	}
+}
+
+.svbOptionList {
+	.svbOptionListLabel {
+		display: block;
+		margin-bottom: 8px;
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: .02em;
+		color: #1e1e1e;
+	}
+}
+
+.svbToggleLabels {
+	padding: 12px;
+	margin-bottom: 16px;
+	border: 1px solid $panelBorder;
+	border-radius: 4px;
+	background: #f8f9fb;
+
+	.components-base-control:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.svbYearRange {
+	.components-base-control {
+		margin-bottom: 0 !important;
+	}
+}
+
+/* The panel's own footer action needs air above it. */
+.svTabPanel .addField {
+	margin-top: 20px;
 }

@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState } from 'react';
 import { duplicate, remove, loadingIcon } from './utils/icons';
 import { resolveDesign, getDesignClasses } from './utils/designCSS';
+import { withAttributeDefaults } from './utils/attributes';
 import ProgressBar from './Components/FrontEnd/MainEle/ProgressBar';
 import SuccessState from './Components/FrontEnd/MainEle/SuccessState';
 import Text from './Components/FrontEnd/Fields/Text';
@@ -23,15 +24,21 @@ import UrlField from './Components/FrontEnd/Fields/Url';
 /** Field types that cannot host a floating label (no single text input). */
 const NON_FLOATING = ['checkbox', 'radio', 'toggle', 'star_rating', 'opinion_scale', 'nps', 'range_slider', 'section', 'date', ''];
 
-const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireError, setRequireError, formData, setFormData, __, SelectControl, isBackend, fieldTypeOpt, attributes, updateFields, addField, onDuplicateFields, removeField, activeIndex, setActiveIndex, isPremium = false }) => {
+const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireError, setRequireError, formData, setFormData, __, SelectControl, isBackend, fieldTypeOpt, attributes: rawAttributes, updateFields, addField, onDuplicateFields, removeField, activeIndex, setActiveIndex, isPremium = false }) => {
+	// Render-only normalisation: a survey saved before a key existed still draws
+	// correctly, and nothing is written back to the post.
+	const attributes = useMemo(() => withAttributeDefaults(rawAttributes), [rawAttributes]);
 	const { form, fields, cId } = attributes;
 	const { id, creator_id, title, description, successMsg } = form;
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [missing, setMissing] = useState([]);
+	const [submitError, setSubmitError] = useState('');
 
 	const design = useMemo(() => resolveDesign(attributes.design, isPremium), [attributes.design, isPremium]);
 	const { progress, success: successDesign, button, label: labelDesign } = design;
+
+	const errorMessage = __('Sorry, your response could not be sent. Please try again.', 'survey-form-block');
 
 	// Button Area
 	const ActionButtons = (index) => {
@@ -70,20 +77,65 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 		}
 
 		setMissing([]);
+		setSubmitError('');
+
+		// The editor is a preview, not a real endpoint. Show the success state so
+		// the author can style it, without a round trip.
+		if (isBackend) {
+			setSuccess(true);
+			setTimeout(() => setSuccess(false), parseInt(successDesign.duration) || 2000);
+			return;
+		}
+
+		// Toggles are held as booleans so "required" still means "must be on",
+		// but a stored response should read the way the visitor saw it - "Yes",
+		// not "true". Convert on the way out only.
+		const readableAnswers = () => {
+			const payload = { ...formData };
+
+			fields.forEach(field => {
+				if ('toggle' !== field.type || field.isDisable) {
+					return;
+				}
+
+				payload[field.id] = formData[field.id]
+					? (field.onLabel || 'Yes')
+					: (field.offLabel || 'No');
+			});
+
+			return payload;
+		};
+
+		const clearAnswers = () => {
+			const tempFormData = {};
+			const { id: formId, title: formTitle, creator_id: formCreator } = formData;
+			Object.keys(formData).map(key => tempFormData[key] = '');
+			setFormData({ ...tempFormData, id: formId, title: formTitle, creator_id: formCreator });
+		};
+
 		setLoading(true);
-		postData(`${window.svbData?.ajaxUrl}`, formData).then(
-			() => {
+
+		postData(`${window.svbData?.ajaxUrl}`, readableAnswers()).then(
+			(res) => {
 				setLoading(false);
+
+				// The response used to be ignored entirely, so a rejected request
+				// still showed "thank you" while the answers were thrown away.
+				// wp_send_json_error() puts the reason in `data`; prefer it, since
+				// it explains *why* (rate limited, missing form id).
+				if (!res || false === res.success) {
+					setSubmitError('string' === typeof res?.data && res.data ? res.data : errorMessage);
+					return;
+				}
+
 				setSuccess(true);
-				const tempFormData = {};
-				const { id: formId, title: formTitle, creator_id: formCreator } = formData;
-				Object.keys(formData).map(key => tempFormData[key] = '');
-				setFormData({ ...tempFormData, id: formId, title: formTitle, creator_id: formCreator });
-				setTimeout(() => {
-					setSuccess(false);
-				}, parseInt(successDesign.duration) || 2000);
+				clearAnswers();
+				setTimeout(() => setSuccess(false), parseInt(successDesign.duration) || 2000);
 			}
-		);
+		).catch(() => {
+			setLoading(false);
+			setSubmitError(errorMessage);
+		});
 	};
 
 	const progressEl = progress.enable && <ProgressBar fields={fields} formData={formData} design={design} />;
@@ -198,6 +250,12 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 		{/* Require Notice */}
 		{requireError && <div className="svb_required_notice">
 			<p className='svb_notice'>Required Field Missing</p>
+		</div>}
+
+		{/* Submission failure. Previously swallowed, which showed a thank-you
+			message while the answers were discarded. */}
+		{submitError && <div className="svb_submit_error" role="alert">
+			<p className='svb_notice'>{submitError}</p>
 		</div>}
 
 	</form>;

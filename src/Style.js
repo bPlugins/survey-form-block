@@ -1,8 +1,12 @@
 import { getBoxValue } from '../../bpl-tools/utils/functions';
 import { getBorderCSS, getColorsCSS, getTypoCSS } from '../../bpl-tools/utils/getCSS';
 import { getDesignCSS, TEXT_INPUTS } from './utils/designCSS';
+import { withAttributeDefaults } from './utils/attributes';
 
-const Style = ({ attributes, id, isPremium = false }) => {
+const Style = ({ attributes: rawAttributes, id, isPremium = false }) => {
+	// A block saved before a style sub-key existed would otherwise hand undefined
+	// to getBoxValue()/getBorderCSS() and throw, blanking the whole survey.
+	const attributes = withAttributeDefaults(rawAttributes);
 	const { fields, labelS, input, radioCheckLabelTypo, radioCheckLabelColor, button, form } = attributes;
 	const { bgColor, padding, border, titleTypo, titleColor, titleAlign, titleMargin, descriptionTypo, descriptionColor, descriptionAlign, descriptionMargin, successMsgColor } = form;
 

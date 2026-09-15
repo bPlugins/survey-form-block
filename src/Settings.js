@@ -140,6 +140,23 @@ const Settings = ({ updateObject, attributes, setAttributes, activeIndex, addFie
 							}
 						})()}
 
+						{'toggle' === type && <div className='svbToggleLabels'>
+							<TextControl
+								label={__('Label when on', 'survey-form-block')}
+								value={myFields.onLabel ?? 'Yes'}
+								placeholder='Yes'
+								help={__('Stored with the response, so it reads as words rather than true/false.', 'survey-form-block')}
+								onChange={(val) => updateFields(activeIndex, 'onLabel', val)}
+							/>
+
+							<TextControl
+								label={__('Label when off', 'survey-form-block')}
+								value={myFields.offLabel ?? 'No'}
+								placeholder='No'
+								onChange={(val) => updateFields(activeIndex, 'offLabel', val)}
+							/>
+						</div>}
+
 						{myFields.type && <SelectControl label={__('Select Field Type', 'survey-form-block')} options={[{ label: 'Select', value: '' }, ...fieldTypeOpt]} value={myFields.type} onChange={(val) => {
 							updateFields(activeIndex, 'type', val);
 							setFormData({ ...formData, [label]: val === 'checkbox' ? [] : '' });

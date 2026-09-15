@@ -1,65 +1,96 @@
-
-
-import { SelectControl, TextControl, TextareaControl, __experimentalNumberControl as NumberControl, CheckboxControl } from '@wordpress/components';
-import { duplicate, remove } from '../../../utils/icons';
+import { CheckboxControl, SelectControl, TextControl, TextareaControl, __experimentalNumberControl as NumberControl } from '@wordpress/components';
 import { produce } from 'immer';
-import { valueConvert } from '../../../utils/functions';
-
-import Width from '../FieldAttr/Size';
-import { LabelPositionOpt } from '../../../utils/options';
 import { __ } from '@wordpress/i18n';
 
-const MultipleInput = ({ updateFields, column, options, index, size, isRequired, isDisable, label, labelPosition, classes, help, addChildField, onDuplicateChildField, onRemoveChildField }) => {
+import { duplicate, remove } from '../../../utils/icons';
+import { valueConvert } from '../../../utils/functions';
+import { LabelPositionOpt } from '../../../utils/options';
+import Width from '../FieldAttr/Size';
 
-    return <>
-        {/* label  */}
-        <label htmlFor='label'>{__('Label', 'survey-form-block')}</label>
-        <TextControl id='label' value={label} placeholder='Label Here' onChange={(val) => updateFields(index, 'label', val)} />
-        {/* label position  */}
-        <label htmlFor='labelPosition'>{__('Label Position', 'survey-form-block')}</label>
-        <SelectControl id='labelPosition' value={labelPosition} options={LabelPositionOpt} onChange={(val) => updateFields(index, 'labelPosition', val)} />
-        {/* name  */}
-        {/*  <TextControl value={name} placeholder='Name' onChange={(val) => updateFields(index, 'name', val)} />*/}
-        {/* placeholder  */}
-        {/* <label htmlFor='placeholder'>Placeholder</label>
-        <TextControl id='placeholder' value={placeholder} placeholder='Placeholder here' onChange={(val) => updateFields(index, 'placeholder', val)} /> */}
-        {/* isDisable  */}
-        <CheckboxControl label="Disable" checked={isDisable} onChange={(val) => updateFields(index, 'isDisable', val)} />
-        {/* isRequired  */}
-        {!isDisable && <CheckboxControl label="Required" checked={isRequired} onChange={(val) => updateFields(index, 'isRequired', val)} />}
-        {/* help  */}
-        <label htmlFor='help'>{__('Help', 'survey-form-block')}</label>
-        <TextareaControl id='help' value={help} placeholder='Help Text' onChange={(val) => updateFields(index, 'help', val)} />
-        <div className='inputArea '>
-            {options?.map((option, childIndex) => {
-                return <div key={childIndex} className="single">
-                    <TextControl value={option?.label} onChange={(val) => {
-                        const newOptions = produce(options, draft => {
-                            draft[childIndex] = {
-                                label: val,
-                                value: valueConvert(val)
-                            }
-                        })
-                        updateFields(index, 'options', newOptions)
-                    }} />
-                    <div className="icon">
-                        <button onClick={() => onDuplicateChildField(index, childIndex)}>{duplicate}</button>
-                        <button onClick={() => onRemoveChildField(index, childIndex)}>{remove}</button>
-                    </div>
-                </div>
-            })}
-            <button className='subBtn' onClick={() => addChildField(index)}>Add</button>
-        </div>
-        {/* width  */}
-        <Width id='size' value={size} onChange={val => updateFields(index, 'size', val)} />
-        {/* column  */}
-        <label htmlFor='column'>{__('Column', 'survey-form-block')}</label>
-        <NumberControl id='column' updateFields={updateFields} value={column} onChange={(val) => {
-            updateFields(index, 'column', val)
-        }} />
-        {/* classes  */}
-        <label htmlFor='classes'>{__('Class', 'survey-form-block')}</label>
-        <TextControl id='classes' value={classes} placeholder='class name' onChange={(val) => updateFields(index, 'classes', val)} />
-    </>
-}
+/**
+ * Settings for the choice fields (checkbox group, radio, dropdown).
+ */
+const MultipleInput = ({ updateFields, column, options, index, size, isRequired, isDisable, label, labelPosition, classes, help, addChildField, onDuplicateChildField, onRemoveChildField }) => {
+	return <div className="svbFieldSettings">
+		<TextControl
+			label={__('Label', 'survey-form-block')}
+			value={label}
+			placeholder={__('Label here', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'label', val)}
+		/>
+
+		<SelectControl
+			label={__('Label Position', 'survey-form-block')}
+			value={labelPosition}
+			options={LabelPositionOpt}
+			onChange={(val) => updateFields(index, 'labelPosition', val)}
+		/>
+
+		<TextareaControl
+			label={__('Help Text', 'survey-form-block')}
+			value={help}
+			placeholder={__('Shown in a tooltip beside the label', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'help', val)}
+		/>
+
+		<div className='svbOptionList'>
+			<span className='svbOptionListLabel'>{__('Choices', 'survey-form-block')}</span>
+
+			<div className='inputArea'>
+				{options?.map((option, childIndex) => (
+					<div key={childIndex} className="single">
+						<TextControl
+							value={option?.label}
+							onChange={(val) => {
+								const newOptions = produce(options, draft => {
+									draft[childIndex] = { label: val, value: valueConvert(val) };
+								});
+								updateFields(index, 'options', newOptions);
+							}}
+						/>
+
+						<div className="icon">
+							<button type='button' title={__('Duplicate', 'survey-form-block')} onClick={() => onDuplicateChildField(index, childIndex)}>{duplicate}</button>
+							<button type='button' title={__('Remove', 'survey-form-block')} onClick={() => onRemoveChildField(index, childIndex)}>{remove}</button>
+						</div>
+					</div>
+				))}
+
+				<button type='button' className='subBtn' onClick={() => addChildField(index)}>{__('Add Choice', 'survey-form-block')}</button>
+			</div>
+		</div>
+
+		<Width value={size} onChange={val => updateFields(index, 'size', val)} />
+
+		<NumberControl
+			label={__('Choice Columns', 'survey-form-block')}
+			value={column}
+			min={1}
+			max={4}
+			onChange={(val) => updateFields(index, 'column', val)}
+		/>
+
+		<div className="svbCheckGroup">
+			<CheckboxControl
+				label={__('Disable', 'survey-form-block')}
+				checked={isDisable}
+				onChange={(val) => updateFields(index, 'isDisable', val)}
+			/>
+
+			{!isDisable && <CheckboxControl
+				label={__('Required', 'survey-form-block')}
+				checked={isRequired}
+				onChange={(val) => updateFields(index, 'isRequired', val)}
+			/>}
+		</div>
+
+		<TextControl
+			label={__('CSS Class', 'survey-form-block')}
+			value={classes}
+			placeholder={__('class name', 'survey-form-block')}
+			onChange={(val) => updateFields(index, 'classes', val)}
+		/>
+	</div>;
+};
+
 export default MultipleInput;

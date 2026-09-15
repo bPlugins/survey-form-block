@@ -1,0 +1,31 @@
+# Files excluded from `npm run plugin-zip`.
+#
+# The premium Freemius SDK is the important one. Without this list wp-scripts
+# zips the whole working directory, which would put vendor/freemius into the
+# wordpress.org build - making BPSVB_HAS_PRO true for every free install and
+# publishing the wp_org_gatekeeper secret from includes/fs.php.
+#
+# Freemius' own deployment strips the @fs_premium_only paths declared in the
+# plugin header; this covers the case where the zip is built by hand instead.
+
+vendor/freemius
+includes/LicenseActivation.php
+
+# Development
+node_modules
+src
+.git
+.github
+.vscode
+.eslintrc.js
+.gitignore
+.distignore
+.DS_Store
+webpack.config.js
+package.json
+package-lock.json
+todo.txt
+readme.md
+
+# Build artefacts that should not ship
+build/*.map

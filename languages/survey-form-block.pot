@@ -1,22 +1,28 @@
-# Copyright (C) 2025 bPlugins
+# Copyright (C) 2026 bPlugins
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Survey Form Block 1.0.1\n"
+"Project-Id-Version: Survey Form Block 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/survey-form-block\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-25T10:46:37+00:00\n"
+"POT-Creation-Date: 2026-09-15T11:05:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
 
 #. Plugin Name of the plugin
 #: survey-form-block.php
+#: includes/AdminMenu.php:57
 msgid "Survey Form Block"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: survey-form-block.php
+msgid "https://bplugins.com/products/survey-form-block"
 msgstr ""
 
 #. Description of the plugin
@@ -34,32 +40,1425 @@ msgstr ""
 msgid "http://bplugins.com"
 msgstr ""
 
-#: inc/AdminMenu.php:33
-#: inc/AdminMenu.php:34
+#: includes/AdminMenu.php:58
+msgid "Survey Forms"
+msgstr ""
+
+#: includes/AdminMenu.php:68
+#: includes/AdminMenu.php:69
 msgid "Survey List"
 msgstr ""
 
-#: block.json
+#: includes/AdminMenu.php:77
+msgid "Demo and Help"
+msgstr ""
+
+#: includes/AdminMenu.php:78
+msgid "Demo & Help"
+msgstr ""
+
+#: includes/AdminMenu.php:93
+msgid "Survey Responses"
+msgstr ""
+
+#: includes/AdminMenu.php:94
+msgid "Everything submitted through your survey blocks, newest first."
+msgstr ""
+
+#: includes/PostType.php:43
+#: includes/PostType.php:45
+#: includes/PostType.php:55
+#: includes/PostType.php:56
+msgid "Surveys"
+msgstr ""
+
+#: includes/PostType.php:46
+#: src/admin/Components/Table.js:394
+msgid "Survey"
+msgstr ""
+
+#: includes/PostType.php:47
+#: includes/PostType.php:48
+msgid "Add New Survey"
+msgstr ""
+
+#: includes/PostType.php:49
+msgid "Edit Survey"
+msgstr ""
+
+#: includes/PostType.php:50
+msgid "New Survey"
+msgstr ""
+
+#: includes/PostType.php:51
+msgid "View Survey"
+msgstr ""
+
+#: includes/PostType.php:52
+msgid "Search Surveys"
+msgstr ""
+
+#: includes/PostType.php:53
+msgid "No surveys found"
+msgstr ""
+
+#: includes/PostType.php:54
+msgid "No surveys found in Trash"
+msgstr ""
+
+#: includes/PostType.php:91
+msgid "ShortCode"
+msgstr ""
+
+#: includes/PostType.php:120
+#: src/admin/post.js:47
+msgid "Copy To Clipboard"
+msgstr ""
+
+#: includes/SVBAjax.php:58
+msgid "Your session has expired. Please reload the page."
+msgstr ""
+
+#: includes/SVBAjax.php:62
+msgid "You do not have permission to manage responses."
+msgstr ""
+
+#: includes/SVBAjax.php:82
+msgid "Nothing was deleted."
+msgstr ""
+
+#: includes/SVBAjax.php:100
+msgid "Response not found."
+msgstr ""
+
+#: includes/SVBAjax.php:108
+msgid "Nothing to save."
+msgstr ""
+
+#: includes/SVBAjax.php:114
+#: src/admin/Components/Table.js:330
+msgid "The response could not be saved."
+msgstr ""
+
+#: includes/SVBAjax.php:152
+msgid "Too many submissions from this address. Please wait a moment and try again."
+msgstr ""
+
+#: survey-form-block.php:85
+msgid "Help & Demos"
+msgstr ""
+
+#: survey-form-block.php:92
+msgid "Go Pro"
+msgstr ""
+
+#: src/admin/Components/ConfirmDialog.js:97
+#: src/admin/Components/Table.js:585
+msgid "Cancel"
+msgstr ""
+
+#: src/admin/Components/ConfirmDialog.js:106
+msgid "Working…"
+msgstr ""
+
+#: src/admin/Components/Table.js:25
+msgid "Yes"
+msgstr ""
+
+#: src/admin/Components/Table.js:25
+msgid "No"
+msgstr ""
+
+#: src/admin/Components/Table.js:156
+msgid "Could not refresh the responses. Please try again."
+msgstr ""
+
+#: src/admin/Components/Table.js:158
+msgid "Could not load submissions. Please reload the page."
+msgstr ""
+
+#: src/admin/Components/Table.js:178
+msgid "Responses refreshed."
+msgstr ""
+
+#: src/admin/Components/Table.js:187
+msgid "Could not reach the server. Please try again."
+msgstr ""
+
+#: src/admin/Components/Table.js:189
+msgid "Could not reach the server. Please reload the page."
+msgstr ""
+
+#: src/admin/Components/Table.js:294
+msgid "The responses could not be deleted."
+msgstr ""
+
+#. translators: %d: number of responses deleted.
+#: src/admin/Components/Table.js:303
+#, js-format
+msgid "%d response(s) deleted."
+msgstr ""
+
+#: src/admin/Components/Table.js:308
+#: src/admin/Components/Table.js:343
+msgid "Could not reach the server."
+msgstr ""
+
+#: src/admin/Components/Table.js:341
+msgid "Response updated."
+msgstr ""
+
+#: src/admin/Components/Table.js:369
+msgid "Loading submissions…"
+msgstr ""
+
+#: src/admin/Components/Table.js:380
+msgid "No surveys yet"
+msgstr ""
+
+#: src/admin/Components/Table.js:381
+msgid "Add a Survey Form Block to a page and publish it. Responses will appear here."
+msgstr ""
+
+#: src/admin/Components/Table.js:405
+msgid "Search"
+msgstr ""
+
+#: src/admin/Components/Table.js:412
+msgid "Filter responses…"
+msgstr ""
+
+#: src/admin/Components/Table.js:419
+msgid "Per page"
+msgstr ""
+
+#. translators: %d: number of responses.
+#: src/admin/Components/Table.js:428
+#, js-format
+msgid "%d responses"
+msgstr ""
+
+#: src/admin/Components/Table.js:440
+msgid "Refreshing…"
+msgstr ""
+
+#: src/admin/Components/Table.js:440
+msgid "Refresh"
+msgstr ""
+
+#. translators: %d: number selected.
+#: src/admin/Components/Table.js:449
+#, js-format
+msgid "%d selected"
+msgstr ""
+
+#: src/admin/Components/Table.js:456
+msgid "Delete selected"
+msgstr ""
+
+#: src/admin/Components/Table.js:461
+msgid "Clear"
+msgstr ""
+
+#. translators: 1: rows loaded, 2: total stored.
+#: src/admin/Components/Table.js:478
+#, js-format
+msgid "Showing the %1$d most recent of %2$d stored responses."
+msgstr ""
+
+#: src/admin/Components/Table.js:488
+msgid "No fields recorded"
+msgstr ""
+
+#: src/admin/Components/Table.js:489
+msgid "Open the page containing this survey and save it once so its fields are registered."
+msgstr ""
+
+#: src/admin/Components/Table.js:494
+msgid "No matches"
+msgstr ""
+
+#: src/admin/Components/Table.js:494
+msgid "No responses yet"
+msgstr ""
+
+#: src/admin/Components/Table.js:496
+msgid "Try a different search term."
+msgstr ""
+
+#: src/admin/Components/Table.js:497
+msgid "Responses to this survey will show up here as they come in."
+msgstr ""
+
+#: src/admin/Components/Table.js:510
+msgid "Select all responses on this page"
+msgstr ""
+
+#: src/admin/Components/Table.js:525
+msgid "Submitted"
+msgstr ""
+
+#: src/admin/Components/Table.js:530
+msgid "Actions"
+msgstr ""
+
+#: src/admin/Components/Table.js:547
+msgid "Select response"
+msgstr ""
+
+#: src/admin/Components/Table.js:581
+msgid "Save"
+msgstr ""
+
+#: src/admin/Components/Table.js:592
+msgid "Edit"
+msgstr ""
+
+#: src/admin/Components/Table.js:596
+#: src/admin/Components/Table.js:645
+msgid "Delete"
+msgstr ""
+
+#: src/admin/Components/Table.js:611
+msgid "Previous"
+msgstr ""
+
+#. translators: 1: current page, 2: total pages.
+#: src/admin/Components/Table.js:617
+#, js-format
+msgid "Page %1$d of %2$d"
+msgstr ""
+
+#: src/admin/Components/Table.js:624
+msgid "Next"
+msgstr ""
+
+#: src/admin/Components/Table.js:636
+msgid "Delete response"
+msgstr ""
+
+#: src/admin/Components/Table.js:637
+msgid "Delete responses"
+msgstr ""
+
+#: src/admin/Components/Table.js:639
+msgid "This response will be permanently removed. This cannot be undone."
+msgstr ""
+
+#. translators: %d: number of responses.
+#: src/admin/Components/Table.js:642
+#, js-format
+msgid "%d responses will be permanently removed. This cannot be undone."
+msgstr ""
+
+#: src/admin/post.js:42
+msgid "Copied Successfully!"
+msgstr ""
+
+#: src/admin/post.js:43
+msgid "Press Ctrl/Cmd + C to copy"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:22
+msgid "Survey Backdrop"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:28
+msgid "Enable backdrop"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:29
+msgid "Paints the area around the survey card."
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:37
+msgid "Type"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:40
+#: src/Components/Settings/Design/QuestionCardPanel.js:44
+#: src/utils/design.js:708
+#: src/utils/design.js:716
+msgid "Solid"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:41
+#: src/Components/Settings/Design/QuestionCardPanel.js:45
+#: src/utils/design.js:633
+#: src/utils/design.js:675
+#: src/utils/design.js:711
+#: src/utils/design.js:717
+msgid "Gradient"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:42
+#: src/Components/Settings/Design/BackgroundPanel.js:66
+#: src/utils/design.js:718
+msgid "Image"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:50
+#: src/Components/Settings/Design/QuestionCardPanel.js:57
+msgid "Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:74
+msgid "Size"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:77
+msgid "Cover"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:78
+msgid "Contain"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:79
+#: src/utils/design.js:648
+msgid "Auto"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:85
+#: src/Components/Settings/Design/ProgressPanel.js:45
+msgid "Position"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:88
+#: src/utils/design.js:653
+#: src/utils/options.js:7
+msgid "Center"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:89
+#: src/utils/design.js:682
+#: src/utils/options.js:12
+msgid "Top"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:90
+#: src/utils/design.js:683
+msgid "Bottom"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:91
+#: src/utils/design.js:652
+#: src/utils/options.js:6
+#: src/utils/options.js:13
+msgid "Left"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:92
+#: src/utils/design.js:654
+#: src/utils/options.js:8
+msgid "Right"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:99
+msgid "Readability Overlay"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:107
+msgid "Glass Blur"
+msgstr ""
+
+#: src/Components/Settings/Design/BackgroundPanel.js:108
+msgid "Frosts the form over the backdrop. 0 disables it."
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:17
+msgid "Submit Button"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:19
+msgid "Button Label"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:21
+msgid "Submit"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:26
+#: src/Components/Settings/Design/ProgressPanel.js:34
+#: src/utils/options.js:42
+msgid "Style"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:37
+msgid "Button Gradient"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:45
+#: src/Components/Settings/FieldAttr/Size.js:13
+msgid "Width"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:54
+#: src/Settings.js:221
+#: src/Settings.js:234
+msgid "Align"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:63
+#: src/Components/Settings/Design/InputStylePanel.js:30
+msgid "Corner Radius"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:66
+#: src/Components/Settings/Design/InputStylePanel.js:33
+msgid "Inherit"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:71
+#: src/Components/Settings/Design/QuestionCardPanel.js:83
+msgid "Hover Effect"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:81
+msgid "Hover Colours"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:89
+msgid "On Hover"
+msgstr ""
+
+#: src/Components/Settings/Design/ButtonPanel.js:95
+msgid "Transition Speed (ms)"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:17
+msgid "Labels & Dividers"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:19
+msgid "Required Field Marker"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:30
+msgid "Help Icon Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:35
+msgid "Section Divider"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:38
+msgid "Line Style"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:49
+msgid "Line Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:55
+msgid "Line Thickness"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:63
+msgid "Section Heading Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:70
+msgid "Section Description Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:76
+msgid "Question Icons"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:80
+#: src/Components/Settings/Design/Shared.js:17
+#: src/Components/Settings/Design/Shared.js:79
+#: src/Components/Settings/Design/ThemePanel.js:52
+msgid "Pro"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:82
+msgid "Pick an icon per question in the General tab → Fields panel."
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:11
+msgid "Effects & Motion"
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:13
+msgid "Question Entrance"
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:24
+msgid "Timing"
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:31
+msgid "Duration (ms)"
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:40
+msgid "Stagger Between Questions (ms)"
+msgstr ""
+
+#: src/Components/Settings/Design/EffectsPanel.js:52
+msgid "Animations are automatically disabled for visitors who prefer reduced motion."
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:12
+msgid "Indigo Violet"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:13
+msgid "Ocean"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:14
+msgid "Sunset"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:15
+msgid "Forest"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:16
+msgid "Midnight"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:17
+msgid "Blush"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:18
+msgid "Citrus"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:19
+msgid "Aurora"
+msgstr ""
+
+#: src/Components/Settings/Design/GradientField.js:24
+msgid "Gradient CSS"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:17
+msgid "Input Style"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:19
+msgid "Field Appearance"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:39
+msgid "Visible Focus Ring"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:40
+msgid "Keeps keyboard navigation obvious. Recommended."
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:46
+msgid "Advanced"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:54
+msgid "Field Background"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:61
+msgid "Focus Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/InputStylePanel.js:68
+msgid "Placeholder Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:21
+msgid "Layout"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:23
+msgid "Survey Layout"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:33
+msgid "Question Spacing"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:40
+msgid "16px"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:46
+msgid "Max Width"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:49
+msgid "Full width"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:55
+msgid "Stack Columns Below"
+msgstr ""
+
+#: src/Components/Settings/Design/LayoutPanel.js:56
+msgid "Screen width at which multi-column questions become full width."
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:24
+msgid "Progress Indicator"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:26
+msgid "Show completion progress"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:27
+msgid "Reflects how many questions have been answered."
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:53
+msgid "Show counter"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:59
+msgid "Progress Colours"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:67
+msgid "Fill Gradient"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:73
+msgid "Fill"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:80
+msgid "Track"
+msgstr ""
+
+#: src/Components/Settings/Design/ProgressPanel.js:86
+msgid "Thickness"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:26
+msgid "Question Card"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:32
+msgid "Style question containers"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:33
+msgid "Turns each question into a designed card."
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:41
+msgid "Background"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:63
+#: src/Settings.js:207
+#: src/Settings.js:252
+msgid "Border"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:69
+#: src/Settings.js:205
+#: src/Settings.js:250
+#: src/Settings.js:266
+msgid "Padding"
+msgstr ""
+
+#: src/Components/Settings/Design/QuestionCardPanel.js:76
+msgid "Shadow"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:19
+msgid "Success State"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:21
+msgid "Headline"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:23
+msgid "Optional, e.g. “Thank you!”"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:28
+msgid "Message"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:34
+msgid "Presentation"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:40
+msgid "“Replace Form” swaps the questions for the thank-you panel on the frontend."
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:44
+msgid "Icon"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:55
+msgid "Icon Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:61
+msgid "Visible For (ms)"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:70
+msgid "Motion & Surface"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:75
+msgid "Animation"
+msgstr ""
+
+#: src/Components/Settings/Design/SuccessPanel.js:87
+msgid "Panel Background"
+msgstr ""
+
+#: src/Components/Settings/Design/ThemePanel.js:58
+msgid "Theme Presets"
+msgstr ""
+
+#: src/Components/Settings/Design/ThemePanel.js:62
+msgid "Premium Themes"
+msgstr ""
+
+#: src/Components/Settings/Design/ThemePanel.js:69
+msgid "Applying a theme updates colours, borders and button styles. Your questions, wording and typography stay exactly as they are."
+msgstr ""
+
+#: src/Components/Settings/FieldAttr/Size.js:17
+msgid "Full Width (100%)"
+msgstr ""
+
+#: src/Components/Settings/FieldAttr/Size.js:18
+msgid "Two Thirds (66%)"
+msgstr ""
+
+#: src/Components/Settings/FieldAttr/Size.js:19
+msgid "Half Width (50%)"
+msgstr ""
+
+#: src/Components/Settings/FieldAttr/Size.js:20
+msgid "One Third (33%)"
+msgstr ""
+
+#: src/Components/Settings/FieldAttr/Size.js:21
+msgid "One Fourth (25%)"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:13
+#: src/Components/Settings/Fields/MultipleInput.js:16
+#: src/Components/Settings/Fields/Text.js:20
+#: src/Settings.js:239
+msgid "Label"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:15
+#: src/Components/Settings/Fields/MultipleInput.js:18
+#: src/Components/Settings/Fields/Text.js:22
+msgid "Label here"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:20
+#: src/Components/Settings/Fields/MultipleInput.js:23
+#: src/Components/Settings/Fields/Text.js:27
+msgid "Label Position"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:29
+msgid "First Year"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:37
+msgid "Last Year"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:45
+#: src/Components/Settings/Fields/MultipleInput.js:30
+#: src/Components/Settings/Fields/Text.js:41
+msgid "Help Text"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:47
+#: src/Components/Settings/Fields/MultipleInput.js:32
+#: src/Components/Settings/Fields/Text.js:43
+msgid "Shown in a tooltip beside the label"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:55
+#: src/Components/Settings/Fields/MultipleInput.js:75
+#: src/Components/Settings/Fields/Text.js:51
+msgid "Disable"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:61
+#: src/Components/Settings/Fields/MultipleInput.js:81
+#: src/Components/Settings/Fields/Text.js:57
+msgid "Required"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:68
+#: src/Components/Settings/Fields/MultipleInput.js:88
+#: src/Components/Settings/Fields/Text.js:64
+msgid "CSS Class"
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:70
+#: src/Components/Settings/Fields/MultipleInput.js:90
+#: src/Components/Settings/Fields/Text.js:66
+msgid "class name"
+msgstr ""
+
+#: src/Components/Settings/Fields/MultipleInput.js:37
+msgid "Choices"
+msgstr ""
+
+#: src/Components/Settings/Fields/MultipleInput.js:53
+msgid "Duplicate"
+msgstr ""
+
+#: src/Components/Settings/Fields/MultipleInput.js:54
+msgid "Remove"
+msgstr ""
+
+#: src/Components/Settings/Fields/MultipleInput.js:59
+msgid "Add Choice"
+msgstr ""
+
+#: src/Components/Settings/Fields/MultipleInput.js:66
+msgid "Choice Columns"
+msgstr ""
+
+#: src/Components/Settings/Fields/Text.js:34
+msgid "Placeholder"
+msgstr ""
+
+#: src/Components/Settings/Fields/Text.js:36
+msgid "Placeholder here"
+msgstr ""
+
+#: src/Edit.js:121
+msgid "Enter your label"
+msgstr ""
+
+#: src/Form.js:41
+msgid "Sorry, your response could not be sent. Please try again."
+msgstr ""
+
+#: src/Form.js:151
+msgid "Title Here"
+msgstr ""
+
+#: src/Form.js:155
+msgid "Description Here"
+msgstr ""
+
+#: src/Form.js:190
+#: src/Settings.js:160
+msgid "Select Field Type"
+msgstr ""
+
+#: src/Form.js:234
+#: src/Settings.js:175
+msgid "Add New Field"
+msgstr ""
+
+#: src/Settings.js:105
+#: src/Settings.js:202
+msgid "Form"
+msgstr ""
+
+#: src/Settings.js:106
+#: src/Settings.js:213
+msgid "Title"
+msgstr ""
+
+#: src/Settings.js:108
+#: src/Settings.js:226
+msgid "Description"
+msgstr ""
+
+#: src/Settings.js:110
+msgid "Success message"
+msgstr ""
+
+#: src/Settings.js:114
+msgid "Fields"
+msgstr ""
+
+#: src/Settings.js:145
+msgid "Label when on"
+msgstr ""
+
+#: src/Settings.js:148
+msgid "Stored with the response, so it reads as words rather than true/false."
+msgstr ""
+
+#: src/Settings.js:153
+msgid "Label when off"
+msgstr ""
+
+#: src/Settings.js:166
+msgid "Question Icon"
+msgstr ""
+
+#: src/Settings.js:178
+msgid "Sortable"
+msgstr ""
+
+#: src/Settings.js:203
+msgid "Background Color"
+msgstr ""
+
+#: src/Settings.js:210
+msgid "Success message color"
+msgstr ""
+
+#: src/Settings.js:214
+#: src/Settings.js:227
+#: src/Settings.js:240
+#: src/Settings.js:246
+#: src/Settings.js:256
+#: src/Settings.js:262
+msgid "Typography"
+msgstr ""
+
+#: src/Settings.js:216
+#: src/Settings.js:229
+#: src/Settings.js:242
+#: src/Settings.js:248
+#: src/Settings.js:258
+msgid "Color"
+msgstr ""
+
+#: src/Settings.js:218
+#: src/Settings.js:231
+msgid "Margin"
+msgstr ""
+
+#: src/Settings.js:245
+msgid "Input"
+msgstr ""
+
+#: src/Settings.js:255
+msgid "Radio and checkbox label"
+msgstr ""
+
+#: src/Settings.js:261
+msgid "Button"
+msgstr ""
+
+#: src/Settings.js:264
+msgid " Colors"
+msgstr ""
+
+#: src/Settings.js:276
+msgid "Unlock More with<br/>Survey Form Block Pro!"
+msgstr ""
+
+#: src/Settings.js:277
+msgid "The free design tools already go a long way - Pro adds the themes, layouts and motion that make a survey look bespoke."
+msgstr ""
+
+#: src/utils/design.js:35
+#: src/utils/design.js:612
+#: src/utils/design.js:621
+#: src/utils/design.js:630
+msgid "Classic"
+msgstr ""
+
+#: src/utils/design.js:38
+msgid "The original Survey Form Block look."
+msgstr ""
+
+#: src/utils/design.js:68
+msgid "Modern Minimal"
+msgstr ""
+
+#: src/utils/design.js:71
+msgid "Airy white surface, quiet borders, confident blue accent."
+msgstr ""
+
+#: src/utils/design.js:120
+msgid "Soft Card"
+msgstr ""
+
+#: src/utils/design.js:123
+msgid "Every question sits on its own softly elevated card."
+msgstr ""
+
+#: src/utils/design.js:172
+msgid "Clean Professional"
+msgstr ""
+
+#: src/utils/design.js:175
+#: src/variations.js:57
+msgid "Crisp business styling with a calm teal accent."
+msgstr ""
+
+#: src/utils/design.js:227
+msgid "Glassmorphism"
+msgstr ""
+
+#: src/utils/design.js:230
+msgid "Frosted translucent panel floating over a colour wash."
+msgstr ""
+
+#: src/utils/design.js:280
+msgid "Bold Gradient"
+msgstr ""
+
+#: src/utils/design.js:283
+msgid "Landing-page energy: saturated gradient with white type."
+msgstr ""
+
+#: src/utils/design.js:338
+msgid "Midnight Dark"
+msgstr ""
+
+#: src/utils/design.js:341
+msgid "Deep slate dark mode with a luminous sky accent."
+msgstr ""
+
+#: src/utils/design.js:396
+msgid "Elegant"
+msgstr ""
+
+#: src/utils/design.js:399
+msgid "Warm editorial cream with a refined gold rule."
+msgstr ""
+
+#: src/utils/design.js:448
+msgid "Neumorphic"
+msgstr ""
+
+#: src/utils/design.js:451
+msgid "Soft extruded surfaces, no hard borders."
+msgstr ""
+
+#: src/utils/design.js:503
+msgid "Sunset Warm"
+msgstr ""
+
+#: src/utils/design.js:506
+msgid "Friendly warm palette for feedback and NPS surveys."
+msgstr ""
+
+#: src/utils/design.js:555
+msgid "Ocean Cool"
+msgstr ""
+
+#: src/utils/design.js:558
+msgid "Fresh aquatic tones, generous rounding, calm contrast."
+msgstr ""
+
+#: src/utils/design.js:612
+msgid "Original stacked questions."
+msgstr ""
+
+#: src/utils/design.js:613
+#: src/utils/design.js:688
+msgid "Card"
+msgstr ""
+
+#: src/utils/design.js:613
+msgid "Each question in its own card."
+msgstr ""
+
+#: src/utils/design.js:614
+#: src/utils/design.js:635
+msgid "Minimal"
+msgstr ""
+
+#: src/utils/design.js:614
+msgid "Roomy spacing, hairline separators."
+msgstr ""
+
+#: src/utils/design.js:615
+msgid "Floating"
+msgstr ""
+
+#: src/utils/design.js:615
+msgid "Elevated cards that lift on focus."
+msgstr ""
+
+#: src/utils/design.js:616
+msgid "Split"
+msgstr ""
+
+#: src/utils/design.js:616
+msgid "Heading column beside the questions."
+msgstr ""
+
+#: src/utils/design.js:617
+msgid "Full Width"
+msgstr ""
+
+#: src/utils/design.js:617
+msgid "Landing-page scale and spacing."
+msgstr ""
+
+#: src/utils/design.js:622
+msgid "Outlined"
+msgstr ""
+
+#: src/utils/design.js:623
+#: src/utils/design.js:631
+msgid "Filled"
+msgstr ""
+
+#: src/utils/design.js:624
+msgid "Underline"
+msgstr ""
+
+#: src/utils/design.js:625
+msgid "Rounded"
+msgstr ""
+
+#: src/utils/design.js:626
+msgid "Floating Label"
+msgstr ""
+
+#: src/utils/design.js:632
+msgid "Outline"
+msgstr ""
+
+#: src/utils/design.js:634
+msgid "Soft"
+msgstr ""
+
+#: src/utils/design.js:639
+#: src/utils/design.js:658
+#: src/utils/design.js:667
+#: src/utils/design.js:694
+#: src/utils/design.js:712
+msgid "None"
+msgstr ""
+
+#: src/utils/design.js:640
+#: src/utils/design.js:668
+msgid "Lift"
+msgstr ""
+
+#: src/utils/design.js:641
+#: src/utils/design.js:697
+msgid "Scale"
+msgstr ""
+
+#: src/utils/design.js:642
+msgid "Glow"
+msgstr ""
+
+#: src/utils/design.js:643
+msgid "Slide Fill"
+msgstr ""
+
+#: src/utils/design.js:647
+msgid "Full"
+msgstr ""
+
+#: src/utils/design.js:659
+msgid "Fade In"
+msgstr ""
+
+#: src/utils/design.js:660
+#: src/utils/design.js:698
+msgid "Slide Up"
+msgstr ""
+
+#: src/utils/design.js:661
+msgid "Slide Left"
+msgstr ""
+
+#: src/utils/design.js:662
+msgid "Scale In"
+msgstr ""
+
+#: src/utils/design.js:663
+msgid "Reveal"
+msgstr ""
+
+#: src/utils/design.js:669
+msgid "Accent Glow"
+msgstr ""
+
+#: src/utils/design.js:670
+msgid "Accent Border"
+msgstr ""
+
+#: src/utils/design.js:674
+msgid "Linear"
+msgstr ""
+
+#: src/utils/design.js:676
+msgid "Segmented"
+msgstr ""
+
+#: src/utils/design.js:677
+msgid "Circular"
+msgstr ""
+
+#: src/utils/design.js:678
+msgid "Step Dots"
+msgstr ""
+
+#: src/utils/design.js:687
+msgid "Inline"
+msgstr ""
+
+#: src/utils/design.js:689
+msgid "Banner"
+msgstr ""
+
+#: src/utils/design.js:690
+msgid "Replace Form"
+msgstr ""
+
+#: src/utils/design.js:695
+msgid "Fade"
+msgstr ""
+
+#: src/utils/design.js:696
+msgid "Pop"
+msgstr ""
+
+#: src/utils/design.js:702
+msgid "Asterisk"
+msgstr ""
+
+#: src/utils/design.js:703
+msgid "“Required” badge"
+msgstr ""
+
+#: src/utils/design.js:704
+msgid "Hidden"
+msgstr ""
+
+#: src/utils/design.js:709
+msgid "Dashed"
+msgstr ""
+
+#: src/utils/design.js:710
+msgid "Dotted"
+msgstr ""
+
+#: src/utils/options.js:18
+msgid "Text (Single Line)"
+msgstr ""
+
+#: src/utils/options.js:19
+msgid "Paragraph (Multi Line)"
+msgstr ""
+
+#: src/utils/options.js:20
+msgid "Email"
+msgstr ""
+
+#: src/utils/options.js:21
+msgid "Number"
+msgstr ""
+
+#: src/utils/options.js:22
+msgid "Phone"
+msgstr ""
+
+#: src/utils/options.js:23
+msgid "Website / URL"
+msgstr ""
+
+#: src/utils/options.js:25
+msgid "Checkbox Group"
+msgstr ""
+
+#: src/utils/options.js:26
+msgid "Radio Buttons"
+msgstr ""
+
+#: src/utils/options.js:27
+msgid "Dropdown Menu"
+msgstr ""
+
+#: src/utils/options.js:28
+msgid "Switch / Toggle"
+msgstr ""
+
+#: src/utils/options.js:30
+msgid "Star Rating"
+msgstr ""
+
+#: src/utils/options.js:31
+msgid "Opinion Scale (1-10)"
+msgstr ""
+
+#: src/utils/options.js:32
+msgid "NPS (Net Promoter Score)"
+msgstr ""
+
+#: src/utils/options.js:33
+msgid "Range Slider"
+msgstr ""
+
+#: src/utils/options.js:35
+msgid "Date Picker"
+msgstr ""
+
+#: src/utils/options.js:36
+msgid "Section Divider Header"
+msgstr ""
+
+#: src/utils/options.js:40
+msgid "General"
+msgstr ""
+
+#: src/utils/options.js:41
+msgid "Design"
+msgstr ""
+
+#: src/variations.js:46
+msgid "Survey Form – Modern Minimal"
+msgstr ""
+
+#: src/variations.js:47
+msgid "Airy white survey with quiet borders and a blue accent."
+msgstr ""
+
+#: src/variations.js:51
+msgid "Survey Form – Soft Card"
+msgstr ""
+
+#: src/variations.js:52
+msgid "Each question on its own softly elevated card."
+msgstr ""
+
+#: src/variations.js:56
+msgid "Survey Form – Clean Professional"
+msgstr ""
+
+#: src/block.json
 msgctxt "block title"
 msgid "Survey Form Block"
 msgstr ""
 
-#: block.json
+#: src/block.json
 msgctxt "block description"
 msgid "Create custom survey forms easily with the Survey Form Block plugin"
 msgstr ""
 
-#: block.json
+#: src/block.json
 msgctxt "block keyword"
 msgid "survey"
 msgstr ""
 
-#: block.json
+#: src/block.json
 msgctxt "block keyword"
 msgid "block"
 msgstr ""
 
-#: block.json
+#: src/block.json
 msgctxt "block keyword"
 msgid "form"
 msgstr ""

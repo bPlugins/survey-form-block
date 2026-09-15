@@ -5,3 +5,6 @@ dist/*
 node_modules
 build
 docs
+
+# Packaging artefact from `npm run plugin-zip`
+*.zip

@@ -384,6 +384,25 @@ html {
 				}
 			}
 
+			// Shown when the server rejects a submission (most often an expired
+			// nonce on a cached page). Louder than the required-field notice
+			// because the visitor has to act on it.
+			.svb_submit_error {
+				margin-top: 12px;
+				padding: 11px 14px;
+				border-radius: var(--svb-card-radius, 8px);
+				border-left: 3px solid #dc2626;
+				background: rgba(220, 38, 38, .07);
+
+				.svb_notice {
+					margin: 0;
+					font-size: 14px;
+					line-height: 1.5;
+					font-weight: 500;
+					color: #b42318;
+				}
+			}
+
 			// New Survey Fields Styling
 			.svbStarRatingArea {
 				display: flex;
