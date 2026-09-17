@@ -739,6 +739,27 @@ $panelBorder: #e0e3eb;
 	}
 }
 
+.svbFieldScale {
+	margin-bottom: 16px;
+
+	.svbScaleRow {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+
+		.components-base-control {
+			margin-bottom: 0;
+		}
+	}
+
+	.svbScaleHelp {
+		margin: 6px 0 0;
+		color: #757575;
+		font-size: 12px;
+		font-style: normal;
+	}
+}
+
 .svbToggleLabels {
 	padding: 12px;
 	margin-bottom: 16px;

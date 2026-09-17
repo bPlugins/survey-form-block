@@ -4,7 +4,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { PanelBody, __experimentalUnitControl as UnitControl } from '@wordpress/components';
+import { PanelBody, __experimentalUnitControl as UnitControl, TextControl } from '@wordpress/components';
 
 import { REQUIRED_MARKS, DIVIDER_STYLES } from '../../../utils/design';
 import { OptionGrid, ProGate, ProTag } from './Shared';
@@ -24,6 +24,21 @@ const DetailsPanel = ({ design, setSection, isPremium, onProClick }) => {
 				onProClick={onProClick}
 				columns="three"
 			/>
+
+			{'badge' === (label.requiredMark || 'asterisk') && <TextControl
+				label={__('Required Badge Text', 'survey-form-block')}
+				value={label.requiredText ?? ''}
+				placeholder={__('Required', 'survey-form-block')}
+				help={__('Shown beside the label of every required question.', 'survey-form-block')}
+				onChange={val => setSection('label', { requiredText: val })}
+			/>}
+
+			{'none' !== (label.requiredMark || 'asterisk') && <ColorControl
+				className="mb10"
+				label={__('Required Marker Colour', 'survey-form-block')}
+				value={label.requiredColor}
+				onChange={val => setSection('label', { requiredColor: val })}
+			/>}
 
 			<ColorControl
 				className="mb10"

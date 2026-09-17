@@ -2,10 +2,10 @@
 
 import LabelArea from '../MainEle/LabelArea';
 
-const Checkbox = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, isRequired, name, help, classes, options = [], value = [], onChange }) => {
+const Checkbox = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, name, help, classes, options = [], value = [], onChange }) => {
 
     return <div className={`fieldMainArea labelPosition-${index} `}>
-        <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+        <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
 
         <div className={`fieldArea ${classes} fieldArea-${index}`}>
             {options.map((opt, childIndex) => {

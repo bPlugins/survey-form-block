@@ -9,14 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-15T11:05:35+00:00\n"
+"POT-Creation-Date: 2026-09-17T06:21:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
 
 #. Plugin Name of the plugin
 #: survey-form-block.php
-#: includes/AdminMenu.php:57
 msgid "Survey Form Block"
 msgstr ""
 
@@ -40,35 +39,100 @@ msgstr ""
 msgid "http://bplugins.com"
 msgstr ""
 
-#: includes/AdminMenu.php:58
-msgid "Survey Forms"
-msgstr ""
-
-#: includes/AdminMenu.php:68
-#: includes/AdminMenu.php:69
+#: includes/AdminMenu.php:62
+#: includes/AdminMenu.php:63
 msgid "Survey List"
 msgstr ""
 
-#: includes/AdminMenu.php:77
+#: includes/AdminMenu.php:71
 msgid "Demo and Help"
 msgstr ""
 
-#: includes/AdminMenu.php:78
+#: includes/AdminMenu.php:72
 msgid "Demo & Help"
 msgstr ""
 
-#: includes/AdminMenu.php:93
+#: includes/AdminMenu.php:80
+msgid "Live Demos"
+msgstr ""
+
+#: includes/AdminMenu.php:81
+msgid "Live Demos ↗"
+msgstr ""
+
+#: includes/AdminMenu.php:96
 msgid "Survey Responses"
 msgstr ""
 
-#: includes/AdminMenu.php:94
+#: includes/AdminMenu.php:97
 msgid "Everything submitted through your survey blocks, newest first."
+msgstr ""
+
+#: includes/AdminMenu.php:126
+#, php-format
+msgid "Redirecting to %s..."
+msgstr ""
+
+#: includes/AdminMenu.php:126
+msgid "Survey Demos Showcase"
+msgstr ""
+
+#: includes/Patterns.php:35
+#: includes/PostType.php:57
+msgid "Survey Forms"
+msgstr ""
+
+#: includes/Patterns.php:64
+msgid "Customer Satisfaction & NPS (CSAT / NPS)"
+msgstr ""
+
+#: includes/Patterns.php:65
+msgid "Measure customer satisfaction and Net Promoter Score with 5-star ratings, NPS 0-10 scale, multi-select tags, and follow-up toggle."
+msgstr ""
+
+#: includes/Patterns.php:70
+msgid "Product Feedback & Feature Request"
+msgstr ""
+
+#: includes/Patterns.php:71
+msgid "Collect product feedback and feature requests with 1-10 opinion scales, friction range sliders, and beta testing enrollment."
+msgstr ""
+
+#: includes/Patterns.php:76
+msgid "Event Registration & Attendee Preferences"
+msgstr ""
+
+#: includes/Patterns.php:77
+msgid "Conference and webinar registration form featuring attendee details, session checkboxes, dietary select, and arrival date."
+msgstr ""
+
+#: includes/Patterns.php:82
+msgid "Job Application & Candidate Screening"
+msgstr ""
+
+#: includes/Patterns.php:83
+msgid "Candidate screening application form with portfolio URL, years experience, technical proficiency scale, and work authorization."
+msgstr ""
+
+#: includes/Patterns.php:88
+msgid "Website Usability & Bug Report Form"
+msgstr ""
+
+#: includes/Patterns.php:89
+msgid "Bug tracker and issue report form with affected URL, severity radio, issue category, date picker, and steps to reproduce."
+msgstr ""
+
+#: includes/Patterns.php:94
+msgid "Employee Onboarding & 30-Day Check-in"
+msgstr ""
+
+#: includes/Patterns.php:95
+msgid "Pulse survey for new hires to assess first-month support, tooling access, role clarity, and mentorship feedback."
 msgstr ""
 
 #: includes/PostType.php:43
 #: includes/PostType.php:45
 #: includes/PostType.php:55
-#: includes/PostType.php:56
 msgid "Surveys"
 msgstr ""
 
@@ -106,11 +170,11 @@ msgstr ""
 msgid "No surveys found in Trash"
 msgstr ""
 
-#: includes/PostType.php:91
+#: includes/PostType.php:105
 msgid "ShortCode"
 msgstr ""
 
-#: includes/PostType.php:120
+#: includes/PostType.php:134
 #: src/admin/post.js:47
 msgid "Copy To Clipboard"
 msgstr ""
@@ -144,11 +208,11 @@ msgstr ""
 msgid "Too many submissions from this address. Please wait a moment and try again."
 msgstr ""
 
-#: survey-form-block.php:85
+#: survey-form-block.php:175
 msgid "Help & Demos"
 msgstr ""
 
-#: survey-form-block.php:92
+#: survey-form-block.php:182
 msgid "Go Pro"
 msgstr ""
 
@@ -359,6 +423,14 @@ msgstr ""
 msgid "Press Ctrl/Cmd + C to copy"
 msgstr ""
 
+#: src/Components/FrontEnd/MainEle/LabelArea.js:30
+#: src/Components/Settings/Design/DetailsPanel.js:31
+#: src/Components/Settings/Fields/Date.js:61
+#: src/Components/Settings/Fields/MultipleInput.js:81
+#: src/Components/Settings/Fields/Text.js:57
+msgid "Required"
+msgstr ""
+
 #: src/Components/Settings/Design/BackgroundPanel.js:22
 msgid "Survey Backdrop"
 msgstr ""
@@ -494,8 +566,8 @@ msgid "Width"
 msgstr ""
 
 #: src/Components/Settings/Design/ButtonPanel.js:54
-#: src/Settings.js:221
-#: src/Settings.js:234
+#: src/Settings.js:311
+#: src/Settings.js:324
 msgid "Align"
 msgstr ""
 
@@ -534,46 +606,58 @@ msgstr ""
 msgid "Required Field Marker"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:30
-msgid "Help Icon Colour"
+#: src/Components/Settings/Design/DetailsPanel.js:29
+msgid "Required Badge Text"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:35
-msgid "Section Divider"
+#: src/Components/Settings/Design/DetailsPanel.js:32
+msgid "Shown beside the label of every required question."
 msgstr ""
 
 #: src/Components/Settings/Design/DetailsPanel.js:38
+msgid "Required Marker Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:45
+msgid "Help Icon Colour"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:50
+msgid "Section Divider"
+msgstr ""
+
+#: src/Components/Settings/Design/DetailsPanel.js:53
 msgid "Line Style"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:49
+#: src/Components/Settings/Design/DetailsPanel.js:64
 msgid "Line Colour"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:55
+#: src/Components/Settings/Design/DetailsPanel.js:70
 msgid "Line Thickness"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:63
+#: src/Components/Settings/Design/DetailsPanel.js:78
 msgid "Section Heading Colour"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:70
+#: src/Components/Settings/Design/DetailsPanel.js:85
 msgid "Section Description Colour"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:76
+#: src/Components/Settings/Design/DetailsPanel.js:91
 msgid "Question Icons"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:80
+#: src/Components/Settings/Design/DetailsPanel.js:95
 #: src/Components/Settings/Design/Shared.js:17
 #: src/Components/Settings/Design/Shared.js:79
 #: src/Components/Settings/Design/ThemePanel.js:52
 msgid "Pro"
 msgstr ""
 
-#: src/Components/Settings/Design/DetailsPanel.js:82
+#: src/Components/Settings/Design/DetailsPanel.js:97
 msgid "Pick an icon per question in the General tab → Fields panel."
 msgstr ""
 
@@ -754,15 +838,15 @@ msgid "Background"
 msgstr ""
 
 #: src/Components/Settings/Design/QuestionCardPanel.js:63
-#: src/Settings.js:207
-#: src/Settings.js:252
+#: src/Settings.js:297
+#: src/Settings.js:342
 msgid "Border"
 msgstr ""
 
 #: src/Components/Settings/Design/QuestionCardPanel.js:69
-#: src/Settings.js:205
-#: src/Settings.js:250
-#: src/Settings.js:266
+#: src/Settings.js:295
+#: src/Settings.js:340
+#: src/Settings.js:356
 msgid "Padding"
 msgstr ""
 
@@ -853,7 +937,7 @@ msgstr ""
 #: src/Components/Settings/Fields/Date.js:13
 #: src/Components/Settings/Fields/MultipleInput.js:16
 #: src/Components/Settings/Fields/Text.js:20
-#: src/Settings.js:239
+#: src/Settings.js:329
 msgid "Label"
 msgstr ""
 
@@ -893,12 +977,6 @@ msgstr ""
 #: src/Components/Settings/Fields/MultipleInput.js:75
 #: src/Components/Settings/Fields/Text.js:51
 msgid "Disable"
-msgstr ""
-
-#: src/Components/Settings/Fields/Date.js:61
-#: src/Components/Settings/Fields/MultipleInput.js:81
-#: src/Components/Settings/Fields/Text.js:57
-msgid "Required"
 msgstr ""
 
 #: src/Components/Settings/Fields/Date.js:68
@@ -957,110 +1035,141 @@ msgstr ""
 msgid "Description Here"
 msgstr ""
 
-#: src/Form.js:190
-#: src/Settings.js:160
+#: src/Form.js:191
+#: src/Settings.js:250
 msgid "Select Field Type"
 msgstr ""
 
-#: src/Form.js:234
-#: src/Settings.js:175
+#: src/Form.js:235
+#: src/Settings.js:265
 msgid "Add New Field"
 msgstr ""
 
-#: src/Settings.js:105
-#: src/Settings.js:202
+#: src/Settings.js:119
+#: src/Settings.js:292
 msgid "Form"
 msgstr ""
 
-#: src/Settings.js:106
-#: src/Settings.js:213
+#: src/Settings.js:120
+#: src/Settings.js:303
 msgid "Title"
 msgstr ""
 
-#: src/Settings.js:108
-#: src/Settings.js:226
+#: src/Settings.js:122
+#: src/Settings.js:316
 msgid "Description"
 msgstr ""
 
-#: src/Settings.js:110
+#: src/Settings.js:124
 msgid "Success message"
 msgstr ""
 
-#: src/Settings.js:114
+#: src/Settings.js:128
 msgid "Fields"
 msgstr ""
 
-#: src/Settings.js:145
+#: src/Settings.js:158
+msgid "Marking a question required flags it in the form. Change how that flag looks - asterisk, badge or hidden - and its wording under Design → Labels & Dividers."
+msgstr ""
+
+#: src/Settings.js:163
+msgid "Number of stars"
+msgstr ""
+
+#: src/Settings.js:175
+#: src/Settings.js:210
+msgid "Minimum"
+msgstr ""
+
+#: src/Settings.js:182
+#: src/Settings.js:217
+msgid "Maximum"
+msgstr ""
+
+#: src/Settings.js:190
+#: src/Settings.js:224
+msgid "Step"
+msgstr ""
+
+#: src/Settings.js:197
+msgid "Starting value"
+msgstr ""
+
+#: src/Settings.js:230
+msgid "Leave blank for no limit."
+msgstr ""
+
+#: src/Settings.js:235
 msgid "Label when on"
 msgstr ""
 
-#: src/Settings.js:148
+#: src/Settings.js:238
 msgid "Stored with the response, so it reads as words rather than true/false."
 msgstr ""
 
-#: src/Settings.js:153
+#: src/Settings.js:243
 msgid "Label when off"
 msgstr ""
 
-#: src/Settings.js:166
+#: src/Settings.js:256
 msgid "Question Icon"
 msgstr ""
 
-#: src/Settings.js:178
+#: src/Settings.js:268
 msgid "Sortable"
 msgstr ""
 
-#: src/Settings.js:203
+#: src/Settings.js:293
 msgid "Background Color"
 msgstr ""
 
-#: src/Settings.js:210
+#: src/Settings.js:300
 msgid "Success message color"
 msgstr ""
 
-#: src/Settings.js:214
-#: src/Settings.js:227
-#: src/Settings.js:240
-#: src/Settings.js:246
-#: src/Settings.js:256
-#: src/Settings.js:262
+#: src/Settings.js:304
+#: src/Settings.js:317
+#: src/Settings.js:330
+#: src/Settings.js:336
+#: src/Settings.js:346
+#: src/Settings.js:352
 msgid "Typography"
 msgstr ""
 
-#: src/Settings.js:216
-#: src/Settings.js:229
-#: src/Settings.js:242
-#: src/Settings.js:248
-#: src/Settings.js:258
+#: src/Settings.js:306
+#: src/Settings.js:319
+#: src/Settings.js:332
+#: src/Settings.js:338
+#: src/Settings.js:348
 msgid "Color"
 msgstr ""
 
-#: src/Settings.js:218
-#: src/Settings.js:231
+#: src/Settings.js:308
+#: src/Settings.js:321
 msgid "Margin"
 msgstr ""
 
-#: src/Settings.js:245
+#: src/Settings.js:335
 msgid "Input"
 msgstr ""
 
-#: src/Settings.js:255
+#: src/Settings.js:345
 msgid "Radio and checkbox label"
 msgstr ""
 
-#: src/Settings.js:261
+#: src/Settings.js:351
 msgid "Button"
 msgstr ""
 
-#: src/Settings.js:264
+#: src/Settings.js:354
 msgid " Colors"
 msgstr ""
 
-#: src/Settings.js:276
+#: src/Settings.js:366
 msgid "Unlock More with<br/>Survey Form Block Pro!"
 msgstr ""
 
-#: src/Settings.js:277
+#: src/Settings.js:367
 msgid "The free design tools already go a long way - Pro adds the themes, layouts and motion that make a survey look bespoke."
 msgstr ""
 

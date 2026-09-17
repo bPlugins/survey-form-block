@@ -1,11 +1,11 @@
 import LabelArea from '../MainEle/LabelArea';
 
-const OpinionScale = ({ fieldEls, buttonArea, index, icon, requiredMark, isRequired, value, help, onChange }) => {
+const OpinionScale = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, value, help, onChange }) => {
     const scalePoints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
         <div className={`fieldMainArea labelPosition-${index}`}>
-            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
             <div className="fieldArea svbOpinionScaleArea">
                 <div className="svbScaleWrapper">
                     {scalePoints.map((point) => (

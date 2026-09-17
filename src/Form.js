@@ -168,6 +168,7 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 						buttonArea: ActionButtons,
 						...field,
 						requiredMark: labelDesign?.requiredMark || 'asterisk',
+						requiredText: labelDesign?.requiredText ?? '',
 						icon: isPremium ? field.icon : '',
 						fieldEls: fieldsEls[index],
 						index,

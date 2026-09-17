@@ -1,6 +1,6 @@
 import LabelArea from '../MainEle/LabelArea';
 
-const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, isRequired, value, help, onChange }) => {
+const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, value, help, onChange }) => {
     const scores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     const getScoreCategory = (score) => {
@@ -11,7 +11,7 @@ const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, isRequired, valu
 
     return (
         <div className={`fieldMainArea labelPosition-${index}`}>
-            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+            <LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
             <div className="fieldArea svbNpsArea">
                 <div className="svbNpsGrid">
                     {scores.map((score) => {

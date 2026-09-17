@@ -44,11 +44,75 @@ export const dashboardInfo = (info) => {
 
 		startButton: {
 			label: 'Create a Survey',
-			url: 'post-new.php?post_type=page'
+			url: 'post-new.php?post_type=survey-form-block'
 		}
 	};
 };
 
+/**
+ * Live demos shown on the Demos tab.
+ *
+ * Empty for now: no survey-form-block demo pages are published on
+ * bblockswp.com yet, and the tab hides itself rather than shipping links that
+ * 404. Add entries here and it appears on its own.
+ *
+ * Shape, matching the sibling offcanvas-block plugin:
+ *   { icon, title, description, category, type: 'iframe', url }
+ */
+export const demoInfo = {
+	allInOneLabel: 'View All Live Demos',
+	allInOneLink: '/survey-demos/',
+	demos: [
+		{
+			icon: '',
+			title: 'Customer Satisfaction & NPS',
+			description: 'Measure CSAT and NPS scores with interactive 5-star ratings, NPS 0-10 scale, and multi-select tags.',
+			category: 'Feedback & Evaluation',
+			type: 'iframe',
+			url: '/customer-satisfaction-survey/',
+		},
+		{
+			icon: '',
+			title: 'Product Feedback & Roadmap',
+			description: 'Collect feature requests and roadmap feedback with 1-10 opinion scale, range slider, and beta tester opt-in.',
+			category: 'Product Management',
+			type: 'iframe',
+			url: '/product-feedback-survey/',
+		},
+		{
+			icon: '',
+			title: 'Event & Conference Registration',
+			description: 'Multi-section registration with attendee details, attendance format, session tracks, and arrival date.',
+			category: 'Events & Community',
+			type: 'iframe',
+			url: '/event-registration-survey/',
+		},
+		{
+			icon: '',
+			title: 'Job Application & Candidate Screening',
+			description: 'Engineering job application with portfolio URLs, years experience, technical proficiency scale, and work authorization.',
+			category: 'Hiring & Recruiting',
+			type: 'iframe',
+			url: '/job-application-survey/',
+		},
+		{
+			icon: '',
+			title: 'Website Usability & Bug Tracker',
+			description: 'Bug reporting tool with page URL capture, issue category, urgency selector, and reproduction steps.',
+			category: 'QA & Support',
+			type: 'iframe',
+			url: '/website-bug-report-survey/',
+		},
+		{
+			icon: '',
+			title: 'Employee Onboarding & Pulse Check',
+			description: '30-day new hire pulse check evaluating tooling access, team mentorship, and role clarity.',
+			category: 'Internal Culture',
+			type: 'iframe',
+			url: '/employee-onboarding-survey/',
+		},
+	],
+};
 export const pricingInfo = {
 	logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`,
 	pluginId: FREEMIUS.product_id,
@@ -155,3 +219,6 @@ export const welcomeInfo = (adminUrl) => ({
 		'Question icons and decorative divider styles'
 	]
 });
+
+
+

@@ -176,9 +176,14 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Screenshots ==
 
-1. A survey on the front end
-2. Building and styling a survey in the block editor
-3. Reusable surveys, each with a click-to-copy shortcode
+1. Customer satisfaction survey with a star rating, a 0-10 Net Promoter Score and a completion bar
+2. Event registration split into numbered sections, with radio, checkbox, date and switch questions
+3. Product feedback form combining an opinion scale, a range slider and multiple choice
+4. Job application form with file-ready text fields, dropdowns and required-field markers
+5. Employee onboarding check-in built on the Soft Card layout
+6. Website usability and bug report form, styled with the Clean Professional theme
+7. Surveys saved once and reused anywhere: each gets a click-to-copy shortcode
+8. Block inspector controls and settings panel with General, Design, and Style customization tabs
 
 
 == Changelog ==
@@ -206,6 +211,10 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * Fixed: Switch / Toggle answers are stored as readable words instead of true and false, and each switch can now carry its own on and off wording (Yes/No, Agreed/Declined, and so on). Responses recorded earlier still display correctly;
 * New: Responses can be edited and deleted from the Survey Responses screen, individually or several at once;
 * New: Deleting a response now asks for confirmation in a styled dialog rather than a browser alert, with keyboard support and focus starting on Cancel;
+* Fixed: After installing the plugin, Allow & Continue and Skip on the opt-in screen now both land on Demo & Help, on the free plan and the paid one alike. Two things were wrong: the licensing SDK was initialised from a file inside includes/, so it identified the plugin by that subdirectory and built every admin URL from it, and it was configured with a plain page menu while the plugin registers a post type menu;
+* Changed: Survey Forms is now a single menu holding Surveys, Survey List, Demo & Help and Account. Existing screen URLs are unchanged;
+* New: The required-field marker is now configurable: choose an asterisk, a badge or nothing, set the badge wording, and pick its colour, under Design → Labels & Dividers. The badge previously read a hard-coded, untranslatable "Required";
+* New: Star Rating, Range Slider and Number questions can now be configured from the inspector - number of stars, and minimum, maximum, step and starting value. These were read by the form but had no control, so they could only be set by editing the block markup by hand;
 * New: Surveys can now be saved in one place and reused - add one under Survey Forms &rarr; Surveys, copy its shortcode from the ShortCode column, and paste `[survey-form-block id="123"]` into any page, post, widget or template. Surveys placed directly on a page are unaffected and keep working as before;
 * New: A Refresh button on the Survey Responses screen pulls in responses that arrived after the page was opened, without losing the survey, search or sorting you were looking at;
 * Improved: The Survey Responses screen has been redesigned - one rounded card instead of stacked strips, a heading that lines up with the table, icons on the row actions, dates split into day and time, a placeholder for unanswered questions, and clearer sorting and selection states;

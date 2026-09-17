@@ -580,6 +580,13 @@ const detailCSS = (root, design, isPremium) => {
 		css += `${line} { border-top: ${thickness} ${divider?.style || 'solid'} ${color}; }`;
 	}
 
+	// The asterisk is an SVG with a baked-in red fill and the badge carries its
+	// own palette, so both need overriding explicitly.
+	if (label?.requiredColor) {
+		css += `${root} .svbMainArea .fieldItem .labelArea .svbRequiredStar svg { fill: ${label.requiredColor}; }`;
+		css += `${root} .svbMainArea .fieldItem .labelArea .svbRequiredBadge { color: ${label.requiredColor}; background: color-mix(in srgb, ${label.requiredColor} 12%, transparent); }`;
+	}
+
 	if (label?.helpColor) {
 		css += `${root} .svbMainArea .fieldItem .labelArea .help svg { fill: ${label.helpColor}; }`;
 	}

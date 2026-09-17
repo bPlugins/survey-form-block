@@ -7,14 +7,14 @@ const StarShape = () => (
 	</svg>
 );
 
-const StarRating = ({ fieldEls, buttonArea, index, icon, requiredMark, isRequired, maxStars = 5, value = 0, help, onChange }) => {
+const StarRating = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, maxStars = 5, value = 0, help, onChange }) => {
 	const starCount = parseInt(maxStars) || 5;
 	const [hovered, setHovered] = useState(0);
 	const shown = hovered || value || 0;
 
 	return (
 		<div className={`fieldMainArea labelPosition-${index}`}>
-			<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+			<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
 
 			<div className="fieldArea svbStarRatingArea">
 				<div className="svbStarsWrapper" onMouseLeave={() => setHovered(0)}>

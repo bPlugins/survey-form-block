@@ -803,7 +803,7 @@ export const defaultDesign = {
 		duration: 2000
 	},
 
-	label: { requiredMark: 'asterisk', helpColor: '' },
+	label: { requiredMark: 'asterisk', requiredText: 'Required', requiredColor: '', helpColor: '' },
 
 	divider: { style: 'solid', color: '', thickness: '2px', headingColor: '', descriptionColor: '' }
 };

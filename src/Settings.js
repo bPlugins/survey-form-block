@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TabPanel, SelectControl, __experimentalBoxControl as BoxControl, TextControl, PanelRow, TextareaControl } from '@wordpress/components';
+import { PanelBody, TabPanel, SelectControl, __experimentalBoxControl as BoxControl, TextControl, PanelRow, TextareaControl, RangeControl } from '@wordpress/components';
 
 import { produce } from 'immer';
 
@@ -35,6 +35,20 @@ import DetailsPanel from './Components/Settings/Design/DetailsPanel';
 import { OptionGrid } from './Components/Settings/Design/Shared';
 
 import { emUnit, pxUnit } from '../../bpl-tools/utils/options';
+
+/**
+ * The scale fields store plain numbers, but a cleared input hands back an empty
+ * string and an older survey may not carry the key at all.
+ */
+const toNumber = (value, fallback) => {
+	const n = Number(value);
+
+	return Number.isFinite(n) ? n : fallback;
+};
+
+const numberOr = (value, fallback) => (
+	undefined === value || null === value || '' === value ? fallback : toNumber(value, fallback)
+);
 
 const Settings = ({ updateObject, attributes, setAttributes, activeIndex, addField, updateFields, formData, setFormData, isPremium = false }) => {
 	const { form, fields, labelS, input, radioCheckLabelTypo, radioCheckLabelColor, button } = attributes;
@@ -139,6 +153,82 @@ const Settings = ({ updateObject, attributes, setAttributes, activeIndex, addFie
 									return <Text {...fieldProps} />;
 							}
 						})()}
+
+						<p className='svbControlHelp'>
+							{__('Marking a question required flags it in the form. Change how that flag looks - asterisk, badge or hidden - and its wording under Design → Labels & Dividers.', 'survey-form-block')}
+						</p>
+
+						{'star_rating' === type && <div className='svbFieldScale'>
+							<RangeControl
+								label={__('Number of stars', 'survey-form-block')}
+								value={Number(myFields.maxStars) || 5}
+								min={3}
+								max={10}
+								onChange={(val) => updateFields(activeIndex, 'maxStars', Number(val) || 5)}
+							/>
+						</div>}
+
+						{'range_slider' === type && <div className='svbFieldScale'>
+							<div className='svbScaleRow'>
+								<TextControl
+									type='number'
+									label={__('Minimum', 'survey-form-block')}
+									value={numberOr(myFields.min, 0)}
+									onChange={(val) => updateFields(activeIndex, 'min', toNumber(val, 0))}
+								/>
+
+								<TextControl
+									type='number'
+									label={__('Maximum', 'survey-form-block')}
+									value={numberOr(myFields.max, 100)}
+									onChange={(val) => updateFields(activeIndex, 'max', toNumber(val, 100))}
+								/>
+
+								<TextControl
+									type='number'
+									min={1}
+									label={__('Step', 'survey-form-block')}
+									value={numberOr(myFields.step, 1)}
+									onChange={(val) => updateFields(activeIndex, 'step', Math.max(1, toNumber(val, 1)))}
+								/>
+							</div>
+
+							<RangeControl
+								label={__('Starting value', 'survey-form-block')}
+								value={numberOr(myFields.value, Math.round((numberOr(myFields.min, 0) + numberOr(myFields.max, 100)) / 2))}
+								min={numberOr(myFields.min, 0)}
+								max={numberOr(myFields.max, 100)}
+								step={Math.max(1, numberOr(myFields.step, 1))}
+								onChange={(val) => updateFields(activeIndex, 'value', Number(val))}
+							/>
+						</div>}
+
+						{'number' === type && <div className='svbFieldScale'>
+							<div className='svbScaleRow'>
+								<TextControl
+									type='number'
+									label={__('Minimum', 'survey-form-block')}
+									value={myFields.min ?? ''}
+									onChange={(val) => updateFields(activeIndex, 'min', '' === val ? '' : Number(val))}
+								/>
+
+								<TextControl
+									type='number'
+									label={__('Maximum', 'survey-form-block')}
+									value={myFields.max ?? ''}
+									onChange={(val) => updateFields(activeIndex, 'max', '' === val ? '' : Number(val))}
+								/>
+
+								<TextControl
+									type='number'
+									label={__('Step', 'survey-form-block')}
+									value={myFields.step ?? ''}
+									onChange={(val) => updateFields(activeIndex, 'step', '' === val ? '' : Number(val))}
+								/>
+							</div>
+
+							<p className='svbScaleHelp'>{__('Leave blank for no limit.', 'survey-form-block')}</p>
+						</div>}
 
 						{'toggle' === type && <div className='svbToggleLabels'>
 							<TextControl

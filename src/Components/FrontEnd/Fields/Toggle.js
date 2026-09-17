@@ -7,13 +7,13 @@ import LabelArea from '../MainEle/LabelArea';
  * switched on". It is converted to `onLabel`/`offLabel` when the form is
  * submitted, so a stored response reads "Yes" rather than "true".
  */
-const Toggle = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, isRequired, value, help, onChange, onLabel, offLabel }) => {
+const Toggle = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, value, help, onChange, onLabel, offLabel }) => {
 	const isChecked = Boolean(value);
 	const stateText = isChecked ? (onLabel || 'Yes') : (offLabel || 'No');
 
 	return (
 		<div className={`fieldMainArea labelPosition-${index}`}>
-			<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+			<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
 
 			<div className="fieldArea svbToggleArea">
 				<label className="svbSwitch">

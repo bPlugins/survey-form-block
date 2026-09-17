@@ -1,12 +1,12 @@
 import LabelArea from '../MainEle/LabelArea';
 
-const Radio = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, isRequired, id, value, help, classes, options = [], onChange }) => {
+const Radio = ({ cId, fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, id, value, help, classes, options = [], onChange }) => {
 	// Every radio group needs its own name, otherwise a second radio question -
 	// or a second survey on the same page - would share one selection.
 	const groupName = `svb-${cId || 'f'}-${id || index}`;
 
 	return <div className={`fieldMainArea labelPosition-${index} `}>
-		<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} />
+		<LabelArea isRequired={isRequired} labelEl={fieldEls.label} help={help} buttonArea={buttonArea} index={index} icon={icon} requiredMark={requiredMark} requiredText={requiredText} />
 
 		<div className={`fieldArea ${classes}  fieldArea-${index}`} role="radiogroup">
 			{options.map((option, childIndex) => {

@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {exit;}
 if (!class_exists('BPSVB_Post_Type')) {
     class BPSVB_Post_Type
     {
-        const NAME = 'survey-form-block';
+        const NAME = BPSVB_CPT_SLUG;
 
         const BLOCK = 'svb/survey-block';
 
@@ -53,7 +53,8 @@ if (!class_exists('BPSVB_Post_Type')) {
                         'not_found'          => __('No surveys found', 'survey-form-block'),
                         'not_found_in_trash' => __('No surveys found in Trash', 'survey-form-block'),
                         'all_items'          => __('Surveys', 'survey-form-block'),
-                        'menu_name'          => __('Surveys', 'survey-form-block'),
+                        // The top-level label, so it reads as the plugin.
+                        'menu_name'          => __('Survey Forms', 'survey-form-block'),
                     ],
                     'supports'           => ['title', 'editor', 'revisions'],
                     'show_in_rest'       => true,
@@ -64,10 +65,13 @@ if (!class_exists('BPSVB_Post_Type')) {
                     'exclude_from_search' => true,
                     'has_archive'        => false,
                     'rewrite'            => false,
-                    // Hangs off the plugin's existing top-level menu rather than
-                    // adding a second one beside it.
-                    'show_in_menu'       => BPSVB_MENU_SLUG,
-                    'menu_icon'          => 'dashicons-feedback',
+                    // This is the plugin's top-level menu. The responses
+                    // screen, Demo & Help and the Freemius Account page are all
+                    // registered against it, and Freemius is configured with the
+                    // same slug so its opt-in screen belongs to this menu too.
+                    'show_in_menu'       => true,
+                    'menu_position'      => 6,
+                    'menu_icon'          => 'data:image/svg+xml;base64,' . base64_encode(self::icon()),
                     // One survey per entry, and it cannot be removed or joined
                     // by other blocks, so the shortcode always has exactly one
                     // thing to print.
@@ -75,6 +79,16 @@ if (!class_exists('BPSVB_Post_Type')) {
                     'template_lock'      => 'all',
                 ]
             );
+        }
+
+        /**
+         * The menu icon, inlined so it takes the admin colour scheme.
+         *
+         * @return string
+         */
+        private static function icon()
+        {
+            return "<svg xmlns='http://www.w3.org/2000/svg' fill='#fff' width='20px' height='20px' viewBox='0 0 100 100' enable-background='new 0 0 100 100'><g><path d='M24,23h44c2.2,0,4,1.8,4,4v4c0,2.2-1.8,4-4,4H24c-2.2,0-4-1.8-4-4v-4C20,24.8,21.8,23,24,23z' /><path d='M24,41h25c2.2,0,4,1.8,4,4v4c0,2.2-1.8,4-4,4H24c-2.2,0-4-1.8-4-4v-4C20,42.8,21.8,41,24,41z' /><path d='M65.9,52c7.7,0,14,6.3,14,14s-6.3,14-14,14s-14-6.3-14-14S58.2,52,65.9,52z M73.8,62.9c0.3-0.3,0.3-1,0-1.3l-1.4-1.3c-0.4-0.4-1-0.4-1.4,0l-7.5,8.4l-3.4-3.4c-0.4-0.4-1-0.4-1.4,0l-1.4,1.3c-0.4,0.3-0.4,0.9,0,1.3l4.8,4.7c0.4,0.4,0.9,0.6,1.4,0.6c0.6,0,1-0.2,1.4-0.6L73.8,62.9z M24,59h23.2c-0.8,2.3-1.2,4.3-1.2,6c-0.1,2.1,0.1,4.1,0.6,6H24l0,0c-2.2,0-4-1.8-4-4v-4l0,0C20,60.8,21.8,59,24,59z'/></g></svg>";
         }
 
         /**

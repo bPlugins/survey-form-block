@@ -8,6 +8,7 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
         {
             add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
             add_action('admin_menu', [$this, 'adminMenu']);
+            add_action('admin_notices', [$this, 'adminNotice']);
         }
 
         public function adminEnqueueScripts($hook)
@@ -51,20 +52,13 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
 
         public function adminMenu()
         {
-            $menuIcon = "<svg xmlns='http://www.w3.org/2000/svg' fill='#fff' width='20px' height='20px' viewBox='0 0 100 100' enable-background='new 0 0 100 100'><g><path d='M24,23h44c2.2,0,4,1.8,4,4v4c0,2.2-1.8,4-4,4H24c-2.2,0-4-1.8-4-4v-4C20,24.8,21.8,23,24,23z' /><path d='M24,41h25c2.2,0,4,1.8,4,4v4c0,2.2-1.8,4-4,4H24c-2.2,0-4-1.8-4-4v-4C20,42.8,21.8,41,24,41z' /><path d='M65.9,52c7.7,0,14,6.3,14,14s-6.3,14-14,14s-14-6.3-14-14S58.2,52,65.9,52z M73.8,62.9c0.3-0.3,0.3-1,0-1.3l-1.4-1.3c-0.4-0.4-1-0.4-1.4,0l-7.5,8.4l-3.4-3.4c-0.4-0.4-1-0.4-1.4,0l-1.4,1.3c-0.4,0.3-0.4,0.9,0,1.3l4.8,4.7c0.4,0.4,0.9,0.6,1.4,0.6c0.6,0,1-0.2,1.4-0.6L73.8,62.9z M24,59h23.2c-0.8,2.3-1.2,4.3-1.2,6c-0.1,2.1,0.1,4.1,0.6,6H24l0,0c-2.2,0-4-1.8-4-4v-4l0,0C20,60.8,21.8,59,24,59z'/></g></svg>";
 
-            add_menu_page(
-                __('Survey Form Block', 'survey-form-block'),
-                __('Survey Forms', 'survey-form-block'),
-                'manage_options',
-                BPSVB_MENU_SLUG,
-                [$this, 'listPage'],
-                'data:image/svg+xml;base64,' . base64_encode($menuIcon),
-                6
-            );
+            // The Surveys post type supplies the top-level menu; everything
+            // here hangs off it, so Freemius's opt-in and Account screens sit
+            // in the same place. See BPSVB_MENU_PARENT.
 
             add_submenu_page(
-                BPSVB_MENU_SLUG,
+                BPSVB_MENU_PARENT,
                 __('Survey List', 'survey-form-block'),
                 __('Survey List', 'survey-form-block'),
                 'manage_options',
@@ -73,12 +67,21 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
             );
 
             add_submenu_page(
-                BPSVB_MENU_SLUG,
+                BPSVB_MENU_PARENT,
                 __('Demo and Help', 'survey-form-block'),
                 __('Demo & Help', 'survey-form-block'),
                 'manage_options',
                 BPSVB_DASHBOARD_SLUG,
                 [$this, 'dashboardPage']
+            );
+
+            add_submenu_page(
+                BPSVB_MENU_PARENT,
+                __('Live Demos', 'survey-form-block'),
+                __('Live Demos ↗', 'survey-form-block'),
+                'manage_options',
+                'survey-demos-showcase',
+                [$this, 'demosShowcaseRedirect']
             );
         }
 
@@ -113,6 +116,37 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
                 ] ) ); ?>'
             ></div>
         <?php }
+
+        /**
+         * Redirects the Live Demos submenu item to the frontend showcase hub.
+         */
+        public function demosShowcaseRedirect()
+        {
+            echo '<script>window.location.href = "' . esc_url( home_url( '/survey-demos/' ) ) . '";</script>';
+            echo '<div class="wrap"><p>' . sprintf( esc_html__( 'Redirecting to %s...', 'survey-form-block' ), '<a href="' . esc_url( home_url( '/survey-demos/' ) ) . '">' . esc_html__( 'Survey Demos Showcase', 'survey-form-block' ) . '</a>' ) . '</p></div>';
+        }
+
+        /**
+         * Admin notice pointing directly to the survey demos.
+         */
+        public function adminNotice()
+        {
+            $screen = get_current_screen();
+            if ( ! $screen || ( false === strpos( (string) $screen->id, BPSVB_CPT_SLUG ) && 'dashboard' !== $screen->id ) ) {
+                return;
+            }
+            ?>
+            <div class="notice notice-info is-dismissible" style="border-left-color: #2563eb; padding: 12px 16px;">
+                <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #0f172a;">
+                    🎯 <strong>Survey Form Block Demos:</strong> 6 production-ready real-world use cases are live!
+                </p>
+                <p style="margin: 0; font-size: 13px;">
+                    <a href="<?php echo esc_url( home_url( '/survey-demos/' ) ); ?>" target="_blank" class="button button-primary" style="margin-right: 8px;">View Live Demos Hub ↗</a>
+                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=' . BPSVB_MENU_SLUG ) ); ?>" class="button button-secondary">View Stored Responses</a>
+                </p>
+            </div>
+            <?php
+        }
     }
     new BPSVB_ADMIN_MENU();
 }

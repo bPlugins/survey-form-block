@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import { questions, star } from '../../../utils/icons';
 import { getIcon } from '../../../utils/svbIcons';
 import Help from '../FieldAttr/Help';
@@ -11,8 +13,9 @@ import Help from '../FieldAttr/Help';
  * @param {number}  props.index       Field index.
  * @param {string}  props.icon        Optional question icon key (Pro).
  * @param {string}  props.requiredMark How to flag required fields.
+ * @param {string}  props.requiredText Wording of the "Required" badge.
  */
-const LabelArea = ({ isRequired, labelEl, help, buttonArea, index, icon = '', requiredMark = 'asterisk' }) => {
+const LabelArea = ({ isRequired, labelEl, help, buttonArea, index, icon = '', requiredMark = 'asterisk', requiredText = '' }) => {
 	const iconEl = icon ? getIcon(icon) : null;
 
 	return <div className='labelArea'>
@@ -21,8 +24,11 @@ const LabelArea = ({ isRequired, labelEl, help, buttonArea, index, icon = '', re
 
 			{labelEl}
 
-			{isRequired && 'asterisk' === requiredMark && star}
-			{isRequired && 'badge' === requiredMark && <span className="svbRequiredBadge">Required</span>}
+			{isRequired && 'asterisk' === requiredMark && <span className="svbRequiredStar">{star}</span>}
+
+			{isRequired && 'badge' === requiredMark && <span className="svbRequiredBadge">
+				{requiredText || __('Required', 'survey-form-block')}
+			</span>}
 
 			{help && <div className='help'>
 				{questions}

@@ -1,0 +1,76 @@
+fix: repair the onboarding redirect and expose the settings the demos needed
+
+Follows a317ccc. Existing surveys, stored submissions, block attributes, AJAX
+actions and CSS class names are unchanged; the admin screens keep their URLs.
+
+Onboarding
+
+* Allow & Continue and Skip on the opt-in screen now both land on Demo & Help,
+  on the free plan and the paid one alike. Two faults, either of which broke it:
+
+  - The licensing SDK was initialised from includes/fs.php. It identifies its
+    plugin from the backtrace of the fs_dynamic_init() call, so it resolved the
+    plugin as "survey-form-block/includes" and served the opt-in screen at
+    ?page=survey-form-block/includes-opt-in. Allow posted back to a page that
+    did not exist and Skip redirected to /wp-admin/undefinededit.php. The
+    bootstrap now lives in the main plugin file, as in the sibling
+    offcanvas-block, and includes/fs.php is gone. Do not move it back.
+
+  - The SDK was configured with a plain page menu while the plugin registers a
+    post type menu, so it never took its CPT code path. The menu slug is now
+    edit.php?post_type=survey-form-block and first-path points at Demo & Help.
+
+* Survey Forms is a single menu again: the Surveys post type is the top level,
+  carrying the plugin icon, with Surveys, Add New Survey, Survey List,
+  Demo & Help and Account beneath it. This replaces the submenu-ordering
+  workaround added in a317ccc, which existed only because the post type was
+  registered as a child of the plugin's own page.
+
+Inspector
+
+* Star Rating, Range Slider and Number questions can be configured from the
+  inspector: number of stars, and minimum, maximum, step and starting value.
+  The form already read all five, but nothing wrote them, so they could only be
+  set by editing block markup by hand - which is how the demo surveys got them.
+
+* The required-field marker is configurable under Design -> Labels & Dividers:
+  asterisk, badge or hidden, the badge wording, and the marker colour. The
+  badge previously rendered a hard-coded, untranslatable "Required", the
+  asterisk had fill="red" baked into its SVG and the badge colour was fixed in
+  the stylesheet. requiredText is threaded through all fifteen field components
+  that render a label.
+
+* A line under the Required checkbox points at the marker settings, which sit
+  in a different tab from the checkbox that makes a question required.
+
+Demos and patterns
+
+* Block patterns: six production survey templates registered under a
+  "Survey Forms" pattern category, so a full survey can be inserted in one step.
+
+* Demos tab in the Demo & Help dashboard. The route was missing entirely, so
+  #/demos fell through to the catch-all and bounced to /welcome. The tab hides
+  itself while no demos are listed rather than shipping links that 404.
+
+* Page styling for the demo surveys, enqueued only when the stylesheet is
+  present. It styles page chrome alone - hero, topbar, pills, split layout -
+  and touches none of the form's own classes.
+
+Readme and assets
+
+* Screenshots renamed to the sequential form wordpress.org reads, and rebuilt
+  at 772px wide so they render without downscaling in the plugin directory's
+  content column. The browser-framed set is used, on a canvas only as tall as
+  its content: at 1080x1080 the form shrank to roughly half the legible size.
+
+* readme.txt: added Requires at least and Requires PHP, which wordpress.org
+  reads from the readme rather than the plugin header; replaced a tag carrying
+  no search value; documented the response dashboard and reusable surveys; and
+  corrected the Pro link, which pointed at the free wordpress.org listing.
+
+Tooling
+
+* scripts/ holds the demo seeding and screenshot capture helpers. Development
+  only; not loaded by the plugin.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
