@@ -30,6 +30,15 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     define( 'BPSVB_PLUGIN_FILE', __FILE__ );
     define( 'BPSVB_DIR', plugin_dir_url( __FILE__ ) );
     define( 'BPSVB_PATH', plugin_dir_path( __FILE__ ) );
+    /**
+     * assets/ holds the wordpress.org listing images (icon, banner,
+     * screenshots). Those are committed to the .org SVN assets directory and
+     * served from ps.w.org - they are NOT part of the distributed plugin, as
+     * `wp-scripts plugin-zip` only globs admin/, build/, includes/, languages/
+     * and public/. Nothing at runtime may load a file from here, or it will
+     * 404 on every real install. Kept defined because it predates that rule
+     * and may be referenced by site-level code.
+     */
     define( 'BPSVB_ASSETS_DIR', plugin_dir_url( __FILE__ ) . 'assets/' );
     define( 'BPSVB_HAS_PRO', file_exists( plugin_dir_path( __FILE__ ) . 'vendor/freemius/start.php' ) );
 
@@ -132,7 +141,6 @@ if ( function_exists( 'bpsvb_fs' ) ) {
         public function __construct()
         {
             add_action( 'enqueue_block_assets', [$this, 'enqueueBlockAssets'] );
-            add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontendStyles'] );
             add_action( 'init', [$this, 'onInit'] );
             add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [$this, 'pluginActionLinks'] );
         }
@@ -149,13 +157,6 @@ if ( function_exists( 'bpsvb_fs' ) ) {
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('wp_ajax'),
             ]);
-        }
-
-        public function enqueueFrontendStyles()
-        {
-            if ( file_exists( BPSVB_PATH . 'assets/demo-pages.css' ) ) {
-                wp_enqueue_style( 'svb-demo-pages', BPSVB_ASSETS_DIR . 'demo-pages.css', [], BPSVB_PLUGIN_VERSION );
-            }
         }
 
         public function onInit() {
@@ -201,7 +202,30 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     // Everything below is admin- or AJAX-only. admin-ajax.php sets WP_ADMIN, so
     // is_admin() covers the public form endpoint too.
     if ( is_admin() || wp_doing_ajax() ) {
+        require_once BPSVB_PATH . 'includes/Options.php';
         require_once BPSVB_PATH . 'includes/AdminMenu.php';
         require_once BPSVB_PATH . 'includes/SVBAjax.php';
+    }
+
+    /**
+     * Uninstall cleanup.
+     *
+     * Hung on the SDK's after_uninstall action rather than shipped as an
+     * uninstall.php, because WordPress gives uninstall.php precedence over the
+     * uninstall hook the SDK registers for its own teardown - so the file would
+     * stop Freemius from ever learning the plugin was removed, and this would
+     * never run either. Freemius rejects a deployment that contains one.
+     *
+     * @see https://freemius.com/help/documentation/release-management/deployment/#uninstallphp-file
+     */
+    if ( bpsvb_fs() && method_exists( bpsvb_fs(), 'add_action' ) ) {
+        bpsvb_fs()->add_action( 'after_uninstall', function () {
+            $uninstall = BPSVB_PATH . 'includes/Uninstall.php';
+
+            if ( file_exists( $uninstall ) ) {
+                require_once $uninstall;
+                BPSVB_Uninstall::run();
+            }
+        } );
     }
 }

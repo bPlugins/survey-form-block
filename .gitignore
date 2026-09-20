@@ -8,3 +8,5 @@ docs
 
 # Packaging artefact from `npm run plugin-zip`
 *.zip
+mess.txt
+features.txt

@@ -74,15 +74,6 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
                 BPSVB_DASHBOARD_SLUG,
                 [$this, 'dashboardPage']
             );
-
-            add_submenu_page(
-                BPSVB_MENU_PARENT,
-                __('Live Demos', 'survey-form-block'),
-                __('Live Demos ↗', 'survey-form-block'),
-                'manage_options',
-                'survey-demos-showcase',
-                [$this, 'demosShowcaseRedirect']
-            );
         }
 
         public function listPage()
@@ -108,26 +99,20 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
             <div
                 id='svbAdminDashboard'
                 data-info='<?php echo esc_attr( wp_json_encode( [
-                    'version'             => BPSVB_PLUGIN_VERSION,
-                    'isPremium'           => BPSVB_Pro::isPremium(),
-                    'hasPro'              => BPSVB_HAS_PRO,
-                    'adminUrl'            => admin_url(),
-                    'licenseActiveNonce'  => wp_create_nonce( 'bPlLicenseActivation' ),
+                    'version'               => BPSVB_PLUGIN_VERSION,
+                    'isPremium'             => BPSVB_Pro::isPremium(),
+                    'hasPro'                => BPSVB_HAS_PRO,
+                    'adminUrl'              => admin_url(),
+                    'licenseActiveNonce'    => wp_create_nonce( 'bPlLicenseActivation' ),
+                    'deleteDataOnUninstall' => BPSVB_Options::shouldDeleteData(),
+                    'uninstallNonce'        => wp_create_nonce( BPSVB_Options::AJAX_ACTION ),
                 ] ) ); ?>'
             ></div>
         <?php }
 
         /**
-         * Redirects the Live Demos submenu item to the frontend showcase hub.
-         */
-        public function demosShowcaseRedirect()
-        {
-            echo '<script>window.location.href = "' . esc_url( home_url( '/survey-demos/' ) ) . '";</script>';
-            echo '<div class="wrap"><p>' . sprintf( esc_html__( 'Redirecting to %s...', 'survey-form-block' ), '<a href="' . esc_url( home_url( '/survey-demos/' ) ) . '">' . esc_html__( 'Survey Demos Showcase', 'survey-form-block' ) . '</a>' ) . '</p></div>';
-        }
-
-        /**
-         * Admin notice pointing directly to the survey demos.
+         * Admin notice pointing at the demos, which live on the Demo & Help
+         * screen's Demos tab rather than on this site.
          */
         public function adminNotice()
         {
@@ -141,8 +126,8 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
                     🎯 <strong>Survey Form Block Demos:</strong> 6 production-ready real-world use cases are live!
                 </p>
                 <p style="margin: 0; font-size: 13px;">
-                    <a href="<?php echo esc_url( home_url( '/survey-demos/' ) ); ?>" target="_blank" class="button button-primary" style="margin-right: 8px;">View Live Demos Hub ↗</a>
-                    <a href="<?php echo esc_url( admin_url( 'admin.php?page=' . BPSVB_MENU_SLUG ) ); ?>" class="button button-secondary">View Stored Responses</a>
+                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_DASHBOARD_SLUG ) . '#/demos' ); ?>" class="button button-primary" style="margin-right: 8px;">View Live Demos</a>
+                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_MENU_SLUG ) ); ?>" class="button button-secondary">View Stored Responses</a>
                 </p>
             </div>
             <?php

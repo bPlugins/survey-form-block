@@ -149,6 +149,10 @@ Yes. Go to **Survey Forms &rarr; Surveys** and add one there instead of building
 
 No. Dropping the Survey Form Block straight onto a page works exactly as it always has, and surveys built that way are untouched by this. The Surveys screen is there for when you want one survey in several places.
 
+= What happens to my responses if I delete the plugin? =
+
+Nothing - they are kept. Deleting the plugin leaves your surveys, responses and tables in place unless you opt in first, under **Survey Forms → Demo & Help → Settings**. That switch is off by default and asks you to type DELETE before it turns on.
+
 = Does it work with any WordPress theme? =
 
 Yes, it will work with any standard WordPress theme.
@@ -213,6 +217,7 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * New: Deleting a response now asks for confirmation in a styled dialog rather than a browser alert, with keyboard support and focus starting on Cancel;
 * Fixed: After installing the plugin, Allow & Continue and Skip on the opt-in screen now both land on Demo & Help, on the free plan and the paid one alike. Two things were wrong: the licensing SDK was initialised from a file inside includes/, so it identified the plugin by that subdirectory and built every admin URL from it, and it was configured with a plain page menu while the plugin registers a post type menu;
 * Changed: Survey Forms is now a single menu holding Surveys, Survey List, Demo & Help and Account. Existing screen URLs are unchanged;
+* New: Uninstall cleanup. Deleting the plugin can now remove its surveys, responses, tables and settings - but only if you switch it on first under Survey Forms → Demo & Help → Settings. It is off by default, so deleting the plugin keeps your data unless you ask otherwise;
 * New: The required-field marker is now configurable: choose an asterisk, a badge or nothing, set the badge wording, and pick its colour, under Design → Labels & Dividers. The badge previously read a hard-coded, untranslatable "Required";
 * New: Star Rating, Range Slider and Number questions can now be configured from the inspector - number of stars, and minimum, maximum, step and starting value. These were read by the form but had no control, so they could only be set by editing the block markup by hand;
 * New: Surveys can now be saved in one place and reused - add one under Survey Forms &rarr; Surveys, copy its shortcode from the ShortCode column, and paste `[survey-form-block id="123"]` into any page, post, widget or template. Surveys placed directly on a page are unaffected and keep working as before;

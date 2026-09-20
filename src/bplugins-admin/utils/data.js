@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import { gutenbergTabIcon } from './icon';
 
 const slug = 'survey-form-block';
@@ -13,7 +15,7 @@ const FREEMIUS = {
 };
 
 export const dashboardInfo = (info) => {
-	const { version, isPremium, hasPro, licenseActiveNonce, adminUrl } = info;
+	const { version, isPremium, hasPro, licenseActiveNonce, adminUrl, deleteDataOnUninstall = false, uninstallNonce = '' } = info;
 
 	const proSuffix = isPremium ? ' Pro' : '';
 
@@ -31,7 +33,17 @@ export const dashboardInfo = (info) => {
 		media: {
 			logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`,
 			banner: `https://ps.w.org/${slug}/assets/banner-772x250.png`,
-			thumbnail: `https://ps.w.org/${slug}/assets/banner-772x250.png`
+			// Served from ps.w.org like the logo and banner above, because
+			// assets/ is not part of the distributed plugin. Its own file
+			// rather than banner-772x250.png: the Overview card crops to 3:2
+			// with object-fit: cover, and the 772x250 banner lost both edges
+			// to that. Drawn at 3:2 and feature-led rather than a slogan.
+			//
+			// RELEASE STEP: assets/dashboard-banner.png must be committed to
+			// the .org SVN assets directory alongside the icon and banner.
+			// Overview only guards on the value being set, not on the request
+			// succeeding, so until it is uploaded this renders a broken image.
+			thumbnail: `https://ps.w.org/${slug}/assets/dashboard-banner.png`
 		},
 		// Only links that actually resolve today. The product landing and docs
 		// pages are not published yet, so they are deliberately absent rather
@@ -41,6 +53,8 @@ export const dashboardInfo = (info) => {
 		},
 		freemius: FREEMIUS,
 		licenseActiveNonce,
+		deleteDataOnUninstall,
+		uninstallNonce,
 
 		startButton: {
 			label: 'Create a Survey',
@@ -52,16 +66,18 @@ export const dashboardInfo = (info) => {
 /**
  * Live demos shown on the Demos tab.
  *
- * Empty for now: no survey-form-block demo pages are published on
- * bblockswp.com yet, and the tab hides itself rather than shipping links that
- * 404. Add entries here and it appears on its own.
+ * Hosted on bblockswp.com, not seeded into the site the plugin is installed
+ * on, so every url here is absolute. Layout hides the nav item while this
+ * array is empty.
+ *
+ * No allInOneLabel/allInOneLink: the shared Demos component documents them as
+ * optional and never reads them, and offcanvas-block leaves them commented
+ * out for the same reason.
  *
  * Shape, matching the sibling offcanvas-block plugin:
  *   { icon, title, description, category, type: 'iframe', url }
  */
 export const demoInfo = {
-	allInOneLabel: 'View All Live Demos',
-	allInOneLink: '/survey-demos/',
 	demos: [
 		{
 			icon: '',
@@ -69,7 +85,7 @@ export const demoInfo = {
 			description: 'Measure CSAT and NPS scores with interactive 5-star ratings, NPS 0-10 scale, and multi-select tags.',
 			category: 'Feedback & Evaluation',
 			type: 'iframe',
-			url: '/customer-satisfaction-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-customer-satisfaction-nps/',
 		},
 		{
 			icon: '',
@@ -77,7 +93,7 @@ export const demoInfo = {
 			description: 'Collect feature requests and roadmap feedback with 1-10 opinion scale, range slider, and beta tester opt-in.',
 			category: 'Product Management',
 			type: 'iframe',
-			url: '/product-feedback-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-product-feedback-feature-request/',
 		},
 		{
 			icon: '',
@@ -85,7 +101,7 @@ export const demoInfo = {
 			description: 'Multi-section registration with attendee details, attendance format, session tracks, and arrival date.',
 			category: 'Events & Community',
 			type: 'iframe',
-			url: '/event-registration-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-tech-conference-event-registration/',
 		},
 		{
 			icon: '',
@@ -93,7 +109,7 @@ export const demoInfo = {
 			description: 'Engineering job application with portfolio URLs, years experience, technical proficiency scale, and work authorization.',
 			category: 'Hiring & Recruiting',
 			type: 'iframe',
-			url: '/job-application-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-job-application-candidate-screening/',
 		},
 		{
 			icon: '',
@@ -101,7 +117,7 @@ export const demoInfo = {
 			description: 'Bug reporting tool with page URL capture, issue category, urgency selector, and reproduction steps.',
 			category: 'QA & Support',
 			type: 'iframe',
-			url: '/website-bug-report-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-website-usability-bug-report-form/',
 		},
 		{
 			icon: '',
@@ -109,10 +125,25 @@ export const demoInfo = {
 			description: '30-day new hire pulse check evaluating tooling access, team mentorship, and role clarity.',
 			category: 'Internal Culture',
 			type: 'iframe',
-			url: '/employee-onboarding-survey/',
+			url: 'https://bblockswp.com/demo/bpsvb-employee-onboarding-30-day-check-in/',
 		},
 	],
 };
+/**
+ * The Settings tab: what "delete my data on uninstall" would actually remove.
+ *
+ * ajaxAction must match BPSVB_Options::AJAX_ACTION, and the nonce it checks is
+ * passed through as uninstallNonce.
+ */
+export const settingsInfo = {
+	ajaxAction: 'svb_save_uninstall_option',
+	cleanupItems: [
+		__('Every saved survey (Survey Forms → Surveys)', 'survey-form-block'),
+		__('Every response collected by those surveys', 'survey-form-block'),
+		__('The plugin\'s own database tables and settings', 'survey-form-block')
+	]
+};
+
 export const pricingInfo = {
 	logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`,
 	pluginId: FREEMIUS.product_id,

@@ -6,9 +6,10 @@ import Pricing from '../../../../bpl-tools/Admin/Pricing';
 import FeatureCompare from '../../../../bpl-tools/Admin/FeatureCompare';
 import Activation from '../../../../bpl-tools/Admin/Activation';
 import OurPlugins from '../../../../bpl-tools/Admin/OurPlugins';
+import Settings from '../../../../bpl-tools/Admin/Settings';
 
 import Layout from './Layout';
-import { demoInfo, pricingInfo, welcomeInfo } from '../utils/data';
+import { demoInfo, pricingInfo, settingsInfo, welcomeInfo } from '../utils/data';
 
 const App = (props) => {
 	const { isPremium, hasPro, adminUrl } = props;
@@ -35,6 +36,8 @@ const App = (props) => {
 					{hasPro && <Route path="activation" element={<Activation {...props} />} />}
 
 					<Route path="our-plugins" element={<OurPlugins {...props} />} />
+
+					<Route path="settings" element={<Settings {...props} {...settingsInfo} />} />
 
 					<Route path="*" element={<Navigate to="/welcome" replace />} />
 				</Route>

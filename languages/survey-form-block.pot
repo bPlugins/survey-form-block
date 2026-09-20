@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T06:21:28+00:00\n"
+"POT-Creation-Date: 2026-09-20T12:00:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
@@ -52,29 +52,24 @@ msgstr ""
 msgid "Demo & Help"
 msgstr ""
 
-#: includes/AdminMenu.php:80
-msgid "Live Demos"
-msgstr ""
-
-#: includes/AdminMenu.php:81
-msgid "Live Demos ↗"
-msgstr ""
-
-#: includes/AdminMenu.php:96
+#: includes/AdminMenu.php:87
 msgid "Survey Responses"
 msgstr ""
 
-#: includes/AdminMenu.php:97
+#: includes/AdminMenu.php:88
 msgid "Everything submitted through your survey blocks, newest first."
 msgstr ""
 
-#: includes/AdminMenu.php:126
-#, php-format
-msgid "Redirecting to %s..."
+#: includes/Options.php:69
+msgid "Permission denied."
 msgstr ""
 
-#: includes/AdminMenu.php:126
-msgid "Survey Demos Showcase"
+#: includes/Options.php:79
+msgid "Surveys and their responses will be deleted when the plugin is uninstalled."
+msgstr ""
+
+#: includes/Options.php:80
+msgid "Surveys and their responses will be kept when the plugin is uninstalled."
 msgstr ""
 
 #: includes/Patterns.php:35
@@ -208,11 +203,11 @@ msgstr ""
 msgid "Too many submissions from this address. Please wait a moment and try again."
 msgstr ""
 
-#: survey-form-block.php:175
+#: survey-form-block.php:176
 msgid "Help & Demos"
 msgstr ""
 
-#: survey-form-block.php:182
+#: survey-form-block.php:183
 msgid "Go Pro"
 msgstr ""
 
@@ -421,6 +416,18 @@ msgstr ""
 
 #: src/admin/post.js:43
 msgid "Press Ctrl/Cmd + C to copy"
+msgstr ""
+
+#: src/bplugins-admin/utils/data.js:141
+msgid "Every saved survey (Survey Forms → Surveys)"
+msgstr ""
+
+#: src/bplugins-admin/utils/data.js:142
+msgid "Every response collected by those surveys"
+msgstr ""
+
+#: src/bplugins-admin/utils/data.js:143
+msgid "The plugin's own database tables and settings"
 msgstr ""
 
 #: src/Components/FrontEnd/MainEle/LabelArea.js:30
