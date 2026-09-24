@@ -9,7 +9,7 @@ Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Build surveys in the block editor, read every response in your dashboard, and reuse any survey anywhere with a shortcode.
+Create custom survey forms in Gutenberg to engage your audience and collect valuable insights – a free survey form block for WordPress.
 
 == Description ==
 Build a survey in the block editor, drop it on a page, and watch the answers arrive. Every response is collected in your own dashboard — no third-party service, no account, and nothing leaves your site.

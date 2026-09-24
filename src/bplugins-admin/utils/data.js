@@ -191,6 +191,39 @@ export const welcomeInfo = (adminUrl) => ({
 						link: { url: `${adminUrl}admin.php?page=survey-form-block`, label: 'View Responses' }
 					}
 				]
+			},
+			{
+				key: 'shortcode',
+				label: 'Shortcode',
+				icon: 'shortcode',
+				steps: [
+					{
+						num: 1,
+						title: 'Add the shortcode',
+						body: 'Open any page or post, click <strong>+</strong> and search for <strong>Shortcode</strong>. Paste <code>[survey_form_block]</code> into the block.'
+					},
+					{
+						num: 2,
+						title: 'Build your questions',
+						body: 'Use the <strong>General</strong> tab to add fields — text, email, rating, NPS, opinion scale, slider, dropdown and more — and to reorder them.'
+					},
+					{
+						num: 3,
+						title: 'Pick a look',
+						body: 'Open the <strong>Design</strong> tab and choose a theme. Layout, input style, buttons, motion and the progress indicator all live there.'
+					},
+					{
+						num: 4,
+						title: 'Publish & collect',
+						body: 'Publish the page. Responses appear under <strong>Survey Forms → Survey List</strong>.',
+						link: { url: `${adminUrl}admin.php?page=survey-form-block`, label: 'View Responses' }
+					},
+					{
+						num: 5,
+						title: 'Optional: Add a survey title',
+						body: 'If you want to give the survey a title, add a <strong>Heading</strong> block above the shortcode.'
+					}
+				]
 			}
 		]
 	},

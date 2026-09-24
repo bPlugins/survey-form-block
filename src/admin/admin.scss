@@ -1,85 +1,145 @@
 /**
  * Submissions list screen.
  *
- * Replaces the runtime Tailwind build and the DataTables stylesheet. Sized and
- * coloured to sit naturally inside wp-admin rather than to look like a separate
- * application: wp-admin's own metrics (40px controls, 13px body text) are kept,
- * and the plugin's purple is used only for accents, never as chrome.
+ * Styled to match the bPlugins admin dashboard (Demo & Help), so the two screens
+ * read as one product rather than as a plugin page next to a dashboard. Every
+ * token below is taken from bpl-tools/Admin/__variables.scss and the conventions
+ * its components already use:
+ *
+ *   - Roboto throughout, 14px body
+ *   - #f6f8fa full-bleed page, white panels, 1px rgba(content,.1) hairlines
+ *   - square corners; bpl-tools comments out every border-radius on purpose
+ *   - #6155F5 primary, used for accents and focus only
+ *   - inputs sit on a rgba(content,.05) tint with a transparent border, and
+ *     focus to white + a 3px rgba(primary,.1) ring
+ *
+ * The accent reads --bpl-dashboard-primary-color where the dashboard sets it,
+ * falling back to the same literal, so a themed dashboard carries over.
  *
  * This stylesheet is enqueued by listPage() alone, so the few unscoped selectors
  * near the top only ever apply to that one screen.
  */
 
-/* ------------------------------- palette --------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
 
-$accent: #4527a4;
-$accentSoft: #f5f2fe;
-$accentLine: #ddd4f8;
-$ink: #1d2327;
-$inkSoft: #3c434a;
-$muted: #646970;
-$faint: #8c8f94;
-$border: #e4e4e7;
-$borderStrong: #c9c9cf;
+/* ---------------------- bPlugins dashboard palette ------------------------ */
+
+$primary: #6155F5;
+$secondary: #091E42;
+$title: #001737;
+$content: #1B2E4B;
+$page: #f6f8fa;
+
+$accent: var(--bpl-dashboard-primary-color, #{$primary});
+$accentSoft: rgba($primary, .08);
+$accentLine: rgba($primary, .22);
+$ink: $title;
+$inkSoft: $content;
+$muted: rgba($content, .7);
+$faint: rgba($content, .5);
+$border: rgba($content, .1);
+$borderStrong: rgba($content, .18);
+$field: rgba($content, .05);
 $surface: #fff;
-$zebra: #fbfbfc;
+$zebra: rgba($content, .022);
 $danger: #c9282a;
 $dangerSoft: #fdf3f3;
-$ok: #17692f;
+$ok: #16a34a;
 $okSoft: #f0f9f2;
 $warnSoft: #fffaeb;
 $warnInk: #7a5a00;
 
-$radius: 10px;
-$control: 7px;
-$max: 1400px;
-$shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
+// bpl-tools squares everything; these stay as named tokens so the decision is
+// in one place rather than spread across thirteen declarations.
+$radius: 0;
+$control: 0;
+$pill: 0;
+$max: 1320px; // .bPlDashboardContainer
+$shadow: 0 1px 3px rgba($secondary, .04);
+$font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
 /* ------------------------------ page header ------------------------------ */
 
 .svbWrap {
-	// The card below is centred with a max width. Left-aligning the heading
-	// against the admin menu instead left it visibly off the card's edge.
-	> h1 {
+	// Full-bleed tinted page, the same escape from #wpbody-content's gutters
+	// that .bPlDashboard uses, so this screen and the dashboard share a canvas.
+	width: calc(100% + 22px);
+	max-width: calc(100% + 22px);
+	min-height: calc(100vh - 32px);
+	margin: 0 0 0 -20px;
+	padding: 32px 24px 64px;
+	background: $page;
+	font-family: $font;
+
+	display: flex;
+	flex-direction: column;
+
+	* { font-family: $font; }
+
+	// WordPress injects admin notices straight after the first <h1>, which
+	// would otherwise cut the hero in half. Ordering them ahead of it keeps the
+	// eyebrow, title and subhead together without removing the notices.
+	> .notice,
+	> .updated,
+	> .error,
+	> .fs-notice {
+		order: -1;
+		width: 100%;
 		max-width: $max;
-		margin: 26px auto 3px;
+		margin: 0 auto 12px;
+	}
+
+	// Centred eyebrow + title + subhead: the hero every bpl-tools dashboard
+	// screen uses, including the utility ones such as Settings.
+	> .svbEyebrow {
+		align-self: center;
+		padding: 5px 12px;
+		background: $accentSoft;
+		color: $accent;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+		line-height: 1.5;
+	}
+
+	> h1 {
+		margin: 10px auto 0;
 		padding: 0;
-		font-size: 23px;
-		font-weight: 600;
-		line-height: 1.3;
-		color: $ink;
+		font-size: 30px;
+		font-weight: 700;
+		line-height: 1.18;
+		letter-spacing: -.4px;
+		color: $title;
+		text-align: center;
 	}
 
 	> .svbSubhead {
-		max-width: $max;
-		margin: 0 auto 18px;
-		font-size: 13px;
-		line-height: 1.5;
-		color: $muted;
-	}
-
-	// WordPress injects admin notices directly after the heading; keep them on
-	// the same column as the rest of the screen.
-	> .notice,
-	> .updated,
-	> .error {
-		max-width: $max;
-		margin-inline: auto;
+		max-width: 640px;
+		margin: 10px auto 26px;
+		font-size: 15px;
+		line-height: 1.6;
+		color: $content;
+		text-align: center;
 	}
 
 	@media (max-width: 782px) {
-		> h1,
-		> .svbSubhead { padding-inline: 12px; }
+		padding: 22px 12px 40px;
+
+		> h1 { font-size: 24px; }
+		> .svbSubhead { font-size: 14px; }
 	}
 }
 
 /* --------------------------------- shell --------------------------------- */
 
 .svbAdmin {
+	width: 100%;
 	max-width: $max;
-	margin: 0 auto 40px;
-	color: $ink;
-	font-size: 13px;
+	margin: 0 auto;
+	color: $inkSoft;
+	font-size: 14px;
+	line-height: 1.5;
 
 	* { box-sizing: border-box; }
 
@@ -106,9 +166,9 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-end;
-		gap: 14px 18px;
-		padding: 16px 18px;
-		background: linear-gradient(#fff, #fcfcfd);
+		gap: 14px 16px;
+		padding: 14px 16px;
+		background: $surface;
 		border-bottom: 1px solid $border;
 	}
 
@@ -119,38 +179,43 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		min-width: 0;
 
 		label {
-			font-size: 10px;
+			font-size: 11px;
 			font-weight: 700;
 			text-transform: uppercase;
-			letter-spacing: .07em;
+			letter-spacing: 1px;
 			color: $faint;
 		}
 
 		// wp-admin's forms.css sets min-height: 40px on select and on the text
 		// input types, with no media query. min-height beats height, so any
 		// smaller value here is ignored; 40 is what these actually draw at.
+		// bpl-tools inputs sit on a tint with a transparent border and resolve
+		// to white on focus, rather than being outlined at rest.
 		select,
 		input[type="search"] {
 			height: 40px;
 			min-width: 190px;
 			max-width: 280px;
 			padding: 0 12px;
-			border: 1px solid $borderStrong;
+			border: 1px solid transparent;
 			border-radius: $control;
 			// Colour only. The shorthand would drop the arrow image below.
-			background-color: $surface;
-			color: $ink;
-			font-size: 13px;
+			background-color: $field;
+			color: $title;
+			font-size: 14px;
 			line-height: 38px;
-			box-shadow: 0 1px 1px rgba(16, 24, 40, .03);
-			transition: border-color .12s ease, box-shadow .12s ease;
+			box-shadow: none;
+			transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
 
-			&:hover { border-color: $muted; }
+			&::placeholder { color: rgba($content, .45); }
+
+			&:hover { border-color: rgba($content, .14); }
 
 			&:focus {
 				outline: none;
-				border-color: $accent;
-				box-shadow: 0 0 0 3px rgba(69, 39, 164, .14);
+				background-color: $surface;
+				border-color: rgba($primary, .45);
+				box-shadow: 0 0 0 3px rgba($primary, .1);
 			}
 		}
 
@@ -161,7 +226,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			appearance: none;
 			-webkit-appearance: none;
 			padding-right: 34px;
-			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23646970' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231B2E4B' stroke-opacity='.55' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 			background-repeat: no-repeat;
 			background-position: right 12px center;
 			background-size: 12px;
@@ -193,7 +258,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		height: 28px;
 		margin: 0 0 6px auto;
 		padding: 0 12px;
-		border-radius: 999px;
+		border-radius: $pill;
 		background: $accentSoft;
 		color: $accent;
 		font-weight: 600;
@@ -271,7 +336,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			height: 30px;
 			padding: 0 12px;
 			border: 1px solid $borderStrong;
-			border-radius: 6px;
+			border-radius: $control;
 			background: $surface;
 			color: $inkSoft;
 			font: inherit;
@@ -316,13 +381,13 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 
 		&.isOk {
 			background: $okSoft;
-			border-bottom-color: #cfe9d6;
+			border-bottom-color: rgba($ok, .3);
 			color: $ok;
 		}
 
 		&.isError {
 			background: $dangerSoft;
-			border-bottom-color: #f3cfd0;
+			border-bottom-color: rgba($danger, .28);
 			color: $danger;
 		}
 
@@ -354,7 +419,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			width: 52px;
 			height: 52px;
 			margin-bottom: 16px;
-			border-radius: 50%;
+			border-radius: $pill;
 			background: $accentSoft;
 			color: $accent;
 		}
@@ -406,7 +471,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		// checkboxes beneath it.
 		thead th {
 			padding: 0;
-			background: #fafafb;
+			background: rgba($content, .03);
 			border-bottom: 1px solid $borderStrong;
 			font-size: 10px;
 			font-weight: 700;
@@ -491,7 +556,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			font-weight: 600;
 		}
 
-		.svbDash { color: #c6c7ca; }
+		.svbDash { color: rgba($content, .32); }
 
 		tbody .svbCheck { padding-top: 15px; }
 
@@ -529,7 +594,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 				width: 17px;
 				height: 17px;
 				margin: 0;
-				border-radius: 4px;
+				border-radius: $control;
 				border-color: $borderStrong;
 				cursor: pointer;
 
@@ -541,7 +606,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 
 				&:focus {
 					border-color: $accent;
-					box-shadow: 0 0 0 3px rgba(69, 39, 164, .18);
+					box-shadow: 0 0 0 3px rgba($primary, .18);
 				}
 			}
 		}
@@ -558,7 +623,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 				padding: 0 10px;
 				margin-right: 5px;
 				border: 1px solid $borderStrong;
-				border-radius: 6px;
+				border-radius: $control;
 				background: $surface;
 				color: $inkSoft;
 				font: inherit;
@@ -610,7 +675,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			min-height: 32px;
 			padding: 6px 9px;
 			border: 1px solid $borderStrong;
-			border-radius: 6px;
+			border-radius: $control;
 			font: inherit;
 			line-height: 1.4;
 			resize: vertical;
@@ -619,7 +684,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			&:focus {
 				outline: none;
 				border-color: $accent;
-				box-shadow: 0 0 0 3px rgba(69, 39, 164, .14);
+				box-shadow: 0 0 0 3px rgba($primary, .1);
 			}
 		}
 	}
@@ -632,7 +697,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		justify-content: center;
 		gap: 14px;
 		padding: 13px 18px;
-		background: #fcfcfd;
+		background: rgba($content, .02);
 		border-top: 1px solid $border;
 		color: $muted;
 		font-variant-numeric: tabular-nums;
@@ -644,7 +709,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 			height: 32px;
 			padding: 0 13px;
 			border: 1px solid $borderStrong;
-			border-radius: 6px;
+			border-radius: $control;
 			background: $surface;
 			color: $inkSoft;
 			font: inherit;
@@ -739,7 +804,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 	width: 100%;
 	max-width: 430px;
 	padding: 26px;
-	border-radius: 12px;
+	border-radius: $radius;
 	background: #fff;
 	box-shadow: 0 16px 48px rgba(0, 0, 0, .28);
 	animation: svbModalIn .14s cubic-bezier(.22, .61, .36, 1);
@@ -751,7 +816,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		width: 44px;
 		height: 44px;
 		margin-bottom: 16px;
-		border-radius: 50%;
+		border-radius: $pill;
 		background: $dangerSoft;
 		color: $danger;
 	}
@@ -781,7 +846,7 @@ $shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 8px rgba(16, 24, 40, .05);
 		height: 36px;
 		padding: 0 18px;
 		border: 1px solid $borderStrong;
-		border-radius: 7px;
+		border-radius: $control;
 		background: #fff;
 		color: $inkSoft;
 		font: inherit;

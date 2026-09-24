@@ -12,12 +12,22 @@ const SuccessState = ({ design, message, isBackend = false }) => {
 	const icon = 'none' === success.icon ? null : getIcon(success.icon);
 
 	return (
-		<div className={`successArea svbSuccess-${success.style} ${isBackend ? 'svbSuccessPreview' : ''}`} role="status" aria-live="polite">
-			{icon && <span className="svbSuccessIcon">{icon}</span>}
+		<div
+			className={`successArea svbSuccess-${success.style} ${isBackend ? 'svbSuccessPreview' : ''}`}
+			role="status"
+			aria-live="polite"
+		>
+			<div className="svbSuccessContainer">
+				{icon && (
+					<div className="svbSuccessIconWrapper">
+						<span className="svbSuccessIcon">{icon}</span>
+					</div>
+				)}
 
-			<div className="svbSuccessBody">
-				{success.title && <p className="svbSuccessTitle">{success.title}</p>}
-				<p className="message">{message}</p>
+				<div className="svbSuccessBody">
+					{success.title && <p className="svbSuccessTitle">{success.title}</p>}
+					<p className="message">{message}</p>
+				</div>
 			</div>
 		</div>
 	);

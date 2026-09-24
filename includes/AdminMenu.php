@@ -84,6 +84,7 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
 
             ?>
             <div class="wrap svbWrap">
+                <span class="svbEyebrow"><?php echo esc_html__('Responses', 'survey-form-block'); ?></span>
                 <h1><?php echo esc_html__('Survey Responses', 'survey-form-block'); ?></h1>
                 <p class="svbSubhead"><?php echo esc_html__('Everything submitted through your survey blocks, newest first.', 'survey-form-block'); ?></p>
                 <div id='svbAdminContainer' class="svbAdminContainer"></div>
