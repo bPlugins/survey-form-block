@@ -3,7 +3,10 @@ bundled
 dist/*
 !dist/*.php
 node_modules
-build
+# Anchored. A bare "build" also matched vendor/freemius-lite/build, so the
+# Lite SDK's compiled opt-in form was never committed and the opt-in screen
+# rendered as an empty mount div on every free install.
+/build
 docs
 
 # Packaging artefact from `npm run plugin-zip`

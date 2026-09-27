@@ -43,7 +43,8 @@ export const dashboardInfo = (info) => {
 			// the .org SVN assets directory alongside the icon and banner.
 			// Overview only guards on the value being set, not on the request
 			// succeeding, so until it is uploaded this renders a broken image.
-			thumbnail: `https://ps.w.org/${slug}/assets/dashboard-banner.png`
+			thumbnail: `https://ps.w.org/${slug}/assets/dashboard-banner.png`,
+			proThumbnail: `https://ps.w.org/${slug}/assets/dashboard-banner-pro.png`
 		},
 		// Only links that actually resolve today. The product landing and docs
 		// pages are not published yet, so they are deliberately absent rather
