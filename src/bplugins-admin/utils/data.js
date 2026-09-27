@@ -33,19 +33,18 @@ export const dashboardInfo = (info) => {
 		media: {
 			logo: `https://ps.w.org/${slug}/assets/icon-128x128.png`,
 			banner: `https://ps.w.org/${slug}/assets/banner-772x250.png`,
-			// Served from ps.w.org like the logo and banner above, because
-			// assets/ is not part of the distributed plugin. Its own file
-			// rather than banner-772x250.png: the Overview card crops to 3:2
-			// with object-fit: cover, and the 772x250 banner lost both edges
-			// to that. Drawn at 3:2 and feature-led rather than a slogan.
+			// The two dashboard images are hosted on templates.bplugins.com, not
+			// ps.w.org: assets/ is not part of the distributed plugin, and the .org
+			// assets directory only carries the listing images (icon, banner,
+			// screenshot-N). Both URLs verified 200.
 			//
-			// RELEASE STEP: assets/dashboard-banner.png must be committed to
-			// the .org SVN assets directory alongside the icon and banner.
-			// Overview only guards on the value being set, not on the request
-			// succeeding, so until it is uploaded this renders a broken image.
+			// thumbnail is drawn at 3:2 because the Overview card crops it with
+			// object-fit: cover, and the 772x250 .org banner lost both edges to
+			// that. proThumbnail is drawn at the size the ProAds figure actually
+			// displays it, on that figure's own #DFDCFF ground, because it is
+			// contained rather than covered and would otherwise letterbox.
 			thumbnail: `https://templates.bplugins.com/wp-content/uploads/2026/09/survey-form-dashboard-banner.png`,
-			proThumbnail: `https://templates.bplugins.com/wp-content/uploads/2026/09/survey-form-dashbaord-pro.png
-`
+			proThumbnail: `https://templates.bplugins.com/wp-content/uploads/2026/09/survey-form-dashbaord-pro.png`
 		},
 		// Only links that actually resolve today. The product landing and docs
 		// pages are not published yet, so they are deliberately absent rather
