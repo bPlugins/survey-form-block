@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-20T12:00:52+00:00\n"
+"POT-Creation-Date: 2026-09-27T11:10:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
@@ -39,24 +39,32 @@ msgstr ""
 msgid "http://bplugins.com"
 msgstr ""
 
-#: includes/AdminMenu.php:62
-#: includes/AdminMenu.php:63
+#: includes/AdminMenu.php:67
+#: includes/AdminMenu.php:68
 msgid "Survey List"
 msgstr ""
 
-#: includes/AdminMenu.php:71
+#: includes/AdminMenu.php:76
 msgid "Demo and Help"
 msgstr ""
 
-#: includes/AdminMenu.php:72
+#: includes/AdminMenu.php:77
 msgid "Demo & Help"
 msgstr ""
 
-#: includes/AdminMenu.php:87
+#: includes/AdminMenu.php:106
+msgid "New"
+msgstr ""
+
+#: includes/AdminMenu.php:168
+msgid "Responses"
+msgstr ""
+
+#: includes/AdminMenu.php:169
 msgid "Survey Responses"
 msgstr ""
 
-#: includes/AdminMenu.php:88
+#: includes/AdminMenu.php:170
 msgid "Everything submitted through your survey blocks, newest first."
 msgstr ""
 
@@ -418,15 +426,15 @@ msgstr ""
 msgid "Press Ctrl/Cmd + C to copy"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:141
+#: src/bplugins-admin/utils/data.js:143
 msgid "Every saved survey (Survey Forms → Surveys)"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:142
+#: src/bplugins-admin/utils/data.js:144
 msgid "Every response collected by those surveys"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:143
+#: src/bplugins-admin/utils/data.js:145
 msgid "The plugin's own database tables and settings"
 msgstr ""
 
