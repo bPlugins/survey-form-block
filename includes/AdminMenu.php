@@ -8,6 +8,11 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
         {
             add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
             add_action('admin_menu', [$this, 'adminMenu']);
+            // Late: the post type's own submenu items are registered by
+            // wp-admin/menu.php before this action fires, so they are already
+            // in $submenu by the time this runs.
+            add_action('admin_menu', [$this, 'badgeNewMenuItems'], 100);
+            add_action('admin_head', [$this, 'menuBadgeStyle']);
             add_action('admin_notices', [$this, 'adminNotice']);
         }
 
@@ -74,6 +79,82 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
                 BPSVB_DASHBOARD_SLUG,
                 [$this, 'dashboardPage']
             );
+        }
+
+        /**
+         * Flags recently added screens with a small "New" chip in the admin menu.
+         *
+         * Patches $submenu rather than the post type's add_new label: that label
+         * also draws the "Add New" button on the survey list table, where a chip
+         * has no business appearing. Core echoes the menu title unescaped, which
+         * is the same mechanism its own update-count bubbles rely on, so the
+         * translated text is escaped here and only the span is raw.
+         */
+        public function badgeNewMenuItems()
+        {
+            global $submenu;
+
+            if ( empty( $submenu[ BPSVB_MENU_PARENT ] ) ) {
+                return;
+            }
+
+            $targets = [
+                'post-new.php?post_type=' . BPSVB_CPT_SLUG, // Add New Survey
+                BPSVB_DASHBOARD_SLUG,                   // Demo & Help
+            ];
+
+            $badge = ' <span class="svbMenuBadge">' . esc_html__( 'New', 'survey-form-block' ) . '</span>';
+
+            foreach ( $submenu[ BPSVB_MENU_PARENT ] as $i => $item ) {
+                // $item[0] is the menu title, $item[2] the slug.
+                if ( ! isset( $item[0], $item[2] ) || ! in_array( $item[2], $targets, true ) ) {
+                    continue;
+                }
+
+                // admin_menu can fire more than once on some screens.
+                if ( false !== strpos( $item[0], 'svbMenuBadge' ) ) {
+                    continue;
+                }
+
+                $submenu[ BPSVB_MENU_PARENT ][ $i ][0] = $item[0] . $badge;
+            }
+        }
+
+        /**
+         * The chip is in the admin menu, which is on every screen, so this is a
+         * few inline rules rather than a stylesheet request on every page load.
+         */
+        public function menuBadgeStyle()
+        {
+            ?>
+            <style id="svb-menu-badge">
+                /* Floated like core's own count bubbles. The submenu gives 136px of
+                   content width and "Add New Survey" needs most of it, so an
+                   inline chip pushed the label onto a second line. */
+                #adminmenu .svbMenuBadge {
+                    float: right;
+                    margin: 1px 0 0 4px;
+                    padding: 0 5px;
+                    border-radius: 8px;
+                    background: #6155F5;
+                    color: #fff;
+                    font-size: 8px;
+                    font-weight: 700;
+                    line-height: 16px;
+                    letter-spacing: .4px;
+                    text-transform: uppercase;
+                }
+
+                /* Current and hovered rows already carry the colour scheme's
+                   accent behind them, so the chip inverts to stay legible. */
+                #adminmenu .current .svbMenuBadge,
+                #adminmenu a:hover .svbMenuBadge,
+                #adminmenu a:focus .svbMenuBadge {
+                    background: #fff;
+                    color: #3c2fd4;
+                }
+            </style>
+            <?php
         }
 
         public function listPage()
