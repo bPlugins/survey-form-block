@@ -1,0 +1,155 @@
+/**
+ * Click-to-copy shortcode clip shown above the survey block in the editor.
+ *
+ * Mirrors the Business Card block's clip, on the bPlugins accent (#6155F5,
+ * the same primary the Demo & Help dashboard uses) so it reads as part of this
+ * plugin rather than a transplant.
+ */
+
+$accent: #6155f5;
+$accent-2: #4527a4;
+$ok: #16a34a;
+$ink: #0f172a;
+$muted: #64748b;
+
+.svbShortcodeClip {
+	--clip-accent: #{$accent};
+
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px 14px;
+	max-width: 640px;
+	margin: 0 auto 22px;
+	padding: 14px 16px;
+	border-radius: 14px;
+	// Two-layer background so the border itself can carry a gradient.
+	background:
+		linear-gradient(#fff, #fff) padding-box,
+		linear-gradient(120deg, rgba($accent, .55), rgba($accent-2, .35)) border-box;
+	border: 1px solid transparent;
+	box-shadow: 0 6px 22px rgba($accent, .12), 0 1px 2px rgba($ink, .04);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	box-sizing: border-box;
+	transition: box-shadow .25s ease, border-color .25s ease;
+
+	&.is-copied {
+		--clip-accent: #{$ok};
+		box-shadow: 0 6px 22px rgba($ok, .18), 0 1px 2px rgba($ink, .04);
+	}
+
+	/* ------------------------------ "Shortcode" tag ------------------------ */
+
+	&__tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex-shrink: 0;
+		padding: 5px 11px;
+		border-radius: 999px;
+		background: rgba($accent, .1);
+		color: var(--clip-accent);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: .6px;
+		text-transform: uppercase;
+		transition: background .25s ease, color .25s ease;
+
+		svg { display: block; }
+	}
+
+	/* --------------------- clickable field (code + button) ----------------- */
+
+	&__field {
+		flex: 1 1 260px;
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 6px 6px 6px 14px;
+		border: 1px solid #e2e8f0;
+		border-radius: 10px;
+		background: #f8fafc;
+		cursor: pointer;
+		font-family: inherit;
+		text-align: left;
+		transition: border-color .2s ease, background .2s ease;
+
+		&:hover {
+			border-color: var(--clip-accent);
+			background: #fff;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--clip-accent);
+			outline-offset: 2px;
+		}
+	}
+
+	&__code {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+		font-size: 14px;
+		font-weight: 600;
+		color: $ink;
+		background: none;
+		padding: 0;
+	}
+
+	&__btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex-shrink: 0;
+		padding: 7px 14px;
+		border-radius: 8px;
+		background: linear-gradient(135deg, $accent, $accent-2);
+		color: #fff;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+		box-shadow: 0 2px 8px rgba($accent, .35);
+		transition: transform .15s ease, box-shadow .2s ease, background .25s ease;
+
+		svg { display: block; }
+	}
+
+	&__field:hover &__btn {
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba($accent, .45);
+	}
+
+	&__field:active &__btn { transform: translateY(0); }
+
+	&.is-copied &__btn {
+		background: linear-gradient(135deg, $ok, #15803d);
+		box-shadow: 0 2px 8px rgba($ok, .4);
+	}
+
+	&__btnText { white-space: nowrap; }
+
+	/* ------------------------------ helper line ---------------------------- */
+
+	&__hint {
+		flex: 1 0 100%;
+		margin: 0;
+		font-size: 12.5px;
+		color: $muted;
+		line-height: 1.4;
+	}
+
+	// The lift and the colour transitions are decoration, not feedback; the
+	// label change from Copy to Copied! carries the meaning on its own.
+	@media (prefers-reduced-motion: reduce) {
+		&,
+		&__tag,
+		&__field,
+		&__btn { transition: none; }
+
+		&__field:hover &__btn { transform: none; }
+	}
+}

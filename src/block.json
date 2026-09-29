@@ -1,11 +1,11 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "svb/survey-block",
 	"title": "Survey Form Block",
 	"description": "Create custom survey forms easily with the Survey Form Block plugin",
 	"category": "widgets",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"keywords": [
 		"survey",
 		"block",

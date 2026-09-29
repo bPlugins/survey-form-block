@@ -125,7 +125,7 @@ if (!class_exists('BPSVB_Post_Type')) {
             $shortcode = sprintf('[%s id="%d"]', BPSVB_Shortcode::TAG, $postId);
 
             printf(
-                '<span class="bPlAdminShortcode" id="bPlAdminShortcode-%1$d">
+                '<span class="bPlAdminShortcode svbShortcodeCell" id="bPlAdminShortcode-%1$d">
                     <input type="text" value="%2$s" size="%4$d" readonly data-svb-shortcode="%1$d">
                     <span class="tooltip">%3$s</span>
                 </span>',

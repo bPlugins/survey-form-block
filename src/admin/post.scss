@@ -1,68 +1,139 @@
 /**
  * ShortCode column on the Surveys list screen.
  *
- * Deliberately the same markup, class names and look as the sibling
- * offcanvas-block plugin, so the two read as one family.
+ * Same treatment as the Business Card block's column - gradient pill, hover
+ * lift, dark tooltip that turns green on a successful copy - on this plugin's
+ * accent so it matches the shortcode clip shown in the editor.
+ *
+ * One deliberate difference from Business Card: the field is sized to its
+ * contents rather than a fixed 132px. A survey shortcode carries a post id, so
+ * a fixed width clips it. The width comes from the input's `size` attribute,
+ * set in BPSVB_Post_Type::column().
+ *
+ * Scoped with .svbShortcodeCell as well as the shared .bPlAdminShortcode
+ * class. That class is common to the bPlugins family, and on a site running
+ * several of them the last stylesheet enqueued wins: advanced-post-block-pro
+ * ships .bPlAdminShortcode .tooltip { margin-left: -75px; width: 140px } and
+ * was dragging this tooltip back over its own pill. The extra class raises
+ * specificity so load order stops mattering.
  */
 
-.bPlAdminShortcode {
+$accent: #6155f5;
+$accent-2: #4527a4;
+$ok: #16a34a;
+$ink: #0f172a;
+
+.bPlAdminShortcode.svbShortcodeCell {
 	position: relative;
-	display: inline-block;
-	margin: 0 auto;
+	display: inline-flex;
+	align-items: center;
 
 	input {
 		width: auto;
-		padding: 4px 10px;
+		padding: 8px 14px;
 		border: none;
-		border-radius: 3px;
+		border-radius: 9px;
 		outline: none;
-		background-color: #4527a4;
+		background: linear-gradient(135deg, $accent, $accent-2);
 		color: #fff;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-		font-size: 12px;
+		font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+		font-size: 13px;
+		font-weight: 600;
+		letter-spacing: .2px;
 		text-align: center;
 		cursor: pointer;
+		box-shadow: 0 2px 8px rgba($accent, .32);
+		transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
 
-		&:focus {
-			box-shadow: 0 0 0 2px rgba(69, 39, 164, .35);
+		&:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 4px 14px rgba($accent, .45);
+			filter: brightness(1.05);
+		}
+
+		&:active { transform: translateY(0); }
+
+		// The pill is its own background, so a plain ring would be lost on it.
+		&:focus-visible {
+			box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba($accent, .65);
 		}
 	}
 
-	// Below the field rather than above it: above, the first row's tooltip
-	// covered the column header.
+	// Beside the field, not above or below it. Business Card places it above,
+	// which is fine for a list of one card, but rows here are ~43px apart and a
+	// pill is ~30px of that, so any vertical placement lands the tooltip on a
+	// neighbouring row's button - and the green one stays put for 1.5s without a
+	// hover to dismiss it. The column has empty space to the right; this uses it.
 	.tooltip {
 		visibility: hidden;
 		position: absolute;
-		top: 145%;
-		left: 50%;
+		top: 50%;
+		left: calc(100% + 14px);
+		// advanced-post-block-pro sets bottom: 150%, width: 140px and
+		// margin-left: -75px on this same class. Specificity does not help
+		// against properties this rule never declares, so they are reset here
+		// by hand: with both top and bottom pinned the box collapsed to 0
+		// height, and the negative margin dragged it back over its own pill.
+		right: auto;
+		bottom: auto;
+		width: auto;
+		max-width: none;
+		margin: 0;
 		z-index: 2;
-		width: 170px;
-		margin-left: -85px;
-		padding: 5px;
+		transform: translateY(-50%);
+		padding: 6px 12px;
 		border-radius: 6px;
-		background-color: #555;
+		background-color: $ink;
 		color: #fff;
 		font-size: 12px;
+		font-weight: 500;
 		line-height: 1.4;
 		text-align: center;
+		white-space: nowrap;
 		opacity: 0;
-		transition: opacity .3s;
+		box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+		pointer-events: none;
+		transition: opacity .25s ease, left .25s ease;
 
 		&::after {
 			content: "";
 			position: absolute;
-			bottom: 100%;
-			left: 50%;
-			margin-left: -5px;
+			top: 50%;
+			right: 100%;
+			bottom: auto;
+			left: auto;
+			margin: 0;
+			transform: translateY(-50%);
 			border-width: 5px;
 			border-style: solid;
-			border-color: transparent transparent #555 transparent;
+			border-color: transparent $ink transparent transparent;
+		}
+
+		&.copied {
+			background-color: $ok;
+
+			&::after {
+				border-color: transparent $ok transparent transparent;
+			}
 		}
 	}
 
+	// Keyboard users get it on focus too, not only on hover.
 	&:hover .tooltip,
-	input:focus + .tooltip {
+	input:focus .tooltip,
+	input:focus + .tooltip,
+	.tooltip.copied {
 		visibility: visible;
 		opacity: 1;
+		left: calc(100% + 12px);
+	}
+
+	// The lift and the fade are decoration; the tooltip wording carries the
+	// result on its own.
+	@media (prefers-reduced-motion: reduce) {
+		input,
+		.tooltip { transition: none; }
+
+		input:hover { transform: none; }
 	}
 }

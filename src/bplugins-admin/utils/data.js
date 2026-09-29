@@ -230,7 +230,19 @@ export const welcomeInfo = (adminUrl) => ({
 	},
 	changelogs: [
 		{
-			version: '1.1.0',
+			version: '1.1.1 – 29 September 2026',
+			type: 'update',
+			list: [
+				'<strong>Fixed:</strong> The opt-in screen was blank on free installs. It is drawn by a script shipped with the licensing SDK, and that script was missing from the plugin because the build folder was excluded at every depth rather than only at the plugin root.',
+				'<strong>New:</strong> A survey\x27s shortcode can be copied from the editor - it sits above the form, one click to copy, so you no longer have to return to the list to fetch it.',
+				'<strong>Improved:</strong> The ShortCode column on the Surveys screen now confirms the copy rather than only offering it, and uses the clipboard API where the site allows it.',
+				'<strong>Fixed:</strong> The ShortCode column\x27s tooltip could cover the button it belongs to, and a neighbouring row\x27s button. Another bPlugins plugin styles the same class name, so load order was deciding its position.',
+				'<strong>Changed:</strong> Live demos open from Demo &amp; Help &rarr; Demos rather than a separate menu item, and are hosted online so nothing is created on your own site.',
+				'<strong>Improved:</strong> The Survey Responses screen now matches the Demo &amp; Help dashboard.'
+			]
+		},
+		{
+			version: '1.1.0 - 27 September 2026',
 			type: 'update',
 			list: [
 				'<strong>New:</strong> Design tab in the block inspector, grouping Theme, Layout, Question Card, Input Style, Button, Progress, Effects, Backdrop, Success State and Labels & Dividers.',
@@ -270,6 +282,8 @@ export const welcomeInfo = (adminUrl) => ({
 			list: ['Initial release.']
 		}
 	],
+	changelogsLimit: 6,
+	changelogsReadMoreLabel: 'View More',
 	proFeatures: [
 		'7 premium themes: Glassmorphism, Bold Gradient, Midnight Dark, Elegant, Neumorphic, Sunset Warm, Ocean Cool',
 		'Floating, Split and Full-Width survey layouts',

@@ -4,7 +4,7 @@ Donate link: https://www.buymeacoffee.com/abuhayat
 Tags: survey, form, feedback, poll, gutenberg block
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -192,7 +192,15 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.1.1 - 29 September, 2026 =
+* Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;
+* New: A survey's shortcode can now be copied from the editor. Open a survey under Survey Forms &rarr; Surveys and it sits above the form, one click to copy, so you no longer have to go back to the list to fetch it;
+* Improved: The ShortCode column on the Surveys screen now confirms the copy instead of only offering it, and copies through the clipboard API where the site allows it;
+* Fixed: The ShortCode column's tooltip could sit on top of the button it belongs to, and on a neighbouring row's button. Another bPlugins plugin styles the same class name, so whichever stylesheet loaded last was deciding the position;
+* Changed: Live demos now open from Demo & Help &rarr; Demos rather than a separate menu item. They are hosted online, so nothing has to be created on your own site to view them;
+* Improved: The Survey Responses screen now follows the Demo & Help dashboard - same typeface, palette and card treatment, so the two screens read as one product;
+
+= 1.1.0 - 27 September, 2026 =
 * New: Design tab in the block inspector, grouping Theme, Layout, Question Card, Input Style, Button, Progress, Effects, Backdrop, Success State and Labels & Dividers;
 * New: 11 survey themes — Classic, Modern Minimal, Soft Card and Clean Professional are free; Glassmorphism, Bold Gradient, Midnight Dark, Elegant, Neumorphic, Sunset Warm and Ocean Cool are Pro;
 * New: Six survey layouts — Classic, Card and Minimal (free) plus Floating, Split and Full Width (Pro);
