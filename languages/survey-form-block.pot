@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Survey Form Block 1.1.0\n"
+"Project-Id-Version: Survey Form Block 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/survey-form-block\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-27T11:10:42+00:00\n"
+"POT-Creation-Date: 2026-09-29T06:58:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
@@ -178,7 +178,7 @@ msgid "ShortCode"
 msgstr ""
 
 #: includes/PostType.php:134
-#: src/admin/post.js:47
+#: src/admin/post.js:40
 msgid "Copy To Clipboard"
 msgstr ""
 
@@ -211,11 +211,11 @@ msgstr ""
 msgid "Too many submissions from this address. Please wait a moment and try again."
 msgstr ""
 
-#: survey-form-block.php:176
+#: survey-form-block.php:179
 msgid "Help & Demos"
 msgstr ""
 
-#: survey-form-block.php:183
+#: survey-form-block.php:186
 msgid "Go Pro"
 msgstr ""
 
@@ -418,23 +418,23 @@ msgstr ""
 msgid "%d responses will be permanently removed. This cannot be undone."
 msgstr ""
 
-#: src/admin/post.js:42
+#: src/admin/post.js:32
 msgid "Copied Successfully!"
 msgstr ""
 
-#: src/admin/post.js:43
+#: src/admin/post.js:33
 msgid "Press Ctrl/Cmd + C to copy"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:143
+#: src/bplugins-admin/utils/data.js:142
 msgid "Every saved survey (Survey Forms → Surveys)"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:144
+#: src/bplugins-admin/utils/data.js:143
 msgid "Every response collected by those surveys"
 msgstr ""
 
-#: src/bplugins-admin/utils/data.js:145
+#: src/bplugins-admin/utils/data.js:144
 msgid "The plugin's own database tables and settings"
 msgstr ""
 
@@ -1032,6 +1032,30 @@ msgstr ""
 
 #: src/Components/Settings/Fields/Text.js:36
 msgid "Placeholder here"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:98
+msgid "Shortcode"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:105
+msgid "Click to copy"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:112
+msgid "Copied!"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:112
+msgid "Copy"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:119
+msgid "Shortcode copied to clipboard"
+msgstr ""
+
+#: src/Components/ShortcodeClip.js:123
+msgid "Paste it into any post, page, or widget."
 msgstr ""
 
 #: src/Edit.js:121
