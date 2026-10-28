@@ -202,6 +202,10 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * Fixed: Surveys now appear even when a performance plugin delays scripts until after the page has loaded;
 * Fixed: A survey shown twice on one page no longer shares input ids and radio groups between the two copies;
 * Changed: New questions start as "Untitled question" with an "Option 1" choice and no placeholder, instead of sample names;
+* Fixed: Every survey built from the same block pattern shared one set of responses, because each pattern carried a fixed survey id. Patterns now get a fresh id each time they are inserted. Surveys you already built from a pattern keep their id and responses;
+* Fixed: Duplicating a survey block, or pasting a copy into the same post, now gives the copy its own id, so it collects its own responses. Ids already saved in a post are never changed;
+* Fixed: Opening a post that holds a survey no longer marks it as having unsaved changes;
+* Fixed: The survey block no longer crashes on the Widgets screen;
 
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;

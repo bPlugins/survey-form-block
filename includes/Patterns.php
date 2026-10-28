@@ -116,6 +116,11 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
         /**
          * Returns survey block attributes matching the production-ready use cases.
          *
+         * The survey id is left empty on purpose, and there is no cId or
+         * creator_id: the block fills all three in when it is inserted. Until
+         * 1.2.0 each pattern carried a fixed id, so every survey built from the
+         * same pattern wrote into one shared set of responses.
+         *
          * @param string $key
          * @return array
          */
@@ -123,10 +128,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
             switch ( $key ) {
                 case 'csat-nps':
                     return [
-                        'cId' => 'svb-csat-nps',
                         'form' => [
-                            'id' => 'svb-form-csat-nps',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => 'Customer Satisfaction & NPS Survey',
                             'description' => 'Help us improve your experience by sharing quick feedback on your recent interaction.',
                             'bgColor' => '#ffffff',
@@ -304,10 +307,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
 
                 case 'product-feedback':
                     return [
-                        'cId' => 'svb-product-fb',
                         'form' => [
-                            'id' => 'svb-form-product-fb',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => 'Product Feedback & Feature Request',
                             'description' => 'Tell us what you love and what features you would like to see on our product roadmap.',
                             'bgColor' => '#f8fafc',
@@ -486,10 +487,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
 
                 case 'event-registration':
                     return [
-                        'cId' => 'svb-event-reg',
                         'form' => [
-                            'id' => 'svb-form-event-reg',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => 'Global Tech Summit 2026 Registration',
                             'description' => 'Join 2,500+ engineers, product managers, and founders in San Francisco or virtually worldwide.',
                             'bgColor' => '#ffffff',
@@ -705,10 +704,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
 
                 case 'job-application':
                     return [
-                        'cId' => 'svb-job-app',
                         'form' => [
-                            'id' => 'svb-form-job-app',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => 'Senior Full-Stack Engineer Application',
                             'description' => 'We are seeking passionate product builders to help design and scale modern web applications.',
                             'bgColor' => '#ffffff',
@@ -910,10 +907,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
 
                 case 'bug-report':
                     return [
-                        'cId' => 'svb-bug-report',
                         'form' => [
-                            'id' => 'svb-form-bug-report',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => 'Bug Report & Issue Tracker',
                             'description' => 'Help our engineering team troubleshoot and resolve application or interface glitches quickly.',
                             'bgColor' => '#ffffff',
@@ -1077,10 +1072,8 @@ if ( ! class_exists( 'BPSVB_Patterns' ) ) {
 
                 case 'employee-onboarding':
                     return [
-                        'cId' => 'svb-onboarding',
                         'form' => [
-                            'id' => 'svb-form-onboarding',
-                            'creator_id' => 1,
+                            'id' => '',
                             'title' => '30-Day New Hire Onboarding Survey',
                             'description' => 'Welcome to the team! Share your feedback so People Ops can make your onboarding journey seamless.',
                             'bgColor' => '#f8fafc',

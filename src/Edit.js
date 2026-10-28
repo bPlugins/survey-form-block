@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { produce } from 'immer';
 import { __ } from '@wordpress/i18n';
 import { SelectControl, Tooltip } from '@wordpress/components';
-import { withSelect } from '@wordpress/data';
+import { withSelect, useSelect } from '@wordpress/data';
 import { RichText } from '@wordpress/block-editor';
 import { useBlockProps } from '@wordpress/block-editor';
 
@@ -13,15 +13,89 @@ import Style from './Style';
 import Form from './Form';
 import { generateUniqueId, postData } from './utils/functions';
 import { isPremium as checkPremium } from './utils/premium';
+import { countIdInContent, pickNewCopies } from './utils/surveyIds';
+
+const BLOCK_NAME = 'svb/survey-block';
+
+/**
+ * Order in which survey blocks mounted in this editor session. Blocks present
+ * when the editor opens mount first, in document order; a duplicate mounts
+ * when it is created. See utils/surveyIds.js.
+ */
+const mountOrder = new Map();
+let mountCounter = 0;
 
 const Edit = props => {
 	const { attributes, setAttributes, clientId, isSelected, formCreatorId, isSavingPost } = props;
-	const { fields, form } = attributes;
+	const { fields, form, cId } = attributes;
 	const { id, creator_id, title } = form;
 
 	const isPremium = checkPremium();
 
-	useEffect(() => { clientId && setAttributes({ cId: clientId.substring(0, 10) }); }, [clientId]); // Set & Update clientId to cId
+	const mounted = useRef(false);
+	if (!mounted.current) {
+		mounted.current = true;
+		mountOrder.set(clientId, ++mountCounter);
+	}
+	useEffect(() => () => { mountOrder.delete(clientId); }, [clientId]);
+
+	// Other survey blocks in this editor with the same survey id, and the post
+	// as it was last saved. Joined into a string so the selector result stays
+	// equal between renders.
+	const { twins, savedContent } = useSelect((select) => {
+		const blockEditor = select('core/block-editor');
+		const editor = select('core/editor');
+		const post = editor?.getCurrentPost?.();
+
+		const sameId = id ? blockEditor.getClientIdsWithDescendants().filter(other =>
+			other !== clientId &&
+			BLOCK_NAME === blockEditor.getBlockName(other) &&
+			id === blockEditor.getBlockAttributes(other)?.form?.id
+		) : [];
+
+		return {
+			twins: sameId.join(','),
+			savedContent: 'string' === typeof post?.content ? post.content : null
+		};
+	}, [id, clientId]);
+
+	// Set the survey id, creator and id prefix once, when they are missing.
+	// These used to be rewritten on every editor load, which marked every post
+	// holding a survey as changed the moment it was opened.
+	useEffect(() => {
+		const patch = {};
+
+		if (!id || (!creator_id && formCreatorId)) {
+			patch.form = { ...form, id: id || clientId.substring(0, 14), creator_id: creator_id || formCreatorId || '' };
+		}
+
+		if (!cId) {
+			patch.cId = clientId.substring(0, 10);
+		}
+
+		if (Object.keys(patch).length) {
+			setAttributes(patch);
+		}
+	}, [clientId, formCreatorId]);
+
+	// A duplicated or pasted copy gets its own survey id, so it collects its own
+	// responses. Ids already in the saved post are never changed; when the
+	// saved content is unknown (widgets screen), nothing is changed.
+	useEffect(() => {
+		if (!id || !twins || null === savedContent) {
+			return;
+		}
+
+		const copies = pickNewCopies({
+			group: [clientId, ...twins.split(',')],
+			savedCount: countIdInContent(savedContent, id),
+			mountedAt: (other) => mountOrder.get(other)
+		});
+
+		if (copies.includes(clientId)) {
+			setAttributes({ form: { ...form, id: clientId.substring(0, 14) }, cId: clientId.substring(0, 10) });
+		}
+	}, [id, twins, savedContent]);
 
 	useEffect(() => {
 		if (isSavingPost) {
@@ -31,10 +105,6 @@ const Edit = props => {
 			postData(url, { columns: JSON.stringify(columns), form_id: id, action: 'svb_add_update_columns', nonce: window.svbData?.nonce, form_name: title });
 		}
 	}, [isSavingPost]);
-
-	useEffect(() => {
-		setAttributes({ form: { ...form, id: id || clientId.substring(0, 14), creator_id: creator_id || formCreatorId } });
-	}, [clientId]);
 
 	useEffect(() => tabController(), [isSelected]);
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -146,9 +216,13 @@ const Edit = props => {
 
 export default withSelect((select) => {
 	const formCreatorId = select('core').getCurrentUser()?.id;
-	const { isSavingPost } = select('core/editor');
+
+	// The core/editor store does not exist on the Widgets screen; destructuring
+	// it unguarded crashed the block there.
+	const editor = select('core/editor');
+
 	return {
 		formCreatorId,
-		isSavingPost: isSavingPost()
+		isSavingPost: editor?.isSavingPost?.() ?? false
 	};
 })(Edit);
