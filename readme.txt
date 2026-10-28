@@ -1,7 +1,7 @@
 === Survey Form Block ===
 Contributors: bplugins, abuhayat, asadsuzan
 Donate link: https://www.buymeacoffee.com/abuhayat
-Tags: survey, form, feedback, poll, gutenberg block
+Tags: survey, nps, feedback, poll, questionnaire
 Requires at least: 6.5
 Tested up to: 7.1
 Stable tag: 1.1.1
@@ -9,34 +9,43 @@ Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Create custom survey forms in Gutenberg to engage your audience and collect valuable insights – a free survey form block for WordPress.
+NPS, CSAT and feedback surveys built in the block editor, with a results summary and CSV export. Responses stay in your WordPress database.
 
 == Description ==
-Build a survey in the block editor, drop it on a page, and watch the answers arrive. Every response is collected in your own dashboard — no third-party service, no account, and nothing leaves your site.
 
-Surveys can live straight on a page, or be saved once under **Survey Forms &rarr; Surveys** and printed anywhere with a shortcode.
+Ask your customers how likely they are to recommend you and how satisfied they are, then see the answer as a number. Survey Form Block builds the survey in the block editor and works out your **Net Promoter Score** and **CSAT** from every response, on your own site.
 
-
-= Features =
-- **Versatile Form Builder Engine**: Create any custom form (contact forms, survey forms, feedback forms, lead generation) directly inside the Gutenberg block editor.
-- **Multi-Column Responsive Grid**: Flexibly adjust field column widths (100% Full, 66% Two Thirds, 50% Half, 33% One Third, 25% One Fourth) with mobile responsive auto-stacking.
-- **Standard Text & Input Fields**: Single Line Text, Multi-Line Paragraph Textarea, Email with built-in format validation, Numeric input (with Min/Max/Step), Telephone Number, and Website URL inputs.
-- **Choice & Selection Controls**: Dropdown Select Menus, Checkbox Groups, Radio Buttons, and iOS/Material style Switch Toggles.
-- **Interactive Survey & Feedback Widgets**:
-  - **Star Rating**: 1-5 or 1-10 interactive star/icon rating widget.
-  - **Opinion Scale**: 1-10 Likert scale rating bar for quick feedback.
-  - **Net Promoter Score (NPS)**: 0-10 score selection with automatic Detractor, Passive, and Promoter category styling.
-  - **Range Slider**: Smooth range slider input with live value indicator badge.
-  - **Section Break Dividers**: Structural headers and divider lines for grouping form sections.
-- **Enhanced Date Picker**: Date input with date range boundaries.
-- **Categorized Block Inspector**: Intuitive sidebar settings to reorder, clone, delete, and configure field labels, placeholders, and validation.
-- **Complete Design Customization**: Total control over typography, colors, padding, borders, background, and submit button styling.
-- **Reusable Surveys & Shortcode**: Save a survey once and print it wherever you like with `[survey-form-block id="123"]` — pages, posts, widgets, or a theme template. Edit it in one place and every copy follows.
-- **Response Dashboard**: Read, search, sort, page through, edit and delete submissions from the WordPress admin. Nothing is sent to an external service.
-- **Works With Page Caching**: Submissions are not tied to an expiring nonce, so visitors on a cached page can still answer. Flooding is limited per IP address instead.
+There is no third-party survey service and no account to create. Responses are stored in your WordPress database and are not sent to any outside service; the only copies that leave your site are the response emails you choose to receive.
 
 
-= Design Presets & Layouts =
+= What you can measure =
+
+- **Net Promoter Score (NPS)**: the 0–10 "How likely are you to recommend us?" question. The Summary shows your score, from −100 to +100, and how many people are promoters (9–10), passives (7–8) and detractors (0–6).
+- **Customer satisfaction (CSAT)**: a star rating with 3 to 10 stars. The Summary shows the average rating and CSAT, the share of people who chose one of the top two ratings.
+- **Opinion scales and sliders**: a 1–10 opinion scale, or a range slider with your own minimum and maximum, summarised as an average. Sliders also show the lowest and highest answer.
+- **The reasons behind the score**: follow up with a text or paragraph question. The Summary shows the newest answers, and the Survey List keeps all of them.
+
+
+= See the results =
+
+- **Summary**: one card per question, with the NPS, average rating and CSAT, scale averages, a bar for every option of a choice or switch question, and the newest written answers. It is worked out from every stored response.
+- **Responses**: search, sort and page through answers under **Survey Forms &rarr; Survey List**, correct a response in place, and delete one or several at a time.
+- **CSV export**: download every response of a survey as a file that opens correctly in Excel. Spreadsheet formulas typed into answers are defused.
+- **Response emails**: by default you get one email when a survey receives its first response. You can switch to an email for every response (at most 30 an hour), choose who receives them, or turn them off.
+
+
+= Ask anything else =
+
+Text, paragraph, email (with a format check), number (with minimum, maximum and step), phone, website, date (a native date picker with optional earliest and latest dates), dropdown, radio buttons, checkboxes, on/off switches and section dividers. Any question can be required. Questions can sit side by side in columns (full, two thirds, half, one third, one quarter) and stack on phones.
+
+
+= Start from a template =
+
+Six ready-made surveys come as block patterns, under **Survey Forms** in the pattern inserter: Customer Satisfaction & NPS, Product Feedback & Feature Request, Event Registration, Job Application, Website Usability & Bug Report, and Employee Onboarding Check-in. Every survey you insert from a pattern gets its own responses.
+
+
+= Design =
+
 The **Design** tab groups every visual control in one place, with a live preview in the editor that matches the frontend.
 
 - **Theme Presets**: One-click survey styling. Free themes: **Classic**, **Modern Minimal**, **Soft Card** and **Clean Professional**. Applying a theme updates colors, borders and button styling while leaving your questions, wording and typography untouched — and every value stays editable afterwards in the Style tab.
@@ -51,19 +60,18 @@ The **Design** tab groups every visual control in one place, with a live preview
 - **Block Variations**: The inserter offers ready-styled starting points so a new survey looks designed from the first click.
 
 
-= Reusable Surveys & Responses =
+= Reusable surveys =
 
 **Survey Forms &rarr; Surveys** is for surveys you want in more than one place. Each entry holds a single survey and gets its own shortcode, shown in the ShortCode column — click it to copy, then paste it into any page, post or widget, or call `do_shortcode()` from a template.
 
 Because every copy points at the same survey, editing it once updates all of them, and every copy writes to the same set of responses.
 
-**Survey Forms &rarr; Survey List** shows what people have answered: pick a survey, search across the answers, sort by any question, page through, correct a response in place, and delete one or several at a time. A Refresh button pulls in anything that arrived while the screen was open.
-
 Dropping the Survey Form Block straight onto a page still works exactly as before — the Surveys screen is an addition, not a replacement.
 
 
 = Pro =
-[Survey Form Block Pro](https://bplugins.com/products/survey-form-block) adds the advanced visual toolkit:
+
+Survey Form Block Pro adds an advanced design toolkit. To see plans and prices, open **Survey Forms &rarr; Demo & Help** after installing the free plugin and choose **Pricing**.
 
 - 7 premium themes: **Glassmorphism**, **Bold Gradient**, **Midnight Dark**, **Elegant**, **Neumorphic**, **Sunset Warm** and **Ocean Cool**
 - **Floating**, **Split** and **Full-Width** survey layouts
@@ -80,11 +88,12 @@ Every Pro setting degrades gracefully: if a license is not active, saved Pro val
 
 
 = How to use =
-- Install and activate the plugin.
-- Add the **Survey Form Block** from the "Widgets" block category in the editor.
-- Build your questions and style them from the right-hand sidebar — the **General**, **Design** and **Style** tabs.
-- Publish the page. Answers appear under **Survey Forms &rarr; Survey List**.
-- To use the same survey in several places, add it under **Survey Forms &rarr; Surveys** instead and paste its shortcode wherever you need it.
+
+1. Install and activate the plugin.
+2. In the block editor, add the **Survey Form Block**, or pick a ready-made survey from the **Survey Forms** patterns.
+3. Edit the questions in the block and style them from the right-hand sidebar — the **General**, **Design** and **Style** tabs.
+4. Publish the page. Responses appear under **Survey Forms &rarr; Survey List**; choose **Summary** there for the NPS, CSAT and totals.
+5. To use the same survey in several places, add it under **Survey Forms &rarr; Surveys** instead and paste its shortcode wherever you need it.
 
 * For installation help click on Installation Tab
 
@@ -135,7 +144,31 @@ Every Pro setting degrades gracefully: if a license is not active, saved Pro val
 
 = Is Survey Form Block free? =
 
-Yes, Survey Form Block is a free Gutenberg block plugin. A Pro version adds advanced themes, layouts, input styles, motion and progress indicators.
+Yes. The survey block, every question type, the results summary with NPS and CSAT, CSV export and response emails are all free. A Pro version adds advanced themes, layouts, input styles, motion and progress indicators.
+
+= How is the Net Promoter Score calculated? =
+
+People who answer 9 or 10 are promoters, 7 or 8 passives, and 0 to 6 detractors. NPS is the percentage of promoters minus the percentage of detractors, rounded, so it runs from −100 to +100. Only people who answered the question are counted.
+
+= What does CSAT mean here? =
+
+The share of people who answered a star rating question with one of the top two ratings — 4 or 5 on a five-star question. The average rating is shown next to it.
+
+= Where are responses stored? Is anything sent elsewhere? =
+
+In two tables in your WordPress database. Nothing a visitor submits is sent to bPlugins or to any other service; response emails go out through your site's own email setup. Each response holds the answers, the time, the survey it belongs to, and the respondent's user ID if they were logged in. IP addresses are not stored with responses; to limit flooding, a hash of the address is kept for one minute. See **External services** below for what the plugin itself connects to.
+
+= Can I export responses? =
+
+Yes, free. Under **Survey Forms &rarr; Survey List**, pick a survey and choose **Export CSV**. The file holds every response of that survey.
+
+= Will I get an email when someone answers? =
+
+By default, one email when a survey receives its first response, sent to the site's admin email address. On the Survey List screen you can switch to an email for every response (at most 30 an hour), send them to other addresses, or turn them off.
+
+= How do you stop spam? =
+
+Submissions are limited per IP address: by default 20 a minute from a freshly loaded page and 10 a minute from a cached one. Developers can change this with the `svb_submission_rate_limit` and `svb_submission_rate_window` filters. There is no CAPTCHA built in.
 
 = Will my existing surveys change after updating? =
 
@@ -157,10 +190,6 @@ Nothing - they are kept. Deleting the plugin leaves your surveys, responses and 
 
 Yes, it will work with any standard WordPress theme.
 
-= Can I change block settings? =
-
-Yes, you can change block settings from the Gutenberg block editor's right sidebar.
-
 = Can I still fine-tune colors after applying a theme? =
 
 Yes. A theme writes its palette into the normal Style controls, so every color, border and padding stays editable afterwards.
@@ -169,13 +198,37 @@ Yes. A theme writes its palette into the normal Style controls, so every color, 
 
 Yes. Submissions are not tied to a nonce that expires, so a visitor landing on a cached page can still respond. Flooding is limited per IP address instead, and the thresholds are filterable.
 
-= How many times can I reuse a block? =
-
-You can use unlimited times as you want.
-
 = Where can I get support? =
 
 You can post your questions on the [support forum here](https://wordpress.org/support/plugin/survey-form-block/)
+
+
+== External services ==
+
+The plugin does not send your visitors' answers to any outside service (response emails go out through your site's own email setup). It does connect to the services below. Your visitors' browsers contact none of them unless you choose a Google font for a survey.
+
+= bPlugins and Freemius: opt-in usage data (free version) =
+
+After activation the plugin asks whether you want to share some information with bPlugins. Nothing is sent unless you choose **Allow & Continue**. If you do, your name and email address, the site's name and URLs, and the WordPress, PHP and plugin versions are sent to bPlugins (api.bplugins.com) and Freemius (wp.freemius.com), and afterwards the plugin reports when it is activated, deactivated or uninstalled.
+
+bPlugins: [privacy policy](https://bplugins.com/privacy-policy/), [terms of service](https://bplugins.com/terms-of-service/). Freemius: [privacy policy](https://freemius.com/privacy/), [terms](https://freemius.com/terms/).
+
+= Demo & Help screen (administrators only) =
+
+When you open this screen and its tabs, your browser loads images from WordPress.org (ps.w.org) and bPlugins (templates.bplugins.com), lists other bPlugins plugins from the WordPress.org plugin directory (api.wordpress.org), loads Pro prices from bPlugins (api.bplugins.com), shows live demos from bblockswp.com (run by bPlugins) in a frame, embeds videos from YouTube, and opens Freemius Checkout (checkout.freemius.com) if you choose to buy. Like any web request these carry your IP address and browser details; apart from the product being viewed or bought, no site data is sent.
+
+WordPress.org: [privacy policy](https://wordpress.org/about/privacy/). bPlugins: [privacy policy](https://bplugins.com/privacy-policy/). YouTube: [terms](https://www.youtube.com/t/terms), [Google privacy policy](https://policies.google.com/privacy). Freemius: [privacy policy](https://freemius.com/privacy/).
+
+= Google Fonts =
+
+The Survey List and Demo & Help screens load the Roboto typeface from Google Fonts (fonts.googleapis.com). On your site's pages, a survey loads a font from Google Fonts only if you pick one in its Typography settings; that request is made by your visitors' browsers.
+
+Google Fonts: [privacy FAQ](https://developers.google.com/fonts/faq/privacy), [Google privacy policy](https://policies.google.com/privacy).
+
+
+== Source code ==
+
+The plugin ships compiled JavaScript and CSS in `build/`. The human-readable source and its build setup are at [github.com/bPlugins/survey-form-block](https://github.com/bPlugins/survey-form-block). Shared components come from [github.com/bPlugins/bpl-tools](https://github.com/bPlugins/bpl-tools), which the build expects next to the plugin folder (`wp-content/plugins/bpl-tools`). To build, run `npm install` and then `npm run build`.
 
 
 == Screenshots ==
@@ -214,6 +267,8 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * New: A Summary view on the Survey List screen, free. It shows the survey's Net Promoter Score with its promoter, passive and detractor split, the average star rating and CSAT (the share of the top two ratings), averages for scales and sliders, a count per option for choices and switches, and the newest written answers. It is worked out from every stored response;
 * New: The plugin now records each survey's questions and the post that holds it whenever that post is saved, so reports know each question's type. Surveys saved before this update are read from their post the first time their summary is opened;
 * Security: Changing a survey's column labels now requires permission to edit the post that holds the survey. Until now any user who could write posts, such as a Contributor, could rename the columns of any survey on the site;
+* New: A one-time request to review the plugin on WordPress.org, shown to administrators on the plugin's own screens once the site has collected 10 responses. Closing it or following it removes it for good;
+* Changed: This page now lists the external services the plugin connects to and where its source code lives. The plugin's homepage link pointed at a page that does not exist and now points here;
 
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;
@@ -283,6 +338,9 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+* Security fixes. A required NPS question now accepts a score of 0, and each survey built from a pattern or a duplicate gets its own responses. New and free: a results summary with NPS and CSAT, CSV export and response emails;
 
 = 1.1.0 =
 * Adds a full visual design system — themes, layouts, input styles, buttons, motion and progress indicators — plus a number of layout and accessibility fixes. Existing surveys are unaffected;

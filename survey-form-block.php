@@ -5,7 +5,7 @@
  * Version: 1.1.1
  * Author: bPlugins
  * Author URI: http://bplugins.com
- * Plugin URI: https://bplugins.com/products/survey-form-block
+ * Plugin URI: https://wordpress.org/plugins/survey-form-block/
  * Requires at least: 6.5
  * Requires PHP: 7.4
  * Tested up to: 7.1
@@ -215,6 +215,7 @@ if ( function_exists( 'bpsvb_fs' ) ) {
         require_once BPSVB_PATH . 'includes/Export.php';
         require_once BPSVB_PATH . 'includes/Notifications.php';
         require_once BPSVB_PATH . 'includes/Reports.php';
+        require_once BPSVB_PATH . 'includes/ReviewAsk.php';
     }
 
     /**
