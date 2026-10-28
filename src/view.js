@@ -8,36 +8,6 @@ import Style from './Style';
 import Form from './Form';
 import { isPremium as checkPremium } from './utils/premium';
 
-// Survey block.
-//
-// domReady() rather than a DOMContentLoaded listener: when an optimisation
-// plugin delays scripts until after that event has fired, a plain listener
-// never runs and the survey stays an empty box.
-domReady(() => {
-	const allSurveyFormBlockEles = document.querySelectorAll('.wp-block-svb-survey-block');
-
-	allSurveyFormBlockEles.forEach(surveyFormEle => {
-		if (!surveyFormEle.dataset.attributes) {
-			return;
-		}
-
-		const saved = JSON.parse(surveyFormEle.dataset.attributes);
-
-		// cId only prefixes input ids and radio group names. The same survey can
-		// print twice on one page (a shortcode, a duplicated block), so make it
-		// unique per render; it is never stored.
-		const attributes = { ...saved, cId: `${saved.cId || 'svb'}-${surveyFormEle.id}` };
-		const isPremium = checkPremium();
-
-		createRoot(surveyFormEle).render(<>
-			<Style attributes={attributes} id={surveyFormEle.id} isPremium={isPremium} />
-			<RenderForm attributes={attributes} isPremium={isPremium} />
-		</>);
-		surveyFormEle?.removeAttribute('data-attributes');
-	});
-});
-
-
 const RenderForm = ({ attributes, isPremium }) => {
 	const { cId, fields } = attributes;
 	const [formData, setFormData] = useState({});
@@ -80,3 +50,36 @@ export async function postData(url = '', data = {}) {
 
 	return response.json();
 }
+
+// Survey block.
+//
+// domReady() rather than a DOMContentLoaded listener: when an optimisation
+// plugin delays scripts until after that event has fired, a plain listener
+// never runs and the survey stays an empty box.
+//
+// It must stay at the end of the file. WordPress loads this script with
+// `defer`, so the document is already parsed and domReady() runs the callback
+// at once - before any `const` declared below it would be initialised.
+domReady(() => {
+	const allSurveyFormBlockEles = document.querySelectorAll('.wp-block-svb-survey-block');
+
+	allSurveyFormBlockEles.forEach(surveyFormEle => {
+		if (!surveyFormEle.dataset.attributes) {
+			return;
+		}
+
+		const saved = JSON.parse(surveyFormEle.dataset.attributes);
+
+		// cId only prefixes input ids and radio group names. The same survey can
+		// print twice on one page (a shortcode, a duplicated block), so make it
+		// unique per render; it is never stored.
+		const attributes = { ...saved, cId: `${saved.cId || 'svb'}-${surveyFormEle.id}` };
+		const isPremium = checkPremium();
+
+		createRoot(surveyFormEle).render(<>
+			<Style attributes={attributes} id={surveyFormEle.id} isPremium={isPremium} />
+			<RenderForm attributes={attributes} isPremium={isPremium} />
+		</>);
+		surveyFormEle?.removeAttribute('data-attributes');
+	});
+});
