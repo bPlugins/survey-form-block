@@ -195,6 +195,13 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 = 1.2.0 =
 * Security (Pro): The bundled Freemius SDK is updated to 2.13.5, which fixes a stored cross-site scripting issue in admin notices;
 * Security (Pro): Checking the licence status now requires the manage_options capability, like activating and deactivating already did;
+* Fixed: A required NPS question rejected a score of 0, so the most critical answers could not be sent. An emptied checkbox group no longer counts as answered;
+* Fixed: Date questions are now a native date picker and store the date as YYYY-MM-DD. The old month, day and year menus could save "undefined March, undefined", made the whole survey disappear when the month was cleared, listed August twice, and stopped at 2023 by default. Questions still set to that old 1990-2023 default now accept any date;
+* Fixed: The range slider starts at its "Starting value" setting and records an answer only once the visitor moves or taps it. It used to start in the middle and show a number that was never submitted;
+* Fixed: Visitor-facing text - the required-field message, NPS and opinion-scale labels and error messages - can now be translated;
+* Fixed: Surveys now appear even when a performance plugin delays scripts until after the page has loaded;
+* Fixed: A survey shown twice on one page no longer shares input ids and radio groups between the two copies;
+* Changed: New questions start as "Untitled question" with an "Option 1" choice and no placeholder, instead of sample names;
 
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;

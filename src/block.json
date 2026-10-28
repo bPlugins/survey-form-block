@@ -92,7 +92,7 @@
 					"labelPosition": "column",
 					"help": "",
 					"name": "",
-					"placeholder": "Enter your placeholder",
+					"placeholder": "",
 					"classes": "",
 					"onLabel": "Yes",
 					"offLabel": "No",
@@ -100,12 +100,12 @@
 					"isDisable": false,
 					"options": [
 						{
-							"label": "Author",
-							"value": "John deo"
+							"label": "Option 1",
+							"value": "Option 1"
 						}
 					],
-					"start": "1990",
-					"end": "2023"
+					"start": "",
+					"end": ""
 				}
 			]
 		},

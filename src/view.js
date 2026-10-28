@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { createRoot } from 'react-dom';
+import domReady from '@wordpress/dom-ready';
+import { __ } from '@wordpress/i18n';
 
 import './style.scss';
 import Style from './Style';
 import Form from './Form';
 import { isPremium as checkPremium } from './utils/premium';
 
-// Servey Block
-document.addEventListener('DOMContentLoaded', () => {
+// Survey block.
+//
+// domReady() rather than a DOMContentLoaded listener: when an optimisation
+// plugin delays scripts until after that event has fired, a plain listener
+// never runs and the survey stays an empty box.
+domReady(() => {
 	const allSurveyFormBlockEles = document.querySelectorAll('.wp-block-svb-survey-block');
 
 	allSurveyFormBlockEles.forEach(surveyFormEle => {
@@ -15,7 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			return;
 		}
 
-		const attributes = JSON.parse(surveyFormEle.dataset.attributes);
+		const saved = JSON.parse(surveyFormEle.dataset.attributes);
+
+		// cId only prefixes input ids and radio group names. The same survey can
+		// print twice on one page (a shortcode, a duplicated block), so make it
+		// unique per render; it is never stored.
+		const attributes = { ...saved, cId: `${saved.cId || 'svb'}-${surveyFormEle.id}` };
 		const isPremium = checkPremium();
 
 		createRoot(surveyFormEle).render(<>
@@ -32,8 +43,6 @@ const RenderForm = ({ attributes, isPremium }) => {
 	const [formData, setFormData] = useState({});
 	const [requireError, setRequireError] = useState(false);
 
-	const __ = (text) => text;
-
 	const fieldsEls = fields.map((field, index) => {
 		const { label } = field;
 
@@ -47,7 +56,13 @@ const RenderForm = ({ attributes, isPremium }) => {
 	</div>;
 };
 
-// Example POST method implementation:
+/**
+ * Sends one response to the public `svb_data_add` endpoint.
+ *
+ * @param {string} url  admin-ajax.php URL.
+ * @param {Object} data Answers keyed by field id, plus id / creator_id / title.
+ * @return {Promise<Object>} The decoded JSON reply.
+ */
 export async function postData(url = '', data = {}) {
 	const formData = new FormData();
 	formData.append('action', 'svb_data_add');
@@ -57,12 +72,11 @@ export async function postData(url = '', data = {}) {
 	formData.append('form_creator_id', data.creator_id);
 	formData.append('form_name', data.title);
 
-	window.formData = formData;
-	// Default options are marked with *
 	const response = await fetch(url, {
-		method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		credentials: 'same-origin', // include, *same-origin, omit
-		body: formData // body data type must match "Content-Type" header
+		method: 'POST',
+		credentials: 'same-origin',
+		body: formData
 	});
-	return response.json(); // parses JSON response into native JavaScript objects
+
+	return response.json();
 }

@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import LabelArea from '../MainEle/LabelArea';
 
 const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, value, help, onChange }) => {
@@ -22,6 +24,7 @@ const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, is
                                 key={score}
                                 type="button"
                                 className={`svbNpsBtn ${category} ${isSelected ? 'active' : ''}`}
+                                aria-pressed={isSelected}
                                 onClick={() => onChange(score)}
                             >
                                 {score}
@@ -30,9 +33,9 @@ const NPS = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, is
                     })}
                 </div>
                 <div className="svbNpsLegend">
-                    <span className="detractorLabel">0-6 Detractors</span>
-                    <span className="passiveLabel">7-8 Passives</span>
-                    <span className="promoterLabel">9-10 Promoters</span>
+                    <span className="detractorLabel">{__('0-6 Detractors', 'survey-form-block')}</span>
+                    <span className="passiveLabel">{__('7-8 Passives', 'survey-form-block')}</span>
+                    <span className="promoterLabel">{__('9-10 Promoters', 'survey-form-block')}</span>
                 </div>
             </div>
         </div>

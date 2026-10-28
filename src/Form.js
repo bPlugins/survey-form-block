@@ -2,6 +2,7 @@ import { useMemo, useEffect, useState } from 'react';
 import { duplicate, remove, loadingIcon } from './utils/icons';
 import { resolveDesign, getDesignClasses } from './utils/designCSS';
 import { withAttributeDefaults } from './utils/attributes';
+import { isAnswered } from './utils/answers';
 import ProgressBar from './Components/FrontEnd/MainEle/ProgressBar';
 import SuccessState from './Components/FrontEnd/MainEle/SuccessState';
 import Text from './Components/FrontEnd/Fields/Text';
@@ -10,7 +11,7 @@ import Checkbox from './Components/FrontEnd/Fields/CheckBox';
 import Radio from './Components/FrontEnd/Fields/Radio';
 import Email from './Components/FrontEnd/Fields/Email';
 import DropDown from './Components/FrontEnd/Fields/DropDowns';
-import Date from './Components/FrontEnd/Fields/Date';
+import DateField from './Components/FrontEnd/Fields/Date';
 import StarRating from './Components/FrontEnd/Fields/StarRating';
 import OpinionScale from './Components/FrontEnd/Fields/OpinionScale';
 import NPS from './Components/FrontEnd/Fields/NPS';
@@ -52,20 +53,17 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 		setFormData({ ...formData, id, creator_id, title });
 	}, []);
 
-	const requiredFields = useMemo(() => {
-		return fields.map(item => item.isRequired && !item.isDisable ? item.id : false).filter(item => item !== false);
-	}, [fields]);
+	const requiredFields = useMemo(() => fields.filter(item => item.isRequired && !item.isDisable && 'section' !== item.type), [fields]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		// Required Field check
-		const missingRequiredFields = requiredFields.filter(field => {
-			if (!formData[field]) {
-				return true;
-			}
-			return false;
-		});
+		// Required field check. isAnswered() accepts a 0 (an NPS detractor) and
+		// rejects an emptied checkbox group; the old `!formData[id]` check had
+		// both backwards.
+		const missingRequiredFields = requiredFields
+			.filter(field => !isAnswered(field, formData[field.id]))
+			.map(field => field.id);
 
 		if (missingRequiredFields.length) {
 			setMissing(missingRequiredFields);
@@ -170,6 +168,9 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 						requiredMark: labelDesign?.requiredMark || 'asterisk',
 						requiredText: labelDesign?.requiredText ?? '',
 						icon: isPremium ? field.icon : '',
+						// The field's own `value` setting is the slider's starting
+						// position; `value` below is replaced by the visitor's answer.
+						startValue: field.value,
 						fieldEls: fieldsEls[index],
 						index,
 						value: formData[fieldId]
@@ -222,7 +223,7 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 								case 'range_slider':
 									return <RangeSlider {...fieldsPros} onChange={val => setFormData({ ...formData, [fieldId]: val })} />;
 								case 'date':
-									return <Date {...fieldsPros} onChange={val => setFormData({ ...formData, [fieldId]: val })} />;
+									return <DateField {...fieldsPros} onChange={val => setFormData({ ...formData, [fieldId]: val })} />;
 								case 'section':
 									return <Section {...fieldsPros} />;
 								default:
@@ -250,7 +251,7 @@ const Form = ({ fieldsEls, RichText, updateObject, postData, Tooltip, requireErr
 
 		{/* Require Notice */}
 		{requireError && <div className="svb_required_notice">
-			<p className='svb_notice'>Required Field Missing</p>
+			<p className='svb_notice'>{__('Required Field Missing', 'survey-form-block')}</p>
 		</div>}
 
 		{/* Submission failure. Previously swallowed, which showed a thank-you

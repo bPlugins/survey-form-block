@@ -22,7 +22,6 @@ export async function postData(url = "", data = {}) {
         formData.append(key, data[key]);
     });
 
-    window.formData = formData;
     // Default options are marked with *
     const response = await fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.

@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 import LabelArea from '../MainEle/LabelArea';
 
 const OpinionScale = ({ fieldEls, buttonArea, index, icon, requiredMark, requiredText, isRequired, value, help, onChange }) => {
@@ -13,6 +15,7 @@ const OpinionScale = ({ fieldEls, buttonArea, index, icon, requiredMark, require
                             key={point}
                             type="button"
                             className={`svbScaleBtn ${value === point ? 'selected' : ''}`}
+                            aria-pressed={value === point}
                             onClick={() => onChange(point)}
                         >
                             {point}
@@ -20,8 +23,8 @@ const OpinionScale = ({ fieldEls, buttonArea, index, icon, requiredMark, require
                     ))}
                 </div>
                 <div className="svbScaleLabels">
-                    <span>Not at all likely</span>
-                    <span>Extremely likely</span>
+                    <span>{__('Not at all likely', 'survey-form-block')}</span>
+                    <span>{__('Extremely likely', 'survey-form-block')}</span>
                 </div>
             </div>
         </div>

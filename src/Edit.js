@@ -41,10 +41,15 @@ const Edit = props => {
 	const [formData, setFormData] = useState({});
 	const [requireError, setRequireError] = useState(false);
 
+	// `property` may also be an object of several properties to set at once;
+	// two separate calls would each start from the same `fields` and the second
+	// would undo the first.
 	const updateFields = (index, property, val, childProperty = false, childIndex = false) => {
 
 		const newFields = produce(fields, draft => {
-			if (false !== childIndex && childProperty) {
+			if (property && 'object' === typeof property) {
+				Object.assign(draft[index], property);
+			} else if (false !== childIndex && childProperty) {
 				draft[index][property][childIndex][childProperty] = val;
 			} else if (childProperty) {
 				draft[index][property][childProperty] = val;
@@ -69,11 +74,11 @@ const Edit = props => {
 				type: '',
 				column: 1,
 				size: 100,
-				label: 'Label-1',
+				label: __('Untitled question', 'survey-form-block'),
 				labelPosition: 'column',
 				help: '',
 				name: '',
-				placeholder: 'Placeholder',
+				placeholder: '',
 				classes: '',
 				icon: '',
 				onLabel: 'Yes',
@@ -82,12 +87,14 @@ const Edit = props => {
 				isDisable: false,
 				options: [
 					{
-						label: 'Author',
-						value: 'Al-Amin'
+						label: __('Option 1', 'survey-form-block'),
+						value: __('Option 1', 'survey-form-block')
 					}
 				],
-				start: '1990',
-				end: '2023',
+				// Empty = no limit. The old 1990-2023 default kept visitors from
+				// picking a current or future date.
+				start: '',
+				end: '',
 			});
 		});
 
