@@ -1,0 +1,208 @@
+/**
+ * Survey Form Block Pro - static design styles.
+ *
+ * Premium build only. Keyframes and structural rules for the premium presets:
+ * slide/scale/reveal motion, pop/scale/slide success animations, the
+ * segmented, step-dot and circular progress styles, the banner and replace
+ * success panels, the Full Width layout, Soft and Minimal buttons, and question
+ * icons. Moved unchanged from src/_design.scss and src/style.scss, under the
+ * same selectors, and loaded after the free stylesheet.
+ */
+
+$primaryColor: #4527a4;
+
+@keyframes svbAnim-slide-up {
+	from { opacity: 0; transform: translateY(18px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes svbAnim-slide-left {
+	from { opacity: 0; transform: translateX(24px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes svbAnim-scale {
+	from { opacity: 0; transform: scale(.94); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbAnim-reveal {
+	from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(10px); }
+	to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+@keyframes svbSuccess-pop {
+	0% { opacity: 0; transform: scale(.8); }
+	60% { opacity: 1; transform: scale(1.04); }
+	100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbSuccess-scale {
+	from { opacity: 0; transform: scale(.92); }
+	to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes svbSuccess-slide {
+	from { opacity: 0; transform: translateY(16px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.wp-block-svb-survey-block {
+	.svbMainArea {
+		.svbProgressArea {
+			.svbProgressSegments {
+				display: flex;
+				gap: 5px;
+
+				.svbProgressSegment {
+					flex: 1;
+					height: var(--svb-progress-height, 6px);
+					border-radius: 999px;
+					background: var(--svb-progress-track, rgba(15, 23, 42, .1));
+					transition: background-color .3s ease;
+
+					&.done {
+						background: var(--svb-progress-fill, #4527a4);
+					}
+				}
+			}
+
+			.svbProgressSteps {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				flex-wrap: wrap;
+
+				.svbProgressStep {
+					display: inline-flex;
+					align-items: center;
+					flex: 0 0 auto;
+
+					.svbProgressStepDot {
+						width: 26px;
+						height: 26px;
+						border-radius: 50%;
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 11px;
+						font-weight: 700;
+						font-style: normal;
+						color: var(--svb-muted, #64748b);
+						background: var(--svb-progress-track, rgba(15, 23, 42, .08));
+						border: 1px solid transparent;
+						transition: all .25s ease;
+					}
+
+					&.done .svbProgressStepDot {
+						color: var(--svb-accent-contrast, #fff);
+						background: var(--svb-progress-fill, #4527a4);
+					}
+				}
+			}
+
+			&.svbProgress-circular {
+				position: relative;
+				width: 72px;
+				height: 72px;
+				margin-left: auto;
+				margin-right: auto;
+
+				.svbProgressCircle {
+					width: 100%;
+					height: 100%;
+					transform: rotate(-90deg);
+
+					circle {
+						fill: none;
+						stroke-width: 6;
+						stroke-linecap: round;
+					}
+
+					.svbProgressCircleTrack {
+						stroke: var(--svb-progress-track, rgba(15, 23, 42, .1));
+					}
+
+					.svbProgressCircleValue {
+						stroke: var(--svb-progress-fill, #4527a4);
+						transition: stroke-dashoffset .45s cubic-bezier(.22, .61, .36, 1);
+					}
+				}
+
+				.svbProgressCircleText {
+					position: absolute;
+					inset: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 14px;
+					font-weight: 700;
+					color: var(--svb-heading, inherit);
+				}
+			}
+		}
+
+		.successArea {
+			&.svbSuccess-replace {
+				flex-direction: column;
+				gap: 10px;
+				padding: 26px 22px;
+				margin-top: 14px;
+				border-radius: var(--svb-card-radius, 12px);
+				background: var(--svb-success-bg, var(--svb-accent-soft, rgba(22, 163, 74, .08)));
+				border: 1px solid var(--svb-card-border-color, rgba(22, 163, 74, .18));
+
+				.svbSuccessIcon {
+					font-size: 34px;
+				}
+			}
+
+			&.svbSuccess-replace {
+				padding: 46px 24px;
+			}
+
+			&.svbSuccess-banner {
+				justify-content: flex-start;
+				text-align: left;
+				padding: 14px 18px;
+				margin-top: 14px;
+				border-radius: var(--svb-card-radius, 10px);
+				border-left: 4px solid var(--svb-success-color, #16a34a);
+				background: var(--svb-success-bg, var(--svb-accent-soft, rgba(22, 163, 74, .08)));
+
+				.svbSuccessBody { text-align: left; }
+				.message { text-align: left; }
+			}
+		}
+
+		form.svbLayout-fullwidth {
+			.mainFieldArea .fieldItem .labelArea .labelHelp label {
+				font-size: 1.05em;
+			}
+		}
+
+		form.svbBtn-soft .subBtnArea .subBtn,
+		form.svbBtn-minimal .subBtnArea .subBtn {
+			background-color: transparent;
+		}
+
+		form .mainFieldArea .successArea {
+			&.svbSuccess-banner {
+				border-radius: 0;
+				background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+				border-left: 4px solid #15803d;
+			}
+		}
+
+		form .mainFieldArea .fieldItem .fieldMainArea .labelArea .labelHelp {
+			.svbFieldIcon {
+				display: inline-flex;
+				align-items: center;
+				margin-right: 6px;
+				font-size: 1.1em;
+				color: var(--svb-accent, #{$primaryColor});
+				flex: 0 0 auto;
+			}
+		}
+	}
+}

@@ -88,15 +88,6 @@ html {
 									cursor: pointer;
 								}
 
-								.svbFieldIcon {
-									display: inline-flex;
-									align-items: center;
-									margin-right: 6px;
-									font-size: 1.1em;
-									color: var(--svb-accent, #{$primaryColor});
-									flex: 0 0 auto;
-								}
-
 								.svbRequiredBadge {
 									font-size: 10px;
 									font-weight: 600;
@@ -419,12 +410,6 @@ html {
 					}
 
 					/* Variants */
-					&.svbSuccess-banner {
-						border-radius: 0;
-						background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-						border-left: 4px solid #15803d;
-					}
-
 					&.svbSuccess-card {
 						border-radius: 8px;
 						box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);

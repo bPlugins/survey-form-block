@@ -9,10 +9,19 @@
  * deliberate design choice (a button variant, an input style, a layout) wins over
  * the older per-property controls, while every property the design system does
  * not touch keeps flowing from the original controls untouched.
+ *
+ * Free and premium: this file holds only the free presets. Each premium preset
+ * is produced by the premium build (src/pro/css.js) through an
+ * `svb.design.css.<slot>` filter, called at the exact point the rule used to sit
+ * so the cascade order is unchanged. Without the premium build every slot
+ * yields an empty string, and `resolveDesign()` has already mapped any premium
+ * value to its free equivalent.
  */
 
+import { applyFilters } from '@wordpress/hooks';
+
 import { getBorderCSS, getBoxCSS, getMultiShadowCSS } from '../../../bpl-tools/utils/getCSS';
-import { getDesign, safeOption, THEMES, LAYOUTS, INPUT_STYLES, BUTTON_VARIANTS, BUTTON_HOVERS, ANIMATIONS, PROGRESS_STYLES, SUCCESS_STYLES, SUCCESS_ANIMATIONS, DIVIDER_STYLES } from './design';
+import { getDesign, getThemes, safeOption, LAYOUTS, INPUT_STYLES, BUTTON_VARIANTS, BUTTON_HOVERS, ANIMATIONS, PROGRESS_STYLES, SUCCESS_STYLES, SUCCESS_ANIMATIONS, DIVIDER_STYLES } from './design';
 
 /** Every text-like control the block can render. */
 export const TEXT_INPUTS = [
@@ -31,6 +40,39 @@ export const TEXT_INPUTS = [
 const TABLET = '@media only screen and (max-width: 1024px)';
 
 const px = val => (val || 0 === val) && !isNaN(val) ? `${val}px` : val;
+
+/**
+ * Helpers handed to premium CSS slots, so the premium build does not need its
+ * own copy of them.
+ */
+const tools = { px, getBorderCSS, getBoxCSS, getMultiShadowCSS };
+
+/**
+ * Premium CSS for one slot, or an empty string in the free build.
+ *
+ * @param {string} slot    Slot name.
+ * @param {Object} context Selectors and values the slot needs.
+ * @return {string} CSS.
+ */
+const proSlot = (slot, context) => applyFilters(`svb.design.css.${slot}`, '', { ...context, tools });
+
+/**
+ * Card styling shared by the Card layout and the premium Floating layout.
+ *
+ * @param {string} item Field item selector.
+ * @return {string} CSS.
+ */
+const cardSurfaceCSS = item => `
+			${item} .fieldMainArea {
+				background: var(--svb-card-bg, #ffffff);
+				border: 1px solid var(--svb-card-border-color, #e6e8ec);
+				border-radius: var(--svb-card-radius, 12px);
+				box-shadow: var(--svb-card-shadow, none);
+				padding: var(--svb-card-padding, 16px 18px);
+				transition: box-shadow var(--svb-transition, .25s) ease, transform var(--svb-transition, .25s) ease, border-color var(--svb-transition, .25s) ease;
+			}
+			${item} .svbSectionDivider { padding: 0; background: none; border: none; box-shadow: none; }
+		`;
 
 
 /**
@@ -51,7 +93,7 @@ export const resolveDesign = (design, isPremium = false) => {
 		return d;
 	}
 
-	const themeIsPro = Boolean(THEMES.find(t => t.name === d.theme)?.pro);
+	const themeIsPro = Boolean(getThemes().find(t => t.name === d.theme)?.pro);
 
 	return {
 		...d,
@@ -83,7 +125,7 @@ export const resolveDesign = (design, isPremium = false) => {
 /* -------------------------------------------------------------------------- */
 
 const themeVarsCSS = (root, design, isPremium) => {
-	const theme = THEMES.find(t => t.name === design.theme);
+	const theme = getThemes().find(t => t.name === design.theme);
 
 	if (!theme || !Object.keys(theme.vars || {}).length) {
 		return '';
@@ -132,30 +174,8 @@ const layoutCSS = (root, design) => {
 				: `@media only screen and (max-width: 640px) { ${rule} }`;
 	});
 
-	if ('card' === layout || 'floating' === layout) {
-		css += `
-			${item} .fieldMainArea {
-				background: var(--svb-card-bg, #ffffff);
-				border: 1px solid var(--svb-card-border-color, #e6e8ec);
-				border-radius: var(--svb-card-radius, 12px);
-				box-shadow: var(--svb-card-shadow, none);
-				padding: var(--svb-card-padding, 16px 18px);
-				transition: box-shadow var(--svb-transition, .25s) ease, transform var(--svb-transition, .25s) ease, border-color var(--svb-transition, .25s) ease;
-			}
-			${item} .svbSectionDivider { padding: 0; background: none; border: none; box-shadow: none; }
-		`;
-	}
-
-	if ('floating' === layout) {
-		css += `
-			${item} .fieldMainArea { box-shadow: var(--svb-card-shadow, 0 4px 14px rgba(15, 23, 42, 0.07)); }
-			${item} .fieldMainArea:hover,
-			${item} .fieldMainArea:focus-within {
-				transform: translateY(-3px);
-				box-shadow: var(--svb-card-hover-shadow, 0 14px 32px rgba(15, 23, 42, 0.14));
-				border-color: var(--svb-accent, currentColor);
-			}
-		`;
+	if ('card' === layout) {
+		css += cardSurfaceCSS(item);
 	}
 
 	if ('minimal' === layout) {
@@ -166,28 +186,8 @@ const layoutCSS = (root, design) => {
 		`;
 	}
 
-	if ('split' === layout) {
-		css += `
-			@media only screen and (min-width: 900px) {
-				${form} { display: grid; grid-template-columns: minmax(220px, 34%) 1fr; column-gap: 44px; align-items: start; }
-				${form} .titleArea { grid-column: 1; grid-row: 1; }
-				${form} .descriptionArea { grid-column: 1; grid-row: 2; align-self: start; }
-				${form} .svbProgressArea { grid-column: 1; grid-row: 3; }
-				${form} .mainFieldArea { grid-column: 2; grid-row: 1 / span 4; }
-				${form} .svb_required_notice { grid-column: 2; }
-				${form} .titleArea .title { margin-top: 0; }
-			}
-		`;
-	}
-
-	if ('fullwidth' === layout) {
-		css += `
-			${form} { text-align: initial; }
-			${root} .svbMainArea .titleArea .title { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem); }
-			${root} .svbMainArea .descriptionArea .description { font-size: clamp(1rem, .95rem + .3vw, 1.15rem); }
-			${item} { margin-bottom: var(--svb-gap, 22px); }
-		`;
-	}
+	// Floating, Split and Full Width.
+	css += proSlot('layout', { root, design, form, item, cardSurfaceCSS });
 
 	// Column stacking breakpoint, overriding the hard-coded 768px baseline.
 	const bp = parseInt(stackBreakpoint) || 768;
@@ -209,40 +209,8 @@ const layoutCSS = (root, design) => {
 	return css;
 };
 
-const cardCSS = (root, design, isPremium) => {
-	const { card } = design;
-
-	if (!card?.enable || !isPremium) {
-		return '';
-	}
-
-	const target = `${root} .svbMainArea .mainFieldArea .fieldItem .fieldMainArea`;
-	const bg = 'gradient' === card.bgType ? card.gradient : card.bg;
-	const shadow = card.shadow?.length ? getMultiShadowCSS(card.shadow) : '';
-	const padding = getBoxCSS(card.padding);
-	const border = getBorderCSS(card.border);
-
-	let css = `
-		${target} {
-			${bg ? `background: ${bg};` : 'background: var(--svb-card-bg, #ffffff);'}
-			${border?.trim() ? border : 'border: 1px solid var(--svb-card-border-color, #e6e8ec);'}
-			${padding ? `padding: ${padding};` : 'padding: var(--svb-card-padding, 16px 18px);'}
-			${shadow ? `box-shadow: ${shadow};` : ''}
-			transition: box-shadow var(--svb-transition, .25s) ease, transform var(--svb-transition, .25s) ease, border-color var(--svb-transition, .25s) ease;
-		}
-		${target} .svbSectionDivider { margin-top: 0; }
-	`;
-
-	if ('lift' === card.hoverEffect) {
-		css += `${target}:hover { transform: translateY(-3px); box-shadow: var(--svb-card-hover-shadow, 0 12px 28px rgba(15, 23, 42, 0.12)); }`;
-	} else if ('glow' === card.hoverEffect) {
-		css += `${target}:hover { box-shadow: 0 0 0 3px var(--svb-accent-soft, rgba(69, 39, 164, .12)); }`;
-	} else if ('border' === card.hoverEffect) {
-		css += `${target}:hover { border-color: var(--svb-accent, #4527a4); }`;
-	}
-
-	return css;
-};
+/** The question card designer is premium in full. */
+const cardCSS = (root, design, isPremium) => proSlot('card', { root, design, isPremium });
 
 const inputCSS = (root, design, isPremium) => {
 	const { inputStyle, input } = design;
@@ -252,8 +220,10 @@ const inputCSS = (root, design, isPremium) => {
 	const hoverSel = TEXT_INPUTS.map(s => `${area} ${s}:hover:not(:focus)`).join(', ');
 	const placeholderSel = TEXT_INPUTS.map(s => `${area} ${s}::placeholder`).join(', ');
 
-	const focus = (isPremium && input?.focusColor) || 'var(--svb-input-focus, #4527a4)';
+	// A custom focus colour is a premium control.
+	const focus = applyFilters('svb.design.inputFocus', 'var(--svb-input-focus, #4527a4)', { design, isPremium });
 	const ring = false === input?.focusRing ? '' : `box-shadow: 0 0 0 3px var(--svb-input-focus-ring, rgba(69, 39, 164, .15));`;
+	const context = { root, design, input, isPremium, area, sel, focusSel, hoverSel, placeholderSel, focus };
 
 	let css = `
 		${sel} { transition: border-color var(--svb-transition, .2s) ease, box-shadow var(--svb-transition, .2s) ease, background-color var(--svb-transition, .2s) ease; }
@@ -264,19 +234,9 @@ const inputCSS = (root, design, isPremium) => {
 		${root} .svbMainArea .fieldItem .fieldArea input[type=range] { accent-color: var(--svb-accent, #4527a4); }
 	`;
 
-	if (isPremium && input?.placeholderColor) {
-		css += `${placeholderSel} { color: ${input.placeholderColor}; opacity: 1; }`;
-	} else {
-		css += `${placeholderSel} { color: var(--svb-placeholder, inherit); }`;
-	}
-
-	if (isPremium && input?.bg) {
-		css += `${sel} { background-color: ${input.bg}; }`;
-	}
-
-	if (isPremium && input?.radius) {
-		css += `${sel} { border-radius: ${px(input.radius)}; }`;
-	}
+	// Placeholder colour, field background and corner radius are premium controls.
+	css += applyFilters('svb.design.css.inputPlaceholder', `${placeholderSel} { color: var(--svb-placeholder, inherit); }`, { ...context, tools });
+	css += proSlot('inputExtras', context);
 
 	switch (inputStyle) {
 		case 'outlined':
@@ -286,60 +246,9 @@ const inputCSS = (root, design, isPremium) => {
 			`;
 			break;
 
-		case 'filled':
-			css += `
-				${sel} { background-color: var(--svb-input-filled-bg, var(--svb-accent-soft, rgba(15, 23, 42, .05))); border-color: transparent; box-shadow: var(--svb-input-shadow, none); }
-				${hoverSel} { border-color: transparent; background-color: var(--svb-input-filled-hover, var(--svb-accent-soft, rgba(15, 23, 42, .08))); }
-				${focusSel} { border-color: ${focus}; }
-			`;
-			break;
-
-		case 'underline':
-			css += `
-				${sel} { background-color: transparent; border-width: 0 0 2px 0; border-style: solid; border-radius: 0; padding-left: 0; padding-right: 0; }
-				${hoverSel} { border-width: 0 0 2px 0; }
-				${area} .selectArea select { padding-left: 0; }
-			`;
-
-			// A ring would float away from a borderless field, so focus thickens
-			// the rule instead. Never `box-shadow: none` here - that would leave
-			// keyboard users with no focus indicator at all.
-			css += false === input?.focusRing
-				? `${focusSel} { border-width: 0 0 2px 0; box-shadow: none; border-bottom-color: ${focus}; }`
-				: `${focusSel} { border-width: 0 0 2px 0; border-bottom-color: ${focus}; box-shadow: 0 2px 0 -1px ${focus}; }`;
-			break;
-
-		case 'rounded':
-			css += `${sel} { border-radius: 999px; } ${area} textarea { border-radius: 18px; }`;
-			break;
-
-		case 'floating': {
-			// Only single-input fields can float a label; choice fields, ratings and
-			// dividers are marked `svbNoFloat` by Form.js and keep a normal label.
-			const floatItem = `${root} .svbMainArea .mainFieldArea .fieldItem:not(.svbNoFloat)`;
-
-			css += `
-				${floatItem} .fieldMainArea { position: relative; padding-top: 8px; }
-				${floatItem} .labelArea {
-					position: absolute; top: calc(8px + var(--svb-float-mid, 1.35em)); left: 11px; transform: translateY(-50%);
-					pointer-events: none; transition: top .18s ease, transform .18s ease, color .18s ease;
-					z-index: 1; margin: 0; width: auto; max-width: calc(100% - 24px);
-				}
-				${floatItem} .labelArea .labelHelp { width: auto; }
-				${floatItem} .labelArea label { background: var(--svb-input-bg, #ffffff); padding: 0 5px; border-radius: 3px; pointer-events: auto; white-space: nowrap; }
-				${floatItem} .fieldMainArea:focus-within .labelArea,
-				${floatItem} .fieldMainArea:has(input:not(:placeholder-shown)) .labelArea,
-				${floatItem} .fieldMainArea:has(textarea:not(:placeholder-shown)) .labelArea {
-					top: 8px; transform: translateY(-50%) scale(.86); transform-origin: left center; color: ${focus};
-				}
-				${floatItem} textarea { min-height: 96px; }
-				${floatItem} .fieldMainArea:not(:focus-within) input:placeholder-shown::placeholder,
-				${floatItem} .fieldMainArea:not(:focus-within) textarea:placeholder-shown::placeholder { color: transparent; }
-			`;
-			break;
-		}
-
 		default:
+			// Filled, Underline, Rounded and Floating Label.
+			css += proSlot('inputStyle', context);
 			break;
 	}
 
@@ -351,6 +260,7 @@ const buttonCSS = (root, design, isPremium) => {
 	const btn = `${root} .subBtn`;
 	const area = `${root} .subBtnArea`;
 	const speed = `${parseInt(button.transition) || 250}ms`;
+	const context = { root, design, button, isPremium, btn, area, speed };
 
 	let css = `
 		${root} { --svb-transition: ${speed}; }
@@ -384,109 +294,31 @@ const buttonCSS = (root, design, isPremium) => {
 			`;
 			break;
 
-		case 'gradient':
-			if (isPremium) {
-				css += `${btn} { background: ${button.gradient || 'var(--svb-accent, #4527a4)'}; border: none; box-shadow: var(--svb-btn-shadow, none); background-size: 180% 180%; }`;
-			}
-			break;
-
-		case 'soft':
-			if (isPremium) {
-				css += `
-					${btn} { background: var(--svb-accent-soft, rgba(69, 39, 164, .12)); color: var(--svb-accent, #4527a4); border: none; box-shadow: none; }
-					${btn}:hover { background: var(--svb-accent, #4527a4); color: #ffffff; }
-				`;
-			}
-			break;
-
-		case 'minimal':
-			if (isPremium) {
-				css += `
-					${btn} { background: transparent; border: none; box-shadow: none; color: var(--svb-accent, #4527a4); padding-left: 4px; padding-right: 4px; }
-					${btn}::after { content: ''; position: absolute; left: 4px; right: 4px; bottom: 6px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform ${speed} ease; }
-					${btn}:hover::after { transform: scaleX(1); }
-				`;
-			}
-			break;
-
 		default:
+			// Gradient, Soft and Minimal.
+			css += proSlot('buttonVariant', context);
 			break;
 	}
 
-	if (isPremium && button.hoverColors?.bg) {
-		css += `${btn}:hover { background: ${button.hoverColors.bg}; }`;
-	}
-
-	if (isPremium && button.hoverColors?.color) {
-		css += `${btn}:hover { color: ${button.hoverColors.color}; }`;
-	}
+	// Hover colours are a premium control.
+	css += proSlot('buttonHoverColors', context);
 
 	switch (button.hoverEffect) {
 		case 'lift':
 			css += `${btn}:hover { transform: translateY(-2px); box-shadow: var(--svb-btn-hover-shadow, 0 10px 22px rgba(15, 23, 42, .18)); }`;
 			break;
 
-		case 'scale':
-			css += `${btn}:hover { transform: scale(1.025); }`;
-			break;
-
-		case 'glow':
-			css += `${btn}:hover { box-shadow: 0 0 0 4px var(--svb-accent-soft, rgba(69, 39, 164, .25)); }`;
-			break;
-
-		case 'slide':
-			css += `
-				${btn}::before { content: ''; position: absolute; inset: 0; background: var(--svb-accent-alt, rgba(255, 255, 255, .18)); transform: translateX(-101%); transition: transform ${speed} ease; z-index: 0; }
-				${btn}:hover::before { transform: translateX(0); }
-				${btn} > * { position: relative; z-index: 1; }
-			`;
-			break;
-
 		default:
+			// Scale, Glow and Slide Fill.
+			css += proSlot('buttonHover', context);
 			break;
 	}
 
 	return css;
 };
 
-const backgroundCSS = (root, design, isPremium) => {
-	const { background: bg } = design;
-
-	if (!bg?.enable || !isPremium) {
-		return '';
-	}
-
-	const wrap = `${root} .svbMainArea`;
-	let css = '';
-
-	if ('gradient' === bg.type) {
-		css += `${wrap} { background: ${bg.gradient || 'transparent'}; }`;
-	} else if ('image' === bg.type && bg.image?.url) {
-		css += `
-			${wrap} {
-				background-image: ${bg.overlayColor ? `linear-gradient(${bg.overlayColor}, ${bg.overlayColor}), ` : ''}url('${String(bg.image.url).replace(/['"()]/g, '')}');
-				background-position: ${bg.position || 'center center'};
-				background-size: ${bg.size || 'cover'};
-				background-repeat: ${bg.repeat || 'no-repeat'};
-				background-attachment: ${bg.attachment || 'scroll'};
-			}
-		`;
-	} else if (bg.color) {
-		css += `${wrap} { background: ${bg.color}; }`;
-	}
-
-	// A backdrop needs breathing room, otherwise the form covers it entirely.
-	css += `${wrap} { padding: var(--svb-bg-padding, 26px); border-radius: var(--svb-bg-radius, 20px); }`;
-
-	if (bg.blur > 0) {
-		css += `
-			${root} form { backdrop-filter: blur(${px(bg.blur)}); -webkit-backdrop-filter: blur(${px(bg.blur)}); }
-			${root} .svbMainArea .mainFieldArea .fieldItem .fieldMainArea { backdrop-filter: blur(var(--svb-card-blur, 6px)); -webkit-backdrop-filter: blur(var(--svb-card-blur, 6px)); }
-		`;
-	}
-
-	return css;
-};
+/** The survey backdrop is premium in full. */
+const backgroundCSS = (root, design, isPremium) => proSlot('background', { root, design, isPremium });
 
 const animationCSS = (root, design) => {
 	const { animation } = design;
@@ -521,17 +353,15 @@ const progressCSS = (root, design, isPremium) => {
 	}
 
 	const wrap = `${root} .svbProgressArea`;
-	const fill = 'gradient' === progress.style && isPremium
-		? (progress.gradient || 'var(--svb-accent, #4527a4)')
-		: (progress.color || 'var(--svb-accent, #4527a4)');
+	// The gradient fill is a premium progress style.
+	const fill = applyFilters('svb.design.progressFill', progress.color || 'var(--svb-accent, #4527a4)', { design, isPremium });
 	const track = progress.trackColor || 'var(--svb-progress-track, rgba(15, 23, 42, .10))';
 	const height = px(progress.height) || '6px';
 
 	return `
 		${wrap} { --svb-progress-fill: ${fill}; --svb-progress-track: ${track}; --svb-progress-height: ${height}; }
 		${wrap} .svbProgressLabel { color: var(--svb-muted, inherit); }
-		${wrap} .svbProgressCircle .svbProgressCircleValue { stroke: ${progress.color || 'var(--svb-accent, #4527a4)'}; }
-	`;
+	` + proSlot('progress', { root, design, isPremium, wrap });
 };
 
 const successCSS = (root, design, isPremium) => {
@@ -540,9 +370,8 @@ const successCSS = (root, design, isPremium) => {
 
 	let css = `${wrap} .svbSuccessIcon { color: ${success.iconColor || 'var(--svb-success-color, currentColor)'}; }`;
 
-	if (success.bg && isPremium) {
-		css += `${wrap}.svbSuccess-card, ${wrap}.svbSuccess-banner, ${wrap}.svbSuccess-replace { background: ${success.bg}; }`;
-	}
+	// A panel background is a premium control.
+	css += proSlot('successBg', { root, design, isPremium, wrap });
 
 	if ('none' !== success.animation) {
 		const anim = `svbSuccess-${success.animation}`;
@@ -574,10 +403,9 @@ const detailCSS = (root, design, isPremium) => {
 
 	if ('none' === divider?.style) {
 		css += `${line} { display: none; }`;
-	} else if ('gradient' === divider?.style && isPremium) {
-		css += `${line} { border: none; height: ${thickness}; background: linear-gradient(90deg, var(--svb-accent, #4527a4), transparent); }`;
 	} else {
-		css += `${line} { border-top: ${thickness} ${divider?.style || 'solid'} ${color}; }`;
+		// The gradient rule is a premium divider style.
+		css += proSlot('dividerLine', { root, design, isPremium, line, thickness }) || `${line} { border-top: ${thickness} ${divider?.style || 'solid'} ${color}; }`;
 	}
 
 	// The asterisk is an SVG with a baked-in red fill and the badge carries its

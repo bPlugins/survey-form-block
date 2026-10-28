@@ -50,6 +50,9 @@ module.exports = {
 		"admin-script": './src/admin/adminScript.js',
 		"admin-dashboard": './src/bplugins-admin/dashboard.js',
 		"admin-post": './src/admin/post.js',
+		// Premium design presets. build/pro/ is @fs_premium_only, so Freemius
+		// strips it from the free WordPress.org build.
+		"pro/design": './src/pro/index.js',
 	},
 	module: { ...defaultConfig.module, rules },
 	plugins: [

@@ -104,6 +104,7 @@ if (!class_exists('BPSVB_Uninstall')) {
         {
             delete_option(BPSVB_Options::KEY);
             delete_option('bpsvb_db_version'); // Schema version, so a reinstall rebuilds.
+            delete_metadata('user', 0, 'bpsvb_demo_notice_dismissed', '', true);
         }
     }
 }

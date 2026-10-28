@@ -206,6 +206,8 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * Fixed: Duplicating a survey block, or pasting a copy into the same post, now gives the copy its own id, so it collects its own responses. Ids already saved in a post are never changed;
 * Fixed: Opening a post that holds a survey no longer marks it as having unsaved changes;
 * Fixed: The survey block no longer crashes on the Widgets screen;
+* Changed: The free plugin no longer contains the Pro design presets. Pro themes, layouts, input and button styles, motion, progress styles, success presentations, the question card designer, the backdrop and question icons now ship only in Survey Form Block Pro. Nothing changes on screen: on a site without Pro, saved Pro choices still fall back to their closest free equivalent;
+* Changed: The demos notice now appears only on the plugin's own screens and only to administrators, and stays dismissed once closed. It no longer appears on the main Dashboard;
 
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;

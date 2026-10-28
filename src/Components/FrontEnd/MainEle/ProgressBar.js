@@ -4,7 +4,13 @@
  * Purely presentational: it reflects how many answerable questions currently
  * hold a value. No survey logic, pagination or state machine is introduced -
  * the data already exists in `formData`.
+ *
+ * The free build draws the linear bar. The premium styles (circular, step dots,
+ * segmented) are drawn by the premium build through the `svb.progress.render`
+ * filter; `resolveDesign()` maps them to linear when they are not available.
  */
+
+import { applyFilters } from '@wordpress/hooks';
 
 const isAnswered = value => {
 	if (Array.isArray(value)) {
@@ -44,52 +50,10 @@ const ProgressBar = ({ fields = [], formData = {}, design }) => {
 		</div>
 	);
 
-	if ('circular' === style) {
-		const radius = 26;
-		const circumference = 2 * Math.PI * radius;
+	const premium = applyFilters('svb.progress.render', null, { style, progress, answerable, formData, done, total, percent, label, isAnswered });
 
-		return (
-			<div className={`svbProgressArea svbProgress-circular svbProgress-${progress.position}`}>
-				<svg className="svbProgressCircle" viewBox="0 0 64 64" role="img" aria-label={`${percent}% complete`}>
-					<circle className="svbProgressCircleTrack" cx="32" cy="32" r={radius} />
-					<circle
-						className="svbProgressCircleValue"
-						cx="32" cy="32" r={radius}
-						strokeDasharray={circumference}
-						strokeDashoffset={circumference - (circumference * percent) / 100}
-					/>
-				</svg>
-				{progress.showLabel && <span className="svbProgressCircleText">{percent}%</span>}
-			</div>
-		);
-	}
-
-	if ('steps' === style) {
-		return (
-			<div className={`svbProgressArea svbProgress-steps svbProgress-${progress.position}`}>
-				<div className="svbProgressSteps" role="img" aria-label={`${done} of ${total} answered`}>
-					{answerable.map((field, i) => (
-						<span key={field.id} className={`svbProgressStep ${isAnswered(formData[field.id]) ? 'done' : ''}`}>
-							<i className="svbProgressStepDot">{i + 1}</i>
-						</span>
-					))}
-				</div>
-				{label}
-			</div>
-		);
-	}
-
-	if ('segmented' === style) {
-		return (
-			<div className={`svbProgressArea svbProgress-segmented svbProgress-${progress.position}`}>
-				<div className="svbProgressSegments" role="img" aria-label={`${percent}% complete`}>
-					{answerable.map(field => (
-						<span key={field.id} className={`svbProgressSegment ${isAnswered(formData[field.id]) ? 'done' : ''}`} />
-					))}
-				</div>
-				{label}
-			</div>
-		);
+	if (premium) {
+		return premium;
 	}
 
 	// linear + gradient share the same markup.

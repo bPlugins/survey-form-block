@@ -4,6 +4,11 @@ if (!defined('ABSPATH')) {exit;}
 if(!class_exists('BPSVB_ADMIN_MENU')) {
     class BPSVB_ADMIN_MENU
     {
+        /** User meta set once the demos notice has been dismissed. */
+        const NOTICE_DISMISSED = 'bpsvb_demo_notice_dismissed';
+
+        const NOTICE_ACTION = 'svb_dismiss_demo_notice';
+
         public function __construct()
         {
             add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
@@ -14,6 +19,7 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
             add_action('admin_menu', [$this, 'badgeNewMenuItems'], 100);
             add_action('admin_head', [$this, 'menuBadgeStyle']);
             add_action('admin_notices', [$this, 'adminNotice']);
+            add_action('wp_ajax_' . self::NOTICE_ACTION, [$this, 'dismissNotice']);
         }
 
         public function adminEnqueueScripts($hook)
@@ -193,26 +199,69 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
         <?php }
 
         /**
-         * Admin notice pointing at the demos, which live on the Demo & Help
-         * screen's Demos tab rather than on this site.
+         * Notice pointing at the demos, which live on the Demo & Help screen's
+         * Demos tab rather than on this site.
+         *
+         * Shown on the plugin's own screens only (it used to appear on the main
+         * Dashboard too), to people who can manage the plugin, and gone for good
+         * once dismissed - WordPress.org guideline 11 asks for exactly that.
          */
         public function adminNotice()
         {
             $screen = get_current_screen();
-            if ( ! $screen || ( false === strpos( (string) $screen->id, BPSVB_CPT_SLUG ) && 'dashboard' !== $screen->id ) ) {
+
+            if (
+                ! $screen
+                || ! current_user_can( 'manage_options' )
+                || false === strpos( (string) $screen->id, BPSVB_CPT_SLUG )
+                // The Demo & Help screen is where the notice points.
+                || false !== strpos( (string) $screen->id, BPSVB_DASHBOARD_SLUG )
+                || get_user_meta( get_current_user_id(), self::NOTICE_DISMISSED, true )
+            ) {
                 return;
             }
             ?>
-            <div class="notice notice-info is-dismissible" style="border-left-color: #2563eb; padding: 12px 16px;">
+            <div class="notice notice-info is-dismissible svbDemoNotice" data-nonce="<?php echo esc_attr( wp_create_nonce( self::NOTICE_ACTION ) ); ?>" style="border-left-color: #2563eb; padding: 12px 16px;">
                 <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 600; color: #0f172a;">
-                    🎯 <strong>Survey Form Block Demos:</strong> 6 production-ready real-world use cases are live!
+                    <?php echo esc_html__( 'Six ready-made survey demos are live: see each one in action before you build your own.', 'survey-form-block' ); ?>
                 </p>
                 <p style="margin: 0; font-size: 13px;">
-                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_DASHBOARD_SLUG ) . '#/demos' ); ?>" class="button button-primary" style="margin-right: 8px;">View Live Demos</a>
-                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_MENU_SLUG ) ); ?>" class="button button-secondary">View Stored Responses</a>
+                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_DASHBOARD_SLUG ) . '#/demos' ); ?>" class="button button-primary" style="margin-right: 8px;"><?php echo esc_html__( 'View Live Demos', 'survey-form-block' ); ?></a>
+                    <a href="<?php echo esc_url( admin_url( BPSVB_MENU_PARENT . '&page=' . BPSVB_MENU_SLUG ) ); ?>" class="button button-secondary"><?php echo esc_html__( 'View Stored Responses', 'survey-form-block' ); ?></a>
                 </p>
             </div>
+            <script>
+                document.addEventListener( 'click', function ( e ) {
+                    var notice = e.target.closest && e.target.closest( '.svbDemoNotice' );
+
+                    if ( ! notice || ! e.target.closest( '.notice-dismiss' ) ) {
+                        return;
+                    }
+
+                    var body = new FormData();
+                    body.append( 'action', <?php echo wp_json_encode( self::NOTICE_ACTION ); ?> );
+                    body.append( 'nonce', notice.getAttribute( 'data-nonce' ) );
+                    fetch( <?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>, { method: 'POST', credentials: 'same-origin', body: body } );
+                } );
+            </script>
             <?php
+        }
+
+        /**
+         * Remembers, per user, that the demos notice was dismissed.
+         *
+         * @return void
+         */
+        public function dismissNotice()
+        {
+            check_ajax_referer( self::NOTICE_ACTION, 'nonce' );
+
+            if ( ! current_user_can( 'manage_options' ) ) {
+                wp_send_json_error( null, 403 );
+            }
+
+            update_user_meta( get_current_user_id(), self::NOTICE_DISMISSED, time() );
+            wp_send_json_success();
         }
     }
     new BPSVB_ADMIN_MENU();

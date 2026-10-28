@@ -51,6 +51,8 @@ const REQUIRED = [
 	'includes/PostType.php',
 	'vendor/freemius/start.php',
 	'vendor/freemius-lite/start.php',
+	// Premium design presets; stripped from the free build with vendor/freemius.
+	'build/pro/design.js',
 	// The Lite SDK draws its opt-in screen from this; without it the screen is
 	// blank on every free install.
 	'vendor/freemius-lite/build/opt-in-form.js'

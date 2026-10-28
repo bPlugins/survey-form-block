@@ -14,7 +14,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: survey-form-block
  * Domain Path: /languages
- * @fs_premium_only /vendor/freemius, /includes/LicenseActivation.php
+ * @fs_premium_only /vendor/freemius, /includes/LicenseActivation.php, /build/pro
  * @fs_free_only /vendor/freemius-lite
  */
 
