@@ -38,6 +38,9 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
             wp_localize_script('svb-admin-script', 'svbData', [
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('wp_ajax'),
+                // CSV download; see includes/Export.php.
+                'exportUrl' => admin_url('admin-post.php'),
+                'exportNonce' => wp_create_nonce('svb_export_csv'),
             ]);
 
             // bPlugins dashboard - only on its own screen.

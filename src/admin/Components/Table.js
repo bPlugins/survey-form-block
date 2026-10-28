@@ -71,7 +71,8 @@ const PATHS = {
 	info: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z',
 	tick: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
 	alert: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z',
-	inbox: 'M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12h-4a3 3 0 0 1-6 0H5V5h14v10z'
+	inbox: 'M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12h-4a3 3 0 0 1-6 0H5V5h14v10z',
+	download: 'M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z'
 };
 
 const SortIcon = ({ dir }) => (
@@ -429,6 +430,17 @@ const Table = () => {
 						sorted.length
 					)}
 				</p>
+
+				{/* Every response of this survey, not only the ones loaded here. */}
+				{window.svbData?.exportUrl && currentForm && (
+					<a
+						className="svbRefresh svbExport"
+						href={`${window.svbData.exportUrl}?${new URLSearchParams({ action: 'svb_export_csv', form_id: currentForm, _wpnonce: window.svbData.exportNonce || '' })}`}
+					>
+						<Icon d={PATHS.download} />
+						{__('Export CSV', 'survey-form-block')}
+					</a>
+				)}
 
 				<button
 					type="button"

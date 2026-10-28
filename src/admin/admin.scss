@@ -290,7 +290,14 @@ $font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 			flex: none;
 		}
 
-		&:hover:not(:disabled) {
+		// The export is a link styled as this button.
+		&.svbExport {
+			text-decoration: none;
+			box-sizing: border-box;
+		}
+
+		&:hover:not(:disabled),
+		&.svbExport:focus-visible {
 			border-color: $accent;
 			background: $accentSoft;
 			color: $accent;

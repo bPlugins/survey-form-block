@@ -29,7 +29,7 @@ const OUT = join(ROOT, `${SLUG}.zip`);
  * top-level dot-directory goes too - .git, .github, .vscode, .claude and
  * whatever tooling adds next - rather than naming them one at a time.
  */
-const SKIP_DIRS = new Set(['node_modules', 'src', 'assets', 'scratchpad']);
+const SKIP_DIRS = new Set(['node_modules', 'src', 'assets', 'scratchpad', 'tests']);
 const isHidden = (segment) => segment.startsWith('.');
 
 /** Exact root-level files never shipped. */

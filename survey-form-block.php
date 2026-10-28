@@ -208,6 +208,7 @@ if ( function_exists( 'bpsvb_fs' ) ) {
         require_once BPSVB_PATH . 'includes/Options.php';
         require_once BPSVB_PATH . 'includes/AdminMenu.php';
         require_once BPSVB_PATH . 'includes/SVBAjax.php';
+        require_once BPSVB_PATH . 'includes/Export.php';
     }
 
     /**
