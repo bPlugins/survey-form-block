@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 
 import ConfirmDialog from './ConfirmDialog';
+import Summary from './Summary';
 
 /**
  * Submissions list.
@@ -72,7 +73,9 @@ const PATHS = {
 	tick: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
 	alert: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z',
 	inbox: 'M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12h-4a3 3 0 0 1-6 0H5V5h14v10z',
-	download: 'M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z'
+	download: 'M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z',
+	list: 'M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z',
+	chart: 'M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z'
 };
 
 const SortIcon = ({ dir }) => (
@@ -118,6 +121,9 @@ const Table = () => {
 	const [editingId, setEditingId] = useState(null);
 	const [draft, setDraft] = useState({});
 	const [pendingDelete, setPendingDelete] = useState(null);
+	const [view, setView] = useState('responses');
+	// Bumped by Refresh while the summary is showing; Summary refetches on change.
+	const [summaryToken, setSummaryToken] = useState(0);
 
 	// A refresh can still be in flight when the screen goes away. A ref rather
 	// than a per-effect flag lets every caller of loadResponses share one check.
@@ -204,7 +210,7 @@ const Table = () => {
 		setPage(1);
 		setSelected([]);
 		setEditingId(null);
-	}, [currentForm, query, perPage]);
+	}, [currentForm, query, perPage, view]);
 
 	const forms = response?.columns || [];
 	const columns = useMemo(
@@ -385,7 +391,8 @@ const Table = () => {
 		</div>;
 	}
 
-	const truncated = response.total > (response.data || []).length;
+	const isSummary = 'summary' === view;
+	const truncated = !isSummary && response.total > (response.data || []).length;
 	const columnKeys = Object.keys(columns);
 
 	return <div className={`svbAdmin ${busy ? 'isBusy' : ''}`}>
@@ -403,33 +410,49 @@ const Table = () => {
 				</div>
 
 				<div className="svbField">
-					<label htmlFor="svbSearch">{__('Search', 'survey-form-block')}</label>
-					<span className="svbSearch">
-						<Icon d={PATHS.search} size={14} />
-						<input
-							id="svbSearch"
-							type="search"
-							value={query}
-							placeholder={__('Filter responses…', 'survey-form-block')}
-							onChange={e => setQuery(e.target.value)}
-						/>
-					</span>
+					<span className="svbLabel" id="svbViewLabel">{__('View', 'survey-form-block')}</span>
+					<div className="svbViewSwitch" role="group" aria-labelledby="svbViewLabel">
+						<button type="button" aria-pressed={!isSummary} onClick={() => setView('responses')}>
+							<Icon d={PATHS.list} size={14} />
+							{__('Responses', 'survey-form-block')}
+						</button>
+						<button type="button" aria-pressed={isSummary} onClick={() => setView('summary')}>
+							<Icon d={PATHS.chart} size={14} />
+							{__('Summary', 'survey-form-block')}
+						</button>
+					</div>
 				</div>
 
-				<div className="svbField">
-					<label htmlFor="svbPerPage">{__('Per page', 'survey-form-block')}</label>
-					<select id="svbPerPage" value={perPage} onChange={e => setPerPage(Number(e.target.value))}>
-						{PER_PAGE_CHOICES.map(n => <option key={n} value={n}>{n}</option>)}
-					</select>
-				</div>
+				{!isSummary && <>
+					<div className="svbField">
+						<label htmlFor="svbSearch">{__('Search', 'survey-form-block')}</label>
+						<span className="svbSearch">
+							<Icon d={PATHS.search} size={14} />
+							<input
+								id="svbSearch"
+								type="search"
+								value={query}
+								placeholder={__('Filter responses…', 'survey-form-block')}
+								onChange={e => setQuery(e.target.value)}
+							/>
+						</span>
+					</div>
 
-				<p className="svbCount">
-					{sprintf(
-						/* translators: %d: number of responses. */
-						__('%d responses', 'survey-form-block'),
-						sorted.length
-					)}
-				</p>
+					<div className="svbField">
+						<label htmlFor="svbPerPage">{__('Per page', 'survey-form-block')}</label>
+						<select id="svbPerPage" value={perPage} onChange={e => setPerPage(Number(e.target.value))}>
+							{PER_PAGE_CHOICES.map(n => <option key={n} value={n}>{n}</option>)}
+						</select>
+					</div>
+
+					<p className="svbCount">
+						{sprintf(
+							/* translators: %d: number of responses. */
+							__('%d responses', 'survey-form-block'),
+							sorted.length
+						)}
+					</p>
+				</>}
 
 				{/* Every response of this survey, not only the ones loaded here. */}
 				{window.svbData?.exportUrl && currentForm && (
@@ -445,7 +468,7 @@ const Table = () => {
 				<button
 					type="button"
 					className={`svbRefresh ${refreshing ? 'isBusy' : ''}`}
-					onClick={() => loadResponses(true)}
+					onClick={() => (isSummary ? setSummaryToken(t => t + 1) : loadResponses(true))}
 					disabled={busy || refreshing}
 				>
 					<Icon d={PATHS.refresh} />
@@ -494,7 +517,9 @@ const Table = () => {
 				</div>
 			)}
 
-			{!columnKeys.length ? (
+			{isSummary ? (
+				<Summary formId={currentForm} token={summaryToken} onShowResponses={() => setView('responses')} />
+			) : !columnKeys.length ? (
 				<div className="svbEmpty">
 					<span className="svbEmptyIcon"><Icon d={PATHS.inbox} size={24} /></span>
 					<h2>{__('No fields recorded', 'survey-form-block')}</h2>

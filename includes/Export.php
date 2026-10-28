@@ -62,7 +62,6 @@ if (!class_exists('BPSVB_Export')) {
         {
             global $wpdb;
 
-            $data_table = $wpdb->prefix . 'svb_data';
             $columns_table = $wpdb->prefix . 'svb_columns';
 
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- custom table, prepared.
@@ -72,13 +71,13 @@ if (!class_exists('BPSVB_Export')) {
             // First pass: answers can hold keys the column map no longer lists
             // (a question deleted after people answered it). Keep those too.
             $extra = [];
-            self::eachRow($data_table, $form_id, function ($row) use (&$extra, $labels) {
+            BPSVB_Survey_Data_Model::forEachResponse($form_id, function ($row) use (&$extra, $labels) {
                 foreach (array_keys(BPSVB_Survey_Data_Model::decodePayload($row['data'])) as $key) {
                     if (!array_key_exists($key, $labels) && !in_array($key, self::BOOKKEEPING, true)) {
                         $extra[$key] = $key;
                     }
                 }
-            });
+            }, self::BATCH);
 
             $columns = self::columns($labels, array_values($extra));
             $name = $map_row && $map_row['form_name'] ? $map_row['form_name'] : $form_id;
@@ -96,7 +95,7 @@ if (!class_exists('BPSVB_Export')) {
             fwrite($out, "\xEF\xBB\xBF"); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fwrite
             self::put($out, array_merge([__('Response ID', 'survey-form-block'), __('Submitted', 'survey-form-block')], array_values($columns)));
 
-            self::eachRow($data_table, $form_id, function ($row) use ($out, $columns) {
+            BPSVB_Survey_Data_Model::forEachResponse($form_id, function ($row) use ($out, $columns) {
                 $answers = BPSVB_Survey_Data_Model::decodePayload($row['data']);
                 $line = [$row['id'], $row['created_at']];
 
@@ -105,34 +104,9 @@ if (!class_exists('BPSVB_Export')) {
                 }
 
                 self::put($out, $line);
-            });
+            }, self::BATCH);
 
             fclose($out); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
-        }
-
-        /**
-         * Calls $callback for every response of a survey, oldest first, in batches.
-         *
-         * @param string   $table    Responses table.
-         * @param string   $form_id  Survey id.
-         * @param callable $callback Receives one row (id, data, created_at).
-         * @return void
-         */
-        private static function eachRow($table, $form_id, $callback)
-        {
-            global $wpdb;
-
-            $after = 0;
-
-            do {
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- custom table, prepared.
-                $rows = $wpdb->get_results($wpdb->prepare('SELECT id, data, created_at FROM %i WHERE form_id = %s AND id > %d ORDER BY id ASC LIMIT %d', $table, $form_id, $after, self::BATCH), ARRAY_A);
-
-                foreach ((array) $rows as $row) {
-                    $callback($row);
-                    $after = (int) $row['id'];
-                }
-            } while (is_array($rows) && count($rows) === self::BATCH);
         }
 
         /**

@@ -20,6 +20,7 @@ function wp_json_encode($data) { return json_encode($data); }
 function wp_strip_all_tags($text) { return trim(strip_tags($text)); }
 function sanitize_title($title) { return trim(preg_replace('/[^a-z0-9]+/', '-', strtolower(strip_tags($title))), '-'); }
 function sanitize_text_field($text) { return trim(strip_tags((string) $text)); }
+function sanitize_key($key) { return preg_replace('/[^a-z0-9_\-]/', '', strtolower((string) $key)); }
 function sanitize_email($email) { return filter_var(trim((string) $email), FILTER_SANITIZE_EMAIL); }
 function is_email($email) { return (bool) filter_var($email, FILTER_VALIDATE_EMAIL); }
 

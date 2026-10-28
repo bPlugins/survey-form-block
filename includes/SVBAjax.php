@@ -244,6 +244,10 @@ if(!class_exists('BPSVB_Ajax')) {
                 wp_send_json_error('form_id not found');
             }
 
+            if (!self::canEditSurvey($form_id)) {
+                wp_send_json_error('insufficient permissions');
+            }
+
             $columns = isset($_POST['columns']) ? self::sanitize_submission(wp_unslash($_POST['columns'])) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_submission() cleans every value.
 
             $model = new BPSVB_Survey_Column_Model();
@@ -255,6 +259,31 @@ if(!class_exists('BPSVB_Ajax')) {
             ]);
 
             wp_send_json_success($insert_id);
+        }
+
+        /**
+         * Whether the current user may change a survey's column labels.
+         *
+         * edit_posts alone let a Contributor rewrite anyone's survey. Once the
+         * post that owns a survey is known (see BPSVB_Schema_Index), only
+         * someone who can edit that post may; before that, or when the post is
+         * gone, edit_posts still decides.
+         *
+         * @param string $form_id
+         * @return bool
+         */
+        public static function canEditSurvey($form_id)
+        {
+            if (!current_user_can(self::EDIT_CAP)) {
+                return false;
+            }
+
+            global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- custom table, prepared.
+            $owner = (int) $wpdb->get_var($wpdb->prepare('SELECT post_id FROM %i WHERE form_id = %s LIMIT 1', $wpdb->prefix . 'svb_columns', $form_id));
+
+            return !($owner && get_post($owner) && !current_user_can('edit_post', $owner));
         }
 
         /**

@@ -202,6 +202,10 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     require_once BPSVB_PATH . 'includes/Shortcode.php';
     require_once BPSVB_PATH . 'includes/Patterns.php';
 
+    // Every request: the block editor saves through the REST API, which is
+    // neither an admin nor an AJAX request.
+    require_once BPSVB_PATH . 'includes/SchemaIndex.php';
+
     // Everything below is admin- or AJAX-only. admin-ajax.php sets WP_ADMIN, so
     // is_admin() covers the public form endpoint too.
     if ( is_admin() || wp_doing_ajax() ) {
@@ -210,6 +214,7 @@ if ( function_exists( 'bpsvb_fs' ) ) {
         require_once BPSVB_PATH . 'includes/SVBAjax.php';
         require_once BPSVB_PATH . 'includes/Export.php';
         require_once BPSVB_PATH . 'includes/Notifications.php';
+        require_once BPSVB_PATH . 'includes/Reports.php';
     }
 
     /**

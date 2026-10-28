@@ -211,6 +211,9 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * New: Response emails. By default you get one email when a survey receives its first response. On the Survey List screen you can switch to an email for every response (at most 30 an hour), turn emails off, and choose who receives them;
 * New: Developers can use the svb_after_submission action, which fires after each stored response with its id, survey id, answers and survey name;
 * New: Export a survey's responses to CSV from Survey Forms &rarr; Survey List, free. The file holds every response of that survey, not only the ones loaded on screen, opens correctly in Excel, keeps answers to questions you have since deleted, and defuses spreadsheet formulas typed into answers;
+* New: A Summary view on the Survey List screen, free. It shows the survey's Net Promoter Score with its promoter, passive and detractor split, the average star rating and CSAT (the share of the top two ratings), averages for scales and sliders, a count per option for choices and switches, and the newest written answers. It is worked out from every stored response;
+* New: The plugin now records each survey's questions and the post that holds it whenever that post is saved, so reports know each question's type. Surveys saved before this update are read from their post the first time their summary is opened;
+* Security: Changing a survey's column labels now requires permission to edit the post that holds the survey. Until now any user who could write posts, such as a Contributor, could rename the columns of any survey on the site;
 
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;

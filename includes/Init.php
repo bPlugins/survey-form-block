@@ -19,7 +19,7 @@ if(!class_exists('BPSVB_Init')) {
          * at. The per-table versions still decide what actually runs, so this
          * can be bumped freely without forcing a rebuild.
          */
-        const DB_VERSION = '2';
+        const DB_VERSION = '3';
 
         const VERSION_OPTION = 'bpsvb_db_version';
 

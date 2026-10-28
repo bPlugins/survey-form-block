@@ -198,6 +198,33 @@ if(!class_exists('BPSVB_Survey_Data_Model')) {
         }
 
         /**
+         * Calls $callback for every response of a survey, oldest first, reading
+         * in batches so a long-running survey never loads into memory at once.
+         *
+         * @param string   $form_id  Survey id.
+         * @param callable $callback Receives one row (id, data, created_at).
+         * @param int      $batch    Rows per query.
+         * @return void
+         */
+        public static function forEachResponse($form_id, $callback, $batch = 500)
+        {
+            global $wpdb;
+
+            $table = $wpdb->prefix . 'svb_data';
+            $after = 0;
+
+            do {
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- custom table, prepared.
+                $rows = $wpdb->get_results($wpdb->prepare('SELECT id, data, created_at FROM %i WHERE form_id = %s AND id > %d ORDER BY id ASC LIMIT %d', $table, $form_id, $after, $batch), ARRAY_A);
+
+                foreach ((array) $rows as $row) {
+                    $callback($row);
+                    $after = (int) $row['id'];
+                }
+            } while (is_array($rows) && count($rows) === $batch);
+        }
+
+        /**
          * Decodes a stored JSON payload.
          *
          * Two write formats exist in the wild. Rows written before this release went
