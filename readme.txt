@@ -228,7 +228,7 @@ Google Fonts: [privacy FAQ](https://developers.google.com/fonts/faq/privacy), [G
 
 == Source code ==
 
-The plugin ships compiled JavaScript and CSS in `build/`. The human-readable source and its build setup are at [github.com/bPlugins/survey-form-block](https://github.com/bPlugins/survey-form-block). Shared components come from [github.com/bPlugins/bpl-tools](https://github.com/bPlugins/bpl-tools), which the build expects next to the plugin folder (`wp-content/plugins/bpl-tools`). To build, run `npm install` and then `npm run build`.
+The plugin ships compiled JavaScript and CSS in `build/`. The human-readable source and its build setup are at [github.com/bPlugins/survey-form-block](https://github.com/bPlugins/survey-form-block/tree/suzy), on the `suzy` branch. Shared components come from [github.com/bPlugins/bpl-tools](https://github.com/bPlugins/bpl-tools), which the build expects next to the plugin folder (`wp-content/plugins/bpl-tools`). To build, run `npm install` and then `npm run build`.
 
 
 == Screenshots ==
