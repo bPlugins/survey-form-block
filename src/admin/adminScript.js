@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client';
 
 import './admin.scss';
 import Table from './Components/Table';
+import Notifications from './Components/Notifications';
 
 document.addEventListener('DOMContentLoaded', () => {
 	const ele = document.querySelector('#svbAdminContainer');
@@ -10,5 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		return;
 	}
 
-	createRoot(ele).render(<Table />);
+	createRoot(ele).render(<>
+		<Notifications />
+		<Table />
+	</>);
 });

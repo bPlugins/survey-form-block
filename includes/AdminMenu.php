@@ -41,6 +41,13 @@ if(!class_exists('BPSVB_ADMIN_MENU')) {
                 // CSV download; see includes/Export.php.
                 'exportUrl' => admin_url('admin-post.php'),
                 'exportNonce' => wp_create_nonce('svb_export_csv'),
+                // Response emails; see includes/Notifications.php.
+                'notify' => [
+                    'mode' => BPSVB_Options::getOptions()['notify_mode'],
+                    'email' => BPSVB_Options::getOptions()['notify_email'],
+                    'adminEmail' => get_option('admin_email'),
+                    'nonce' => wp_create_nonce(BPSVB_Options::NOTIFY_ACTION),
+                ],
             ]);
 
             // bPlugins dashboard - only on its own screen.

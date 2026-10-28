@@ -208,6 +208,8 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * Fixed: The survey block no longer crashes on the Widgets screen;
 * Changed: The free plugin no longer contains the Pro design presets. Pro themes, layouts, input and button styles, motion, progress styles, success presentations, the question card designer, the backdrop and question icons now ship only in Survey Form Block Pro. Nothing changes on screen: on a site without Pro, saved Pro choices still fall back to their closest free equivalent;
 * Changed: The demos notice now appears only on the plugin's own screens and only to administrators, and stays dismissed once closed. It no longer appears on the main Dashboard;
+* New: Response emails. By default you get one email when a survey receives its first response. On the Survey List screen you can switch to an email for every response (at most 30 an hour), turn emails off, and choose who receives them;
+* New: Developers can use the svb_after_submission action, which fires after each stored response with its id, survey id, answers and survey name;
 * New: Export a survey's responses to CSV from Survey Forms &rarr; Survey List, free. The file holds every response of that survey, not only the ones loaded on screen, opens correctly in Excel, keeps answers to questions you have since deleted, and defuses spreadsheet formulas typed into answers;
 
 = 1.1.1 - 29 September, 2026 =

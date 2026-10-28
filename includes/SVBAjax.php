@@ -168,6 +168,21 @@ if(!class_exists('BPSVB_Ajax')) {
                 wp_send_json_error('something went wrong!');
             }
 
+            $answers = json_decode($data['data'], true);
+
+            /**
+             * Fires after a survey response is stored.
+             *
+             * Response emails hang off this (includes/Notifications.php), and
+             * integrations can too.
+             *
+             * @param int    $insert_id Stored row id.
+             * @param string $form_id   Survey id.
+             * @param array  $answers   Sanitised answers keyed by field id.
+             * @param string $form_name Survey title.
+             */
+            do_action('svb_after_submission', $insert_id, $form_id, is_array($answers) ? $answers : [], $data['form_name']);
+
             wp_send_json_success($insert_id);
         }
 
