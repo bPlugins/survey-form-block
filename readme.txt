@@ -192,6 +192,10 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 
 == Changelog ==
 
+= 1.2.0 =
+* Security (Pro): The bundled Freemius SDK is updated to 2.13.5, which fixes a stored cross-site scripting issue in admin notices;
+* Security (Pro): Checking the licence status now requires the manage_options capability, like activating and deactivating already did;
+
 = 1.1.1 - 29 September, 2026 =
 * Fixed: The opt-in screen was blank on free installs. That screen is drawn by a script shipped with the licensing SDK, and the script was missing from the plugin because the build folder was being excluded at every depth rather than only at the plugin root;
 * New: A survey's shortcode can now be copied from the editor. Open a survey under Survey Forms &rarr; Surveys and it sits above the form, one click to copy, so you no longer have to go back to the list to fetch it;
@@ -250,7 +254,7 @@ You can post your questions on the [support forum here](https://wordpress.org/su
 * Improved: Unanswered required fields are highlighted individually after a failed submit;
 
 = 1.0.2 - 8 April, 2026 =
-* Wordfence problem has been solved;
+* Security: Logged-in users without admin rights could download all survey responses (CVE-2026-5626). Reading responses now requires the manage_options capability. Update if you run 1.0.1 or earlier;
 
 = 1.0.1 - 25 April, 2025 =
 * Compatible with WordPress 6.8;

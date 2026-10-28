@@ -271,9 +271,10 @@ if (!class_exists(LicenseActivation::class)) {
                 ]);
             }
 
-            // Permissions check
-            if ('status' !== $action && !current_user_can('manage_options')) {
-                $action_text = ('activate' === $action) ? 'activate' : 'deactivate';
+            // Permissions check. Status included: it returns the licence key,
+            // which only someone who can manage the licence should ever see.
+            if (!current_user_can('manage_options')) {
+                $action_text = ('status' === $action) ? 'view' : (('activate' === $action) ? 'activate' : 'deactivate');
                 wp_send_json_error([
                     'message' => "You do not have permission to {$action_text} licenses."
                 ]);
