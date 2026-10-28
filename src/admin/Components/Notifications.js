@@ -29,16 +29,23 @@ const Notifications = () => {
 
 	const recipient = saved.email || initial.adminEmail;
 
-	const summary = 'off' === saved.mode
-		? __('Response emails are off.', 'survey-form-block')
-		: sprintf(
-			'first' === saved.mode
-				/* translators: %s: email address(es). */
-				? __('An email goes to %s when a survey receives its first response.', 'survey-form-block')
-				/* translators: %s: email address(es). */
-				: __('Every new response is emailed to %s.', 'survey-form-block'),
+	// One sprintf() per string: the POT extractor only reads a translators
+	// comment placed directly before the __() call.
+	let summary = __('Response emails are off.', 'survey-form-block');
+
+	if ('first' === saved.mode) {
+		summary = sprintf(
+			/* translators: %s: email address(es). */
+			__('An email goes to %s when a survey receives its first response.', 'survey-form-block'),
 			recipient
 		);
+	} else if ('each' === saved.mode) {
+		summary = sprintf(
+			/* translators: %s: email address(es). */
+			__('Every new response is emailed to %s.', 'survey-form-block'),
+			recipient
+		);
+	}
 
 	const save = (e) => {
 		e.preventDefault();
