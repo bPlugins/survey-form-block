@@ -245,7 +245,7 @@ The plugin ships compiled JavaScript and CSS in `build/`. The human-readable sou
 
 == Changelog ==
 
-= 1.2.0 =
+= 1.2.0 - 28 October, 2026 =
 * Security (Pro): The bundled Freemius SDK is updated to 2.13.5, which fixes a stored cross-site scripting issue in admin notices;
 * Security (Pro): Checking the licence status now requires the manage_options capability, like activating and deactivating already did;
 * Fixed: A required NPS question rejected a score of 0, so the most critical answers could not be sent. An emptied checkbox group no longer counts as answered;
