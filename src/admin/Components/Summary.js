@@ -25,7 +25,7 @@ const Bars = ({ items, of }) => <ul className="svbBars">
 		const share = percent(item.count, of);
 
 		return <li key={i}>
-			<span className="svbBarLabel">{item.label}</span>
+			<span className="svbBarLabel" title={item.label}>{item.label}</span>
 			<span className="svbBarTrack" aria-hidden="true">
 				<span className="svbBarFill" style={{ width: `${share}%` }} />
 			</span>
