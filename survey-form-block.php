@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Survey Form Block
  * Description: Create custom survey forms easily with the Survey Form Block plugin.
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: bPlugins
  * Author URI: http://bplugins.com
  * Plugin URI: https://wordpress.org/plugins/survey-form-block/
  * Requires at least: 6.5
  * Requires PHP: 7.4
  * Tested up to: 7.1
- * Stable tag: 1.1.1
+ * Stable tag: 1.2.0
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: survey-form-block
@@ -29,7 +29,7 @@ if ( function_exists( 'bpsvb_fs' ) ) {
     }
 } else {
     // Constant
-    define( 'BPSVB_PLUGIN_VERSION', isset( $_SERVER['HTTP_HOST'] ) && 'localhost' === $_SERVER['HTTP_HOST'] ? time() : '1.1.1' );
+    define( 'BPSVB_PLUGIN_VERSION', isset( $_SERVER['HTTP_HOST'] ) && 'localhost' === $_SERVER['HTTP_HOST'] ? time() : '1.2.0' );
     define( 'BPSVB_PLUGIN_FILE', __FILE__ );
     define( 'BPSVB_DIR', plugin_dir_url( __FILE__ ) );
     define( 'BPSVB_PATH', plugin_dir_path( __FILE__ ) );

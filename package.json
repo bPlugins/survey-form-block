@@ -1,6 +1,6 @@
 {
   "name": "survey-form-block",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Description of survey block.",
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",

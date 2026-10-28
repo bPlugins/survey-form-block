@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Survey Form Block 1.1.1\n"
+"Project-Id-Version: Survey Form Block 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/survey-form-block\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T04:39:26+00:00\n"
+"POT-Creation-Date: 2026-10-28T09:13:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: survey-form-block\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: survey-form-block.php
-msgid "https://bplugins.com/products/survey-form-block"
+msgid "https://wordpress.org/plugins/survey-form-block/"
 msgstr ""
 
 #. Description of the plugin
@@ -39,45 +39,138 @@ msgstr ""
 msgid "http://bplugins.com"
 msgstr ""
 
-#: includes/AdminMenu.php:67
-#: includes/AdminMenu.php:68
+#: includes/AdminMenu.php:83
+#: includes/AdminMenu.php:84
 msgid "Survey List"
 msgstr ""
 
-#: includes/AdminMenu.php:76
+#: includes/AdminMenu.php:92
 msgid "Demo and Help"
 msgstr ""
 
-#: includes/AdminMenu.php:77
+#: includes/AdminMenu.php:93
 msgid "Demo & Help"
 msgstr ""
 
-#: includes/AdminMenu.php:106
+#: includes/AdminMenu.php:122
 msgid "New"
 msgstr ""
 
-#: includes/AdminMenu.php:168
+#: includes/AdminMenu.php:184
+#: src/admin/Components/Table.js:417
 msgid "Responses"
 msgstr ""
 
-#: includes/AdminMenu.php:169
+#: includes/AdminMenu.php:185
 msgid "Survey Responses"
 msgstr ""
 
-#: includes/AdminMenu.php:170
+#: includes/AdminMenu.php:186
 msgid "Everything submitted through your survey blocks, newest first."
 msgstr ""
 
-#: includes/Options.php:69
+#: includes/AdminMenu.php:236
+msgid "Six ready-made survey demos are live: see each one in action before you build your own."
+msgstr ""
+
+#: includes/AdminMenu.php:239
+msgid "View Live Demos"
+msgstr ""
+
+#: includes/AdminMenu.php:240
+msgid "View Stored Responses"
+msgstr ""
+
+#: includes/Export.php:39
+msgid "You do not have permission to export responses."
+msgstr ""
+
+#: includes/Export.php:47
+msgid "No survey was chosen to export."
+msgstr ""
+
+#: includes/Export.php:96
+msgid "Response ID"
+msgstr ""
+
+#: includes/Export.php:96
+#: src/admin/Components/Table.js:562
+msgid "Submitted"
+msgstr ""
+
+#: includes/Export.php:156
+#: includes/Notifications.php:171
+#: src/admin/Components/Table.js:26
+msgid "Yes"
+msgstr ""
+
+#: includes/Export.php:156
+#: includes/Notifications.php:171
+#: src/admin/Components/Table.js:26
+msgid "No"
+msgstr ""
+
+#. translators: 1: site name, 2: survey name.
+#: includes/Notifications.php:113
+#, php-format
+msgid "[%1$s] First response to \"%2$s\""
+msgstr ""
+
+#. translators: 1: site name, 2: survey name.
+#: includes/Notifications.php:115
+#, php-format
+msgid "[%1$s] New response: %2$s"
+msgstr ""
+
+#: includes/Notifications.php:120
+msgid "Your survey just received its first response."
+msgstr ""
+
+#. translators: %s: survey name.
+#: includes/Notifications.php:125
+#, php-format
+msgid "Survey: %s"
+msgstr ""
+
+#. translators: %s: date and time.
+#: includes/Notifications.php:127
+#, php-format
+msgid "Submitted: %s"
+msgstr ""
+
+#. translators: %s: link to the responses screen.
+#: includes/Notifications.php:145
+#, php-format
+msgid "All responses: %s"
+msgstr ""
+
+#: includes/Notifications.php:149
+msgid "That is the most response emails sent in one hour. Responses keep arriving in Survey List; emails resume next hour."
+msgstr ""
+
+#: includes/Notifications.php:153
+msgid "Change or turn off these emails on the Survey List screen."
+msgstr ""
+
+#: includes/Options.php:82
+#: includes/Options.php:132
 msgid "Permission denied."
 msgstr ""
 
-#: includes/Options.php:79
+#: includes/Options.php:92
 msgid "Surveys and their responses will be deleted when the plugin is uninstalled."
 msgstr ""
 
-#: includes/Options.php:80
+#: includes/Options.php:93
 msgid "Surveys and their responses will be kept when the plugin is uninstalled."
+msgstr ""
+
+#: includes/Options.php:139
+msgid "Choose when to send emails."
+msgstr ""
+
+#: includes/Options.php:143
+msgid "Enter valid email addresses, separated by commas."
 msgstr ""
 
 #: includes/Patterns.php:35
@@ -140,7 +233,7 @@ msgid "Surveys"
 msgstr ""
 
 #: includes/PostType.php:46
-#: src/admin/Components/Table.js:394
+#: src/admin/Components/Table.js:402
 msgid "Survey"
 msgstr ""
 
@@ -182,6 +275,26 @@ msgstr ""
 msgid "Copy To Clipboard"
 msgstr ""
 
+#: includes/Reports.php:51
+msgid "You do not have permission to view results."
+msgstr ""
+
+#: includes/Reports.php:57
+msgid "No survey was chosen."
+msgstr ""
+
+#. translators: %s: number of survey responses.
+#: includes/ReviewAsk.php:83
+#, php-format
+msgid "Survey Form Block has collected %s response on this site. If it has been useful, would you leave a review on WordPress.org? It helps other site owners decide whether it suits them."
+msgid_plural "Survey Form Block has collected %s responses on this site. If it has been useful, would you leave a review on WordPress.org? It helps other site owners decide whether it suits them."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/ReviewAsk.php:94
+msgid "Write a review"
+msgstr ""
+
 #: includes/SVBAjax.php:58
 msgid "Your session has expired. Please reload the page."
 msgstr ""
@@ -203,7 +316,7 @@ msgid "Nothing to save."
 msgstr ""
 
 #: includes/SVBAjax.php:114
-#: src/admin/Components/Table.js:330
+#: src/admin/Components/Table.js:337
 msgid "The response could not be saved."
 msgstr ""
 
@@ -220,7 +333,7 @@ msgid "Go Pro"
 msgstr ""
 
 #: src/admin/Components/ConfirmDialog.js:97
-#: src/admin/Components/Table.js:585
+#: src/admin/Components/Table.js:622
 msgid "Cancel"
 msgstr ""
 
@@ -228,192 +341,385 @@ msgstr ""
 msgid "Working…"
 msgstr ""
 
-#: src/admin/Components/Table.js:25
-msgid "Yes"
+#: src/admin/Components/Notifications.js:11
+msgid "When a survey gets its first response"
 msgstr ""
 
-#: src/admin/Components/Table.js:25
-msgid "No"
+#: src/admin/Components/Notifications.js:12
+msgid "For every response (at most 30 emails an hour)"
 msgstr ""
 
-#: src/admin/Components/Table.js:156
+#: src/admin/Components/Notifications.js:13
+msgid "Never"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:34
+msgid "Response emails are off."
+msgstr ""
+
+#. translators: %s: email address(es).
+#: src/admin/Components/Notifications.js:39
+#, js-format
+msgid "An email goes to %s when a survey receives its first response."
+msgstr ""
+
+#. translators: %s: email address(es).
+#: src/admin/Components/Notifications.js:45
+#, js-format
+msgid "Every new response is emailed to %s."
+msgstr ""
+
+#: src/admin/Components/Notifications.js:65
+msgid "The settings could not be saved."
+msgstr ""
+
+#: src/admin/Components/Notifications.js:72
+msgid "Email settings saved."
+msgstr ""
+
+#: src/admin/Components/Notifications.js:74
+#: src/admin/Components/Table.js:315
+#: src/admin/Components/Table.js:350
+msgid "Could not reach the server."
+msgstr ""
+
+#: src/admin/Components/Notifications.js:82
+msgid "Response emails"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:87
+msgid "Close"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:87
+msgid "Change"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:93
+msgid "Send an email"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:101
+msgid "Send to"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:111
+msgid "Leave empty to use the site admin email. Separate several addresses with commas."
+msgstr ""
+
+#: src/admin/Components/Notifications.js:115
+msgid "Saving…"
+msgstr ""
+
+#: src/admin/Components/Notifications.js:115
+#: src/admin/Components/Table.js:618
+msgid "Save"
+msgstr ""
+
+#. translators: 1: scale point, 2: number of answers.
+#: src/admin/Components/Summary.js:45
+#: src/admin/Components/Summary.js:56
+#, js-format
+msgid "%1$s: %2$d answer"
+msgid_plural "%1$s: %2$d answers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/Components/Summary.js:73
+msgid "Promoters (9–10)"
+msgstr ""
+
+#: src/admin/Components/Summary.js:74
+msgid "Passives (7–8)"
+msgstr ""
+
+#: src/admin/Components/Summary.js:75
+msgid "Detractors (0–6)"
+msgstr ""
+
+#: src/admin/Components/Summary.js:80
+msgid "Net Promoter Score"
+msgstr ""
+
+#: src/admin/Components/Summary.js:100
+msgid "Scores"
+msgstr ""
+
+#: src/admin/Components/Summary.js:108
+msgid "Average rating"
+msgstr ""
+
+#. translators: 1: second-highest rating, 2: highest rating.
+#: src/admin/Components/Summary.js:114
+#, js-format
+msgid "CSAT (%1$d–%2$d stars)"
+msgstr ""
+
+#. translators: %d: number of stars.
+#: src/admin/Components/Summary.js:126
+#, js-format
+msgid "%d star"
+msgid_plural "%d stars"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/Components/Summary.js:136
+#: src/admin/Components/Summary.js:143
+msgid "Average"
+msgstr ""
+
+#: src/admin/Components/Summary.js:139
+msgid "Answers per point"
+msgstr ""
+
+#: src/admin/Components/Summary.js:144
+msgid "Lowest"
+msgstr ""
+
+#: src/admin/Components/Summary.js:145
+msgid "Highest"
+msgstr ""
+
+#. translators: 1: answers shown, 2: answers in total.
+#: src/admin/Components/Summary.js:162
+#, js-format
+msgid "The %1$d newest of %2$d answers."
+msgstr ""
+
+#: src/admin/Components/Summary.js:168
+msgid "See them all"
+msgstr ""
+
+#: src/admin/Components/Summary.js:191
+msgid "People could pick more than one, so shares can add up to more than 100%."
+msgstr ""
+
+#. translators: 1: people who answered, 2: responses in total.
+#: src/admin/Components/Summary.js:206
+#, js-format
+msgid "%1$d of %2$d answered"
+msgstr ""
+
+#: src/admin/Components/Summary.js:254
+msgid "Could not load the summary. Please try again."
+msgstr ""
+
+#: src/admin/Components/Summary.js:259
+msgid "Adding up the responses…"
+msgstr ""
+
+#: src/admin/Components/Summary.js:264
+#: src/admin/Components/Table.js:531
+msgid "No responses yet"
+msgstr ""
+
+#: src/admin/Components/Summary.js:265
+msgid "The summary fills in as responses arrive."
+msgstr ""
+
+#: src/admin/Components/Summary.js:276
+msgid "Response"
+msgid_plural "Responses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/Components/Summary.js:278
+msgid "NPS"
+msgstr ""
+
+#: src/admin/Components/Summary.js:279
+msgid "CSAT"
+msgstr ""
+
+#: src/admin/Components/Summary.js:283
+msgid "Collected"
+msgstr ""
+
+#: src/admin/Components/Summary.js:289
+msgid "This survey is not on any page or post any more, so its question types are unknown. Only answer counts are shown."
+msgstr ""
+
+#: src/admin/Components/Summary.js:295
+msgid "No questions recorded"
+msgstr ""
+
+#: src/admin/Components/Summary.js:296
+msgid "Open the page containing this survey and update it once so its questions are registered."
+msgstr ""
+
+#: src/admin/Components/Table.js:163
 msgid "Could not refresh the responses. Please try again."
 msgstr ""
 
-#: src/admin/Components/Table.js:158
+#: src/admin/Components/Table.js:165
 msgid "Could not load submissions. Please reload the page."
 msgstr ""
 
-#: src/admin/Components/Table.js:178
+#: src/admin/Components/Table.js:185
 msgid "Responses refreshed."
 msgstr ""
 
-#: src/admin/Components/Table.js:187
+#: src/admin/Components/Table.js:194
 msgid "Could not reach the server. Please try again."
 msgstr ""
 
-#: src/admin/Components/Table.js:189
+#: src/admin/Components/Table.js:196
 msgid "Could not reach the server. Please reload the page."
 msgstr ""
 
-#: src/admin/Components/Table.js:294
+#: src/admin/Components/Table.js:301
 msgid "The responses could not be deleted."
 msgstr ""
 
 #. translators: %d: number of responses deleted.
-#: src/admin/Components/Table.js:303
+#: src/admin/Components/Table.js:310
 #, js-format
 msgid "%d response(s) deleted."
 msgstr ""
 
-#: src/admin/Components/Table.js:308
-#: src/admin/Components/Table.js:343
-msgid "Could not reach the server."
-msgstr ""
-
-#: src/admin/Components/Table.js:341
+#: src/admin/Components/Table.js:348
 msgid "Response updated."
 msgstr ""
 
-#: src/admin/Components/Table.js:369
+#: src/admin/Components/Table.js:376
 msgid "Loading submissions…"
 msgstr ""
 
-#: src/admin/Components/Table.js:380
+#: src/admin/Components/Table.js:387
 msgid "No surveys yet"
 msgstr ""
 
-#: src/admin/Components/Table.js:381
+#: src/admin/Components/Table.js:388
 msgid "Add a Survey Form Block to a page and publish it. Responses will appear here."
 msgstr ""
 
-#: src/admin/Components/Table.js:405
+#: src/admin/Components/Table.js:413
+msgid "View"
+msgstr ""
+
+#: src/admin/Components/Table.js:421
+msgid "Summary"
+msgstr ""
+
+#: src/admin/Components/Table.js:428
 msgid "Search"
 msgstr ""
 
-#: src/admin/Components/Table.js:412
+#: src/admin/Components/Table.js:435
 msgid "Filter responses…"
 msgstr ""
 
-#: src/admin/Components/Table.js:419
+#: src/admin/Components/Table.js:442
 msgid "Per page"
 msgstr ""
 
 #. translators: %d: number of responses.
-#: src/admin/Components/Table.js:428
+#: src/admin/Components/Table.js:451
 #, js-format
 msgid "%d responses"
 msgstr ""
 
-#: src/admin/Components/Table.js:440
+#: src/admin/Components/Table.js:464
+msgid "Export CSV"
+msgstr ""
+
+#: src/admin/Components/Table.js:475
 msgid "Refreshing…"
 msgstr ""
 
-#: src/admin/Components/Table.js:440
+#: src/admin/Components/Table.js:475
 msgid "Refresh"
 msgstr ""
 
 #. translators: %d: number selected.
-#: src/admin/Components/Table.js:449
+#: src/admin/Components/Table.js:484
 #, js-format
 msgid "%d selected"
 msgstr ""
 
-#: src/admin/Components/Table.js:456
+#: src/admin/Components/Table.js:491
 msgid "Delete selected"
 msgstr ""
 
-#: src/admin/Components/Table.js:461
+#: src/admin/Components/Table.js:496
 msgid "Clear"
 msgstr ""
 
 #. translators: 1: rows loaded, 2: total stored.
-#: src/admin/Components/Table.js:478
+#: src/admin/Components/Table.js:513
 #, js-format
 msgid "Showing the %1$d most recent of %2$d stored responses."
 msgstr ""
 
-#: src/admin/Components/Table.js:488
+#: src/admin/Components/Table.js:525
 msgid "No fields recorded"
 msgstr ""
 
-#: src/admin/Components/Table.js:489
+#: src/admin/Components/Table.js:526
 msgid "Open the page containing this survey and save it once so its fields are registered."
 msgstr ""
 
-#: src/admin/Components/Table.js:494
+#: src/admin/Components/Table.js:531
 msgid "No matches"
 msgstr ""
 
-#: src/admin/Components/Table.js:494
-msgid "No responses yet"
-msgstr ""
-
-#: src/admin/Components/Table.js:496
+#: src/admin/Components/Table.js:533
 msgid "Try a different search term."
 msgstr ""
 
-#: src/admin/Components/Table.js:497
+#: src/admin/Components/Table.js:534
 msgid "Responses to this survey will show up here as they come in."
 msgstr ""
 
-#: src/admin/Components/Table.js:510
+#: src/admin/Components/Table.js:547
 msgid "Select all responses on this page"
 msgstr ""
 
-#: src/admin/Components/Table.js:525
-msgid "Submitted"
-msgstr ""
-
-#: src/admin/Components/Table.js:530
+#: src/admin/Components/Table.js:567
 msgid "Actions"
 msgstr ""
 
-#: src/admin/Components/Table.js:547
+#: src/admin/Components/Table.js:584
 msgid "Select response"
 msgstr ""
 
-#: src/admin/Components/Table.js:581
-msgid "Save"
-msgstr ""
-
-#: src/admin/Components/Table.js:592
+#: src/admin/Components/Table.js:629
 msgid "Edit"
 msgstr ""
 
-#: src/admin/Components/Table.js:596
-#: src/admin/Components/Table.js:645
+#: src/admin/Components/Table.js:633
+#: src/admin/Components/Table.js:682
 msgid "Delete"
 msgstr ""
 
-#: src/admin/Components/Table.js:611
+#: src/admin/Components/Table.js:648
 msgid "Previous"
 msgstr ""
 
 #. translators: 1: current page, 2: total pages.
-#: src/admin/Components/Table.js:617
+#: src/admin/Components/Table.js:654
 #, js-format
 msgid "Page %1$d of %2$d"
 msgstr ""
 
-#: src/admin/Components/Table.js:624
+#: src/admin/Components/Table.js:661
 msgid "Next"
 msgstr ""
 
-#: src/admin/Components/Table.js:636
+#: src/admin/Components/Table.js:673
 msgid "Delete response"
 msgstr ""
 
-#: src/admin/Components/Table.js:637
+#: src/admin/Components/Table.js:674
 msgid "Delete responses"
 msgstr ""
 
-#: src/admin/Components/Table.js:639
+#: src/admin/Components/Table.js:676
 msgid "This response will be permanently removed. This cannot be undone."
 msgstr ""
 
 #. translators: %d: number of responses.
-#: src/admin/Components/Table.js:642
+#: src/admin/Components/Table.js:679
 #, js-format
 msgid "%d responses will be permanently removed. This cannot be undone."
 msgstr ""
@@ -438,9 +744,34 @@ msgstr ""
 msgid "The plugin's own database tables and settings"
 msgstr ""
 
+#: src/Components/FrontEnd/Fields/NPS.js:36
+msgid "0-6 Detractors"
+msgstr ""
+
+#: src/Components/FrontEnd/Fields/NPS.js:37
+msgid "7-8 Passives"
+msgstr ""
+
+#: src/Components/FrontEnd/Fields/NPS.js:38
+msgid "9-10 Promoters"
+msgstr ""
+
+#: src/Components/FrontEnd/Fields/OpinionScale.js:26
+msgid "Not at all likely"
+msgstr ""
+
+#: src/Components/FrontEnd/Fields/OpinionScale.js:27
+msgid "Extremely likely"
+msgstr ""
+
+#: src/Components/FrontEnd/Fields/RangeSlider.js:40
+#: src/Components/FrontEnd/Fields/RangeSlider.js:46
+msgid "Not answered"
+msgstr ""
+
 #: src/Components/FrontEnd/MainEle/LabelArea.js:30
 #: src/Components/Settings/Design/DetailsPanel.js:31
-#: src/Components/Settings/Fields/Date.js:61
+#: src/Components/Settings/Fields/Date.js:74
 #: src/Components/Settings/Fields/MultipleInput.js:81
 #: src/Components/Settings/Fields/Text.js:57
 msgid "Required"
@@ -464,23 +795,23 @@ msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:40
 #: src/Components/Settings/Design/QuestionCardPanel.js:44
-#: src/utils/design.js:708
-#: src/utils/design.js:716
+#: src/utils/design.js:391
+#: src/utils/design.js:399
 msgid "Solid"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:41
 #: src/Components/Settings/Design/QuestionCardPanel.js:45
-#: src/utils/design.js:633
-#: src/utils/design.js:675
-#: src/utils/design.js:711
-#: src/utils/design.js:717
+#: src/utils/design.js:316
+#: src/utils/design.js:358
+#: src/utils/design.js:394
+#: src/utils/design.js:400
 msgid "Gradient"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:42
 #: src/Components/Settings/Design/BackgroundPanel.js:66
-#: src/utils/design.js:718
+#: src/utils/design.js:401
 msgid "Image"
 msgstr ""
 
@@ -502,7 +833,7 @@ msgid "Contain"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:79
-#: src/utils/design.js:648
+#: src/utils/design.js:331
 msgid "Auto"
 msgstr ""
 
@@ -512,31 +843,31 @@ msgid "Position"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:88
-#: src/utils/design.js:653
+#: src/utils/design.js:336
 #: src/utils/options.js:7
 msgid "Center"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:89
-#: src/utils/design.js:682
+#: src/utils/design.js:365
 #: src/utils/options.js:12
 msgid "Top"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:90
-#: src/utils/design.js:683
+#: src/utils/design.js:366
 msgid "Bottom"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:91
-#: src/utils/design.js:652
+#: src/utils/design.js:335
 #: src/utils/options.js:6
 #: src/utils/options.js:13
 msgid "Left"
 msgstr ""
 
 #: src/Components/Settings/Design/BackgroundPanel.js:92
-#: src/utils/design.js:654
+#: src/utils/design.js:337
 #: src/utils/options.js:8
 msgid "Right"
 msgstr ""
@@ -949,58 +1280,62 @@ msgstr ""
 msgid "One Fourth (25%)"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:13
+#: src/Components/Settings/Fields/Date.js:24
 #: src/Components/Settings/Fields/MultipleInput.js:16
 #: src/Components/Settings/Fields/Text.js:20
 #: src/Settings.js:329
 msgid "Label"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:15
+#: src/Components/Settings/Fields/Date.js:26
 #: src/Components/Settings/Fields/MultipleInput.js:18
 #: src/Components/Settings/Fields/Text.js:22
 msgid "Label here"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:20
+#: src/Components/Settings/Fields/Date.js:31
 #: src/Components/Settings/Fields/MultipleInput.js:23
 #: src/Components/Settings/Fields/Text.js:27
 msgid "Label Position"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:29
+#: src/Components/Settings/Fields/Date.js:40
 msgid "First Year"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:37
+#: src/Components/Settings/Fields/Date.js:48
 msgid "Last Year"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:45
+#: src/Components/Settings/Fields/Date.js:55
+msgid "Leave blank for no limit. Visitors pick the date from their browser's calendar."
+msgstr ""
+
+#: src/Components/Settings/Fields/Date.js:58
 #: src/Components/Settings/Fields/MultipleInput.js:30
 #: src/Components/Settings/Fields/Text.js:41
 msgid "Help Text"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:47
+#: src/Components/Settings/Fields/Date.js:60
 #: src/Components/Settings/Fields/MultipleInput.js:32
 #: src/Components/Settings/Fields/Text.js:43
 msgid "Shown in a tooltip beside the label"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:55
+#: src/Components/Settings/Fields/Date.js:68
 #: src/Components/Settings/Fields/MultipleInput.js:75
 #: src/Components/Settings/Fields/Text.js:51
 msgid "Disable"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:68
+#: src/Components/Settings/Fields/Date.js:81
 #: src/Components/Settings/Fields/MultipleInput.js:88
 #: src/Components/Settings/Fields/Text.js:64
 msgid "CSS Class"
 msgstr ""
 
-#: src/Components/Settings/Fields/Date.js:70
+#: src/Components/Settings/Fields/Date.js:83
 #: src/Components/Settings/Fields/MultipleInput.js:90
 #: src/Components/Settings/Fields/Text.js:66
 msgid "class name"
@@ -1058,30 +1393,113 @@ msgstr ""
 msgid "Paste it into any post, page, or widget."
 msgstr ""
 
-#: src/Edit.js:121
+#: src/Edit.js:147
+msgid "Untitled question"
+msgstr ""
+
+#: src/Edit.js:160
+#: src/Edit.js:161
+msgid "Option 1"
+msgstr ""
+
+#: src/Edit.js:198
 msgid "Enter your label"
 msgstr ""
 
-#: src/Form.js:41
+#: src/Form.js:42
 msgid "Sorry, your response could not be sent. Please try again."
 msgstr ""
 
-#: src/Form.js:151
+#: src/Form.js:149
 msgid "Title Here"
 msgstr ""
 
-#: src/Form.js:155
+#: src/Form.js:153
 msgid "Description Here"
 msgstr ""
 
-#: src/Form.js:191
+#: src/Form.js:192
 #: src/Settings.js:250
 msgid "Select Field Type"
 msgstr ""
 
-#: src/Form.js:235
+#: src/Form.js:236
 #: src/Settings.js:265
 msgid "Add New Field"
+msgstr ""
+
+#: src/Form.js:254
+msgid "Required Field Missing"
+msgstr ""
+
+#: src/pro/themes.js:17
+#: src/utils/design.js:232
+msgid "Glassmorphism"
+msgstr ""
+
+#: src/pro/themes.js:20
+#: src/utils/design.js:235
+msgid "Frosted translucent panel floating over a colour wash."
+msgstr ""
+
+#: src/pro/themes.js:70
+#: src/utils/design.js:239
+msgid "Bold Gradient"
+msgstr ""
+
+#: src/pro/themes.js:73
+#: src/utils/design.js:242
+msgid "Landing-page energy: saturated gradient with white type."
+msgstr ""
+
+#: src/pro/themes.js:128
+#: src/utils/design.js:246
+msgid "Midnight Dark"
+msgstr ""
+
+#: src/pro/themes.js:131
+#: src/utils/design.js:249
+msgid "Deep slate dark mode with a luminous sky accent."
+msgstr ""
+
+#: src/pro/themes.js:186
+#: src/utils/design.js:253
+msgid "Elegant"
+msgstr ""
+
+#: src/pro/themes.js:189
+#: src/utils/design.js:256
+msgid "Warm editorial cream with a refined gold rule."
+msgstr ""
+
+#: src/pro/themes.js:238
+#: src/utils/design.js:260
+msgid "Neumorphic"
+msgstr ""
+
+#: src/pro/themes.js:241
+#: src/utils/design.js:263
+msgid "Soft extruded surfaces, no hard borders."
+msgstr ""
+
+#: src/pro/themes.js:293
+#: src/utils/design.js:267
+msgid "Sunset Warm"
+msgstr ""
+
+#: src/pro/themes.js:296
+#: src/utils/design.js:270
+msgid "Friendly warm palette for feedback and NPS surveys."
+msgstr ""
+
+#: src/pro/themes.js:345
+#: src/utils/design.js:274
+msgid "Ocean Cool"
+msgstr ""
+
+#: src/pro/themes.js:348
+#: src/utils/design.js:277
+msgid "Fresh aquatic tones, generous rounding, calm contrast."
 msgstr ""
 
 #: src/Settings.js:119
@@ -1212,285 +1630,229 @@ msgstr ""
 msgid "The free design tools already go a long way - Pro adds the themes, layouts and motion that make a survey look bespoke."
 msgstr ""
 
-#: src/utils/design.js:35
-#: src/utils/design.js:612
-#: src/utils/design.js:621
-#: src/utils/design.js:630
+#: src/utils/design.js:36
+#: src/utils/design.js:295
+#: src/utils/design.js:304
+#: src/utils/design.js:313
 msgid "Classic"
 msgstr ""
 
-#: src/utils/design.js:38
+#: src/utils/design.js:39
 msgid "The original Survey Form Block look."
 msgstr ""
 
-#: src/utils/design.js:68
+#: src/utils/design.js:69
 msgid "Modern Minimal"
 msgstr ""
 
-#: src/utils/design.js:71
+#: src/utils/design.js:72
 msgid "Airy white surface, quiet borders, confident blue accent."
 msgstr ""
 
-#: src/utils/design.js:120
+#: src/utils/design.js:121
 msgid "Soft Card"
 msgstr ""
 
-#: src/utils/design.js:123
+#: src/utils/design.js:124
 msgid "Every question sits on its own softly elevated card."
 msgstr ""
 
-#: src/utils/design.js:172
+#: src/utils/design.js:173
 msgid "Clean Professional"
 msgstr ""
 
-#: src/utils/design.js:175
+#: src/utils/design.js:176
 #: src/variations.js:57
 msgid "Crisp business styling with a calm teal accent."
 msgstr ""
 
-#: src/utils/design.js:227
-msgid "Glassmorphism"
-msgstr ""
-
-#: src/utils/design.js:230
-msgid "Frosted translucent panel floating over a colour wash."
-msgstr ""
-
-#: src/utils/design.js:280
-msgid "Bold Gradient"
-msgstr ""
-
-#: src/utils/design.js:283
-msgid "Landing-page energy: saturated gradient with white type."
-msgstr ""
-
-#: src/utils/design.js:338
-msgid "Midnight Dark"
-msgstr ""
-
-#: src/utils/design.js:341
-msgid "Deep slate dark mode with a luminous sky accent."
-msgstr ""
-
-#: src/utils/design.js:396
-msgid "Elegant"
-msgstr ""
-
-#: src/utils/design.js:399
-msgid "Warm editorial cream with a refined gold rule."
-msgstr ""
-
-#: src/utils/design.js:448
-msgid "Neumorphic"
-msgstr ""
-
-#: src/utils/design.js:451
-msgid "Soft extruded surfaces, no hard borders."
-msgstr ""
-
-#: src/utils/design.js:503
-msgid "Sunset Warm"
-msgstr ""
-
-#: src/utils/design.js:506
-msgid "Friendly warm palette for feedback and NPS surveys."
-msgstr ""
-
-#: src/utils/design.js:555
-msgid "Ocean Cool"
-msgstr ""
-
-#: src/utils/design.js:558
-msgid "Fresh aquatic tones, generous rounding, calm contrast."
-msgstr ""
-
-#: src/utils/design.js:612
+#: src/utils/design.js:295
 msgid "Original stacked questions."
 msgstr ""
 
-#: src/utils/design.js:613
-#: src/utils/design.js:688
+#: src/utils/design.js:296
+#: src/utils/design.js:371
 msgid "Card"
 msgstr ""
 
-#: src/utils/design.js:613
+#: src/utils/design.js:296
 msgid "Each question in its own card."
 msgstr ""
 
-#: src/utils/design.js:614
-#: src/utils/design.js:635
+#: src/utils/design.js:297
+#: src/utils/design.js:318
 msgid "Minimal"
 msgstr ""
 
-#: src/utils/design.js:614
+#: src/utils/design.js:297
 msgid "Roomy spacing, hairline separators."
 msgstr ""
 
-#: src/utils/design.js:615
+#: src/utils/design.js:298
 msgid "Floating"
 msgstr ""
 
-#: src/utils/design.js:615
+#: src/utils/design.js:298
 msgid "Elevated cards that lift on focus."
 msgstr ""
 
-#: src/utils/design.js:616
+#: src/utils/design.js:299
 msgid "Split"
 msgstr ""
 
-#: src/utils/design.js:616
+#: src/utils/design.js:299
 msgid "Heading column beside the questions."
 msgstr ""
 
-#: src/utils/design.js:617
+#: src/utils/design.js:300
 msgid "Full Width"
 msgstr ""
 
-#: src/utils/design.js:617
+#: src/utils/design.js:300
 msgid "Landing-page scale and spacing."
 msgstr ""
 
-#: src/utils/design.js:622
+#: src/utils/design.js:305
 msgid "Outlined"
 msgstr ""
 
-#: src/utils/design.js:623
-#: src/utils/design.js:631
+#: src/utils/design.js:306
+#: src/utils/design.js:314
 msgid "Filled"
 msgstr ""
 
-#: src/utils/design.js:624
+#: src/utils/design.js:307
 msgid "Underline"
 msgstr ""
 
-#: src/utils/design.js:625
+#: src/utils/design.js:308
 msgid "Rounded"
 msgstr ""
 
-#: src/utils/design.js:626
+#: src/utils/design.js:309
 msgid "Floating Label"
 msgstr ""
 
-#: src/utils/design.js:632
+#: src/utils/design.js:315
 msgid "Outline"
 msgstr ""
 
-#: src/utils/design.js:634
+#: src/utils/design.js:317
 msgid "Soft"
 msgstr ""
 
-#: src/utils/design.js:639
-#: src/utils/design.js:658
-#: src/utils/design.js:667
-#: src/utils/design.js:694
-#: src/utils/design.js:712
+#: src/utils/design.js:322
+#: src/utils/design.js:341
+#: src/utils/design.js:350
+#: src/utils/design.js:377
+#: src/utils/design.js:395
 msgid "None"
 msgstr ""
 
-#: src/utils/design.js:640
-#: src/utils/design.js:668
+#: src/utils/design.js:323
+#: src/utils/design.js:351
 msgid "Lift"
 msgstr ""
 
-#: src/utils/design.js:641
-#: src/utils/design.js:697
+#: src/utils/design.js:324
+#: src/utils/design.js:380
 msgid "Scale"
 msgstr ""
 
-#: src/utils/design.js:642
+#: src/utils/design.js:325
 msgid "Glow"
 msgstr ""
 
-#: src/utils/design.js:643
+#: src/utils/design.js:326
 msgid "Slide Fill"
 msgstr ""
 
-#: src/utils/design.js:647
+#: src/utils/design.js:330
 msgid "Full"
 msgstr ""
 
-#: src/utils/design.js:659
+#: src/utils/design.js:342
 msgid "Fade In"
 msgstr ""
 
-#: src/utils/design.js:660
-#: src/utils/design.js:698
+#: src/utils/design.js:343
+#: src/utils/design.js:381
 msgid "Slide Up"
 msgstr ""
 
-#: src/utils/design.js:661
+#: src/utils/design.js:344
 msgid "Slide Left"
 msgstr ""
 
-#: src/utils/design.js:662
+#: src/utils/design.js:345
 msgid "Scale In"
 msgstr ""
 
-#: src/utils/design.js:663
+#: src/utils/design.js:346
 msgid "Reveal"
 msgstr ""
 
-#: src/utils/design.js:669
+#: src/utils/design.js:352
 msgid "Accent Glow"
 msgstr ""
 
-#: src/utils/design.js:670
+#: src/utils/design.js:353
 msgid "Accent Border"
 msgstr ""
 
-#: src/utils/design.js:674
+#: src/utils/design.js:357
 msgid "Linear"
 msgstr ""
 
-#: src/utils/design.js:676
+#: src/utils/design.js:359
 msgid "Segmented"
 msgstr ""
 
-#: src/utils/design.js:677
+#: src/utils/design.js:360
 msgid "Circular"
 msgstr ""
 
-#: src/utils/design.js:678
+#: src/utils/design.js:361
 msgid "Step Dots"
 msgstr ""
 
-#: src/utils/design.js:687
+#: src/utils/design.js:370
 msgid "Inline"
 msgstr ""
 
-#: src/utils/design.js:689
+#: src/utils/design.js:372
 msgid "Banner"
 msgstr ""
 
-#: src/utils/design.js:690
+#: src/utils/design.js:373
 msgid "Replace Form"
 msgstr ""
 
-#: src/utils/design.js:695
+#: src/utils/design.js:378
 msgid "Fade"
 msgstr ""
 
-#: src/utils/design.js:696
+#: src/utils/design.js:379
 msgid "Pop"
 msgstr ""
 
-#: src/utils/design.js:702
+#: src/utils/design.js:385
 msgid "Asterisk"
 msgstr ""
 
-#: src/utils/design.js:703
+#: src/utils/design.js:386
 msgid "“Required” badge"
 msgstr ""
 
-#: src/utils/design.js:704
+#: src/utils/design.js:387
 msgid "Hidden"
 msgstr ""
 
-#: src/utils/design.js:709
+#: src/utils/design.js:392
 msgid "Dashed"
 msgstr ""
 
-#: src/utils/design.js:710
+#: src/utils/design.js:393
 msgid "Dotted"
 msgstr ""
 
